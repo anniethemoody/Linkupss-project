@@ -1,0 +1,46 @@
+.body{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: auto;
+}
+
+.navbar-brand{
+    margin-left: 2rem;
+}
+
+.sign-in{
+    margin-right: 5rem;
+}
+
+.goal{
+    padding: 50px;
+    margin: auto;
+    display: grid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image{
+max-width: 500px;
+max-height: 500px;
+margin-left: 2em;
+float: left;
+
+}
+
+.discription{
+    margin-left: 5rem;
+}
+
+footer{
+    clear: both;
+    margin-left: 2rem;
+    align-self: center;
+}

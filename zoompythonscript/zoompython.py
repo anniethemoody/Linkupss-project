@@ -73,11 +73,6 @@ async def launch():
                 await page.click(cameraButton)
                 currentCommand = "idle"
 
-# async def end():
-#     async with async_playwright() as p:
-#         browser = await p.chromium.launch(channel="chrome", headless=False, args=['--start-maximized'])
-#         await browser.close()
-
 async def findCOM():
     global comPort
     while True:
@@ -108,14 +103,14 @@ async def arduino():
         if arduinoRead == "cam":
             currentCommand = arduinoRead
 
-async def cURL(): #Check cURL file for next available meeting
-    while True:
-        with open('zoomSessionInfo.txt') as f:
-            time.sleep(10)
-            info = f.readlines()
-            print(info[1])
-            #if (link[1] == computerID and link[2] == "available"):
-            #    meetingAvailable == True
+# async def cURL(): #Check cURL file for next available meeting
+#     while True:
+#         with open('zoomSessionInfo.txt') as f:
+#             time.sleep(10)
+#             info = f.readlines()
+#             print(info[1])
+#             #if (link[1] == computerID and link[2] == "available"):
+#             #    meetingAvailable == True
 
 async def main():
     findComLoop = asyncio.get_running_loop()

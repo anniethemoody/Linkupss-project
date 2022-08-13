@@ -1,0 +1,57 @@
+body{
+    background: url(https://bpic.588ku.com/back_pic/05/98/66/825ef0aa0d10ad6.jpg!/fw/150/quality/90/unsharp/true/compress/true);
+}
+
+.title{
+    text-align: center;
+    font-size: 50px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.goal{
+    position: relative;
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 20px;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 2rem;
+    padding: 10px;
+}
+
+.Block{
+    margin-left: 10%;
+    margin-top: 1%;
+    margin-right: 10%;
+    display: flex; 
+    align-items: center;
+}
+
+.description{
+    border-radius: 20px;
+    width: 60%;
+    padding: 10px;
+}
+
+.imageLeft{
+    width: 27rem;
+    height: 20rem;
+    margin-right: 50px;
+    float: left;
+}
+
+.goal:hover, .description:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: rgb(209, 208, 203);
+    transition-duration: 2s;
+}
+
+.imageRight{
+    width: 27rem;
+    height: 20rem;
+    margin-left: 50px;
+    float: right;
+}

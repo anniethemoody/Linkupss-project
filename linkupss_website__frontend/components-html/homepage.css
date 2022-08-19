@@ -54,11 +54,11 @@ body{
     float: left;
 }
 
-.goal:hover, .description:hover{
+/* .goal:hover, .description:hover{
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     background: rgb(209, 208, 203);
     transition-duration: 2s;
-}
+} */
 
 .imageRight{
     width: 100%;

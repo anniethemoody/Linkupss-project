@@ -24,23 +24,32 @@ body{
     padding: 10px;
 }
 
-.Block{
+/* .Block{
     margin-left: 10%;
     margin-top: 1%;
     margin-right: 10%;
-    display: flex; 
+    display: flex;
+    align-items: center;
+} */
+
+.container{
+    margin-top: 3%;
+}
+
+.col-5{
+    display: flex;
     align-items: center;
 }
 
 .description{
     border-radius: 20px;
-    width: 60%;
+    font-size: 1.1vw;
     padding: 10px;
 }
 
 .imageLeft{
-    width: 27rem;
-    height: 20rem;
+    width: 100%;
+    max-height: 100%;
     margin-right: 50px;
     float: left;
 }
@@ -52,15 +61,15 @@ body{
 }
 
 .imageRight{
-    width: 27rem;
-    height: 20rem;
+    width: 100%;
+    max-height: 100%;
     margin-left: 50px;
     float: right;
 }
 
 /* Company Promises */
 
-.container{
+.containers{
     display: inline-grid;
     grid-template-columns: repeat(3,1fr);
     margin-left: 10%;

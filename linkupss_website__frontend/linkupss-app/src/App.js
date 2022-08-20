@@ -1,23 +1,26 @@
 import logo from './logo.svg';
 import './App.css';
+import NavBar from './components/navbar';
+import SideBar from './components/sidebar';
+import React, { Component,useEffect } from 'react';
+import { Switch } from 'react-router-dom';
+import { Redirect,Route } from 'react-router-dom';
+import Dashboard from './components/dashboard/dashboard';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
+//EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="box">
+    <NavBar className="navpos"/>
+    <div className="content">
+    
+    <Switch>
+     <Route path="/" component={Dashboard}/> 
+
+    </Switch>
+    </div>
     </div>
   );
 }

@@ -118,9 +118,8 @@ body{
     }
 }
 
-.flag{
+.p-3{
     margin-left: 3%;
-    margin-top: 3%;
     background: rgb(238, 232, 205);
     font-size: 150%;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);

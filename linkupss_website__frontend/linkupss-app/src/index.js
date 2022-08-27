@@ -4,7 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import {BrowserRouter} from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.css';
+//import "./App.css"
+//import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 //import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(

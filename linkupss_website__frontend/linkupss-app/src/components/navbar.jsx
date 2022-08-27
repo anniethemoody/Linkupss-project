@@ -11,12 +11,12 @@ class NavBar extends Component {
             
 
           <ul className="list nav__list collapsible__content">
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/">Set Up</NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/">About Us</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/setup">Set Up</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/aboutus">About Us</NavLink></li>
                                  
-                <li className="nav__item" ><NavLink className= "nav-item nav-link col" to="/">Products</NavLink></li>
+                <li className="nav__item" ><NavLink className= "nav-item nav-link col" to="/products">Products</NavLink></li>
                
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/">Latest News</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/latestnews">Latest News</NavLink></li>
                
                
                 <React.Fragment>

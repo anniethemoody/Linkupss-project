@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import { getAdminInfo } from './adminService';
 
 export const sessions = [
     //desc max character count:88 chars
@@ -6,39 +7,66 @@ export const sessions = [
     _id: "akjshfbboqihroia",
     name: "Yoga",
     desc:"Yoga session held by Heidi, will be doing a series of physical exercise",
-    participants: [],
-    admins: [],
+    participants: ["kjabsdjiubfe129837"],
+    admins: ["96383888"],
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "15:00",
     day_of_week: "Saturday",
     meeting_link: "",
-  },
+
+   },
   {
     _id: uuidv4(),
     name: "Bingo",
     desc:"Who doesn't like playing bingo, win a prize with us tonight!",
     participants: [],
-    admins: [],
+    admins: ["96383888"],
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "08:30",
     day_of_week: "Friday",
     meeting_link: "",
   },
-  {
+   {
     _id: uuidv4(),
     name: "Arts & Crafts",
     desc:"Build your favourite necklace for your loved ones",
     participants: [],
-    admins: [],
-    org_id: "",
+    admins: ["96383888"],
+    org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "12:00",
     day_of_week: "Thursday",
     meeting_link: "",
+  },
+  {
+    _id: uuidv4(),
+    name: "Yushi Making",
+    desc:"Make your own sushi",
+    participants: [],
+    admins: ["96383888"],
+    org_id: "cvsb18273gdiasdbasduqwe",
+    session_time: "15:00",
+    day_of_week: "Friday",
+    meeting_link: "",
+  },
+  {
+    _id: uuidv4(),
+    name: "French class",
+    desc:"Learn how to speak in french",
+    participants: [],
+    admins: ["96383888"],
+    org_id: "cvsb18273gdiasdbasduqwe",
+    session_time: "10:00",
+    day_of_week: "Friday",
+    meeting_link: "",
   }
+
+  
+
+
 ];
 
-export function getSessions() {
-  return sessions;
+export function getSessions(id,admin_id) {
+  return sessions.filter((m) => m.org_id === id).filter((m)=>m.admins.includes(admin_id));;
 }
 
 export function getSession(id) {

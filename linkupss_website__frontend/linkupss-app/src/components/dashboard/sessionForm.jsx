@@ -11,30 +11,51 @@ import DatePicker from "react-datepicker";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import "react-datepicker/dist/react-datepicker.css";
-import { getSession,getSessionParticipants } from "../../services/sessionService";
-import { getOrgMembers,getOrgMember } from "../../services/orgMembersService";
-import { v4 as uuidv4 } from 'uuid';
+import {
+  getSession,
+  getSessionParticipants,
+} from "../../services/sessionService";
+import {
+  getOrgMembers,
+  getOrgMember,
+  getOrgMembersByOrg,
+} from "../../services/orgMembersService";
+import { v4 as uuidv4 } from "uuid";
+import { getAdminInfo, getAdminInfoByOrg } from "../../services/adminService";
 
 const SessionForm = (props) => {
+  //----------All fields
   const [adminButtonState, setAdminButtonState] = useState(true);
   const [adminList, setAdminList] = useState([]);
   const [sessionParticipants, setSessionParticipants] = useState([]);
   const [filteredOrgMembers, setFilteredOrgMembers] = useState([]);
-  const [orgMembers,setOrgMembers] = useState(getOrgMembers());
-  const [memberSearchQuery,setMemberSearchQuery] = useState("");
-  const [sessionId,setSessionId] = useState(uuidv4())
-  const [sessionName, setSessionName] = useState("Enter session name");
-  const [sessionDesc, setSessionDesc] = useState("Enter session description");
+  const [filteredAdmins, setFilteredAdmins] = useState([]);
+  const [orgMembers, setOrgMembers] = useState([]);
+  //console.log(orgMembers);
+  const [orgAdmins, setOrgAdmins] = useState(
+    getAdminInfoByOrg(props.userinfo.org_id)
+  );
+  const [memberSearchQuery, setMemberSearchQuery] = useState("");
+  const [adminSearchQuery, setAdminSearchQuery] = useState("");
+  const [sessionId, setSessionId] = useState(uuidv4());
+  const [sessionName, setSessionName] = useState("");
+  const [sessionDesc, setSessionDesc] = useState("");
   const [sessionDayOfWeek, setSessionDayOfWeek] = useState(
     "Select day of week for session"
   );
   const [sessionTime, setSessionTime] = useState(" ");
-  const [datePickerTime, setDatePickerTime] = useState(new Date(null,null,null,0,0));
-  const [sessionLink, setSessionLink] = useState(
-    "Enter link to session meeting"
+  const [datePickerTime, setDatePickerTime] = useState(
+    new Date(null, null, null, 0, 0)
   );
+  const [sessionLink, setSessionLink] = useState("");
   const [newSession, setNewSession] = useState({});
+  const [errors, setErrors] = useState({
+    name: "",
+    desc: "",
+    meeting_link: "",
+  });
 
+  //----------
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       const ingred_item = e.target.value;
@@ -72,7 +93,7 @@ const SessionForm = (props) => {
   const handleDeleteAdmin = (item) => {
     const new_admin_list = [];
     for (var i of adminList) {
-      if (i != item) {
+      if (i !== item) {
         new_admin_list.push(i);
       }
     }
@@ -97,80 +118,137 @@ const SessionForm = (props) => {
     }
   };
   const handleSearchMember = (e) => {
-    const query= e.currentTarget.value;
+    const query = e.currentTarget.value;
     setMemberSearchQuery(query);
-    setFilteredOrgMembers(orgMembers.filter(m=>m.name.toLowerCase().startsWith(query.toLowerCase())));
-    
+    setFilteredOrgMembers(
+      orgMembers.filter((m) =>
+        m.name.toLowerCase().startsWith(query.toLowerCase())
+      )
+    );
+  };
+  const handleSearchAdmin = (e) => {
+    const query = e.currentTarget.value;
+    setAdminSearchQuery(query);
+    setFilteredAdmins(
+      orgAdmins.filter((m) =>
+        m.admin_name.toLowerCase().startsWith(query.toLowerCase())
+      )
+    );
+  };
+  const handleAddOrgAdmins = (_admin_id) => {
+    let new_admin_list = [];
+
+    for (var i of adminList) {
+      new_admin_list.push(i);
+    }
+    new_admin_list.push(_admin_id);
+    setAdminList(new_admin_list);
+    console.log(adminList);
+  };
+  const handleRemoveOrgAdmins = (_admin_id) => {
+    if (_admin_id === props.userinfo._admin_id) {
+      props.removeSelfFromSession();
+    } else {
+      console.log(_admin_id);
+      let new_admin_list = [];
+      for (var i of adminList) {
+        if(i !== _admin_id){
+            console.log("check")
+        new_admin_list.push(i);
+        }
+      }
+      //new_admin_list.splice(_admin_id, 1);
+      console.log(new_admin_list);
+      setAdminList(new_admin_list);
+      console.log(adminList);
+    }
   };
 
   const handleAddingOrgMembers = (_member_id) => {
- 
-        let session_id_passed="";
-        console.log(getOrgMember(_member_id));
-        const index = orgMembers.indexOf(getOrgMember(_member_id));
-        const new_org_members = [];
-        for (var i of orgMembers) {
-            new_org_members.push(i);
-          }
-          if(props.form_type == "new"){
-            session_id_passed = sessionId;
-          }
-          else{
-            session_id_passed = props.selectedSession._id
-          }
+    // let session_id_passed="";
+    // console.log(getOrgMember(_member_id));
+    // const index = orgMembers.indexOf(getOrgMember(_member_id));
+    // const new_org_members = [];
+    // for (var i of orgMembers) {
+    //     new_org_members.push(i);
+    //   }
+    //   if(props.form_type == "new"){
+    //     session_id_passed = sessionId;
+    //   }
+    //   else{
+    //     session_id_passed = props.selectedSession._id
+    //   }
 
-          new_org_members[index].sessions_enrolled.push(session_id_passed);
-          setOrgMembers(new_org_members);
-        const new_participant_list = [];
-        for (var i of sessionParticipants) {
-            new_participant_list.push(i);
-          }
-          new_participant_list.push(_member_id);
-          setSessionParticipants(new_participant_list);
-    
-          console.log(new_org_members);
-  }
+    //   new_org_members[index].sessions_enrolled.push(session_id_passed);
+    //   setOrgMembers(new_org_members);
+    const new_participant_list = [];
+    for (var i of sessionParticipants) {
+      new_participant_list.push(i);
+    }
+    new_participant_list.push(_member_id);
+    setSessionParticipants(new_participant_list);
+
+    // console.log(new_org_members);
+  };
   const handleRemovingOrgMembers = (_member_id) => {
-    let session_id_passed="";
-    const index = orgMembers.indexOf(getOrgMember(_member_id));
-    console.log(index);
-    const new_org_members = [];
-    for (var i of orgMembers) {
-        new_org_members.push(i);
+    // let session_id_passed="";
+    // const index = orgMembers.indexOf(getOrgMember(_member_id));
+    // console.log(index);
+    // const new_org_members = [];
+    // for (var i of orgMembers) {
+    //     new_org_members.push(i);
+    //   }
+    //   if(props.form_type == "new"){
+    //     session_id_passed = sessionId;
+    //   }
+    //   else{
+    //     session_id_passed = props.selectedSession._id
+    //   }
+
+    //   const session_index = new_org_members[index].sessions_enrolled.indexOf(getSession(session_id_passed));
+    //   new_org_members[index].sessions_enrolled.splice(session_id_passed,1);
+    //   setOrgMembers(new_org_members);
+
+    const new_participant_list = [];
+    for (var i of sessionParticipants) {
+      new_participant_list.push(i);
+    }
+    new_participant_list.splice(_member_id, 1);
+    setSessionParticipants(new_participant_list);
+  };
+  const handleValidation = (input) => {
+    if (input === "name") {
+      if (sessionName.length > 10) {
       }
-      if(props.form_type == "new"){
-        session_id_passed = sessionId;
+      if (sessionName === "") {
       }
-      else{
-        session_id_passed = props.selectedSession._id
+    }
+    if (input === "desc") {
+      if (sessionDesc.length > 18) {
       }
-      const session_index = new_org_members[index].sessions_enrolled.indexOf(getSession(session_id_passed));
-      new_org_members[index].sessions_enrolled.splice(session_id_passed,1);
-      setOrgMembers(new_org_members);
-      const new_participant_list = [];
-      for (var i of sessionParticipants) {
-          new_participant_list.push(i);
-        }
-        new_participant_list.splice(_member_id,1);
-        setSessionParticipants(new_participant_list);
-  
-  }
+    }
+    if (input === "meeting-link") {
+      if (sessionLink === "") {
+      }
+    }
+  };
+
   const saveSession = (props) => {
-    console.log(props.form_type);
+    console.log(props.selectedSession);
     let passed_id = "";
-    if(props.form_type === "edit"){
-        passed_id = props.selectedSession._id;
+    if (props.form_type === "edit") {
+      passed_id = props.selectedSession._id;
+    } else {
+      passed_id = sessionId;
     }
-    else{
-        passed_id = sessionId;
-    }
+
     const session_saved = {
       _id: passed_id,
       name: sessionName,
       desc: sessionDesc,
       participants: sessionParticipants,
       admins: adminList,
-      org_id: props.selectedSession.org_id,
+      org_id: props.userinfo.org_id,
       session_time: sessionTime,
       day_of_week: sessionDayOfWeek,
       meeting_link: sessionLink,
@@ -185,29 +263,51 @@ const SessionForm = (props) => {
       console.log(props.selectedSession);
       //const {name,desc,meeting_link,session_time,day_of_week} = props.selectedSession;
       console.log(props.selectedSession.name);
-      let temp_admin = [];
-      let temp_participants = [];
-      temp_admin = temp_admin.concat(props.selectedSession.admins);
-      temp_participants = temp_participants.concat(
-        props.selectedSession.participants
-      );
-
+      //   let temp_admin = [];
+      //   let temp_participants = [];
+      //   temp_admin = temp_admin.concat(props.selectedSession.admins);
+      //   temp_participants = temp_participants.concat(
+      //     props.selectedSession.participants
+      //   );
+      //setAdminList(temp_admin);
       setSessionName(props.selectedSession.name);
       setSessionDesc(props.selectedSession.desc);
       setSessionLink(props.selectedSession.meeting_link);
       console.log(props.selectedSession.participants);
-      if (typeof props.selectedSession.participants !== "undefined") {
-        setSessionParticipants(
-          props.selectedSession.participants
-        );
-        setFilteredOrgMembers(
-          getOrgMembers()
-        );
+      //check that
+      if (typeof props.selectedSession.admins !== "undefined") {
+        setAdminList(props.selectedSession.admins);
+      } else {
+        setAdminList([]);
       }
+      if (typeof getAdminInfoByOrg(props.userinfo.org_id) !== "undefined") {
+        setOrgAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+        setFilteredAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+      } else {
+        setOrgAdmins([]);
+        setFilteredAdmins([]);
+      }
+
+      if (typeof props.selectedSession.participants !== "undefined") {
+        setSessionParticipants(props.selectedSession.participants);
+      } else {
+        setSessionParticipants([]);
+      }
+      //console.log(sessionParticipants);
+      if (typeof getOrgMembersByOrg(props.userinfo.org_id) !== "undefined") {
+        setOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+        setFilteredOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+      } else {
+        setOrgMembers([]);
+        setFilteredOrgMembers([]);
+      }
+      console.log(orgMembers);
+
       // console.log(sessionParticipants);
       setSessionDayOfWeek(props.selectedSession.day_of_week);
       setSessionTime(props.selectedSession.session_time);
-      console.log(props.selectedSession.session_time);
+      // console.log("session time:", props.selectedSession.session_time);
+
       setDatePickerTime(
         new Date(
           null,
@@ -217,17 +317,46 @@ const SessionForm = (props) => {
           parseInt(props.selectedSession.session_time.substring(3, 5))
         )
       );
+      //console.log(orgMembers);
     }
     if (props.form_type === "new") {
-      setAdminList([]);
+      //   if (!adminList.includes(props.userinfo._admin_id)) {
+      //     console.log("saved admin");
+      //     const new_adminlist = [];
+      //     new_adminlist.push(props.userinfo._admin_id);
+      //     setAdminList(new_adminlist);
+      //   }
+
       //console.log(props.selectedSession._id);
-      setSessionName("Enter session name");
-      setSessionDesc("Enter session description");
-      setSessionLink("Enter session link");
-      setSessionParticipants([]);
-      setFilteredOrgMembers(getOrgMembers());
+      setSessionName("");
+      setSessionDesc("");
+      setSessionLink("");
+
+
+        let new_admins = [];
+        
+        new_admins.push(props.userinfo._admin_id);
+        if (typeof getAdminInfoByOrg(props.userinfo.org_id) !== "undefined") {
+            setOrgAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+            setFilteredAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+            setAdminList(new_admins);   
+          } else {
+            setOrgAdmins([]);
+            setFilteredAdmins([]);
+          }
+      
+
+      if (typeof getOrgMembersByOrg(props.userinfo.org_id) !== "undefined") {
+        setOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+        setFilteredOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+      } else {
+        setOrgMembers([]);
+        setFilteredOrgMembers([]);
+      }
+
       setSessionDayOfWeek("Select day of week for session");
       setSessionTime("00:00");
+      setDatePickerTime(new Date(null, null, null, 0, 0));
     }
   }, [props.selectedSession, props.form_type]);
   return (
@@ -273,52 +402,78 @@ const SessionForm = (props) => {
 
         <hr className="rounded" />
         <div>
+          {/*Admin card */}
           <p style={{ fontSize: "18px" }}>Admins</p>
-          <div
-            className="adminlist-spacing"
-            style={{ display: "flex", flexWrap: "wrap" }}
-          >
-            {adminList &&
-              adminList.map((item) => (
-                <button
-                  key={item}
-                  className="btn btn-primary adminButton-spacing"
-                  style={{
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <span>{item}</span>
-                  <CloseIcon onClick={() => handleDeleteAdmin(item)} />
-                </button>
-              ))}
-          </div>
-          {adminButtonState && (
-            <button
-              className="btn btn-primary"
-              style={{
-                borderRadius: "20px",
-                display: "flex",
-                alignItems: "center",
-              }}
-              onClick={() => setAdminButtonState(false)}
+          <Card>
+            {Array.isArray(orgAdmins) && !orgAdmins.length ? (
+              <Card.Header>
+                <span style={{ paddingRight: "20px" }}>
+                  You are the only admin in this organisation. Ask others to
+                  manage your sessions with you!
+                </span>
+              </Card.Header>
+            ) : (
+              <Card.Header>
+                <input
+                  type="text"
+                  name="query"
+                  className="form-control my-3"
+                  placeholder="Search admins from your organisation"
+                  value={adminSearchQuery}
+                  onChange={handleSearchAdmin}
+                />
+              </Card.Header>
+            )}
+
+            <ListGroup
+              variant="flush"
+              className={
+                !orgAdmins.length || orgAdmins.length <= 2
+                  ? "form-lisgroup-card-none"
+                  : "form-listgroup-card"
+              }
             >
-              <AddIcon style={{ fontSize: "20px" }} />
-              <span>Add admins</span>
-            </button>
-          )}
-          {!adminButtonState && (
-            <Form.Control
-              type="search"
-              placeholder="Enter admins for this session"
-              className="me-2"
-              aria-label="Search"
-              onKeyDown={handleKeyDown}
-            />
-          )}
+              {!orgAdmins.length ? (
+                <div></div>
+              ) : (
+                filteredAdmins.map((item) => (
+                  <ListGroup.Item
+                    className="form-listgroup-item"
+                    key={item._admin_id}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <p>{item.admin_name}</p>
+                      {adminList.indexOf(item._admin_id) !== -1 ? (
+                        <Button
+                          variant="danger"
+                          onClick={() => handleRemoveOrgAdmins(item._admin_id)}
+                        >
+                          Remove Admin
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          onClick={() => handleAddOrgAdmins(item._admin_id)}
+                        >
+                          Grant Access
+                        </Button>
+                      )}
+                    </div>
+                  </ListGroup.Item>
+                ))
+              )}
+            </ListGroup>
+          </Card>
         </div>
         <hr className="rounded" />
+
+        {/*Participant card */}
         <p style={{ fontSize: "18px" }}>Participants</p>
         <Card>
           {Array.isArray(orgMembers) && !orgMembers.length ? (
@@ -334,13 +489,20 @@ const SessionForm = (props) => {
                 type="text"
                 name="query"
                 className="form-control my-3"
-                placeholder="Search members from organisation"
+                placeholder="Search members from your organisation"
                 value={memberSearchQuery}
                 onChange={handleSearchMember}
               />
             </Card.Header>
           )}
-          <ListGroup variant="flush" className={!orgMembers.length ? "form-lisgroup-card-none" : "form-listgroup-card"}>
+          <ListGroup
+            variant="flush"
+            className={
+              !orgMembers.length || orgMembers.length <= 2
+                ? "form-lisgroup-card-none"
+                : "form-listgroup-card"
+            }
+          >
             {!orgMembers.length ? (
               <div></div>
             ) : (
@@ -349,17 +511,32 @@ const SessionForm = (props) => {
                   className="form-listgroup-item"
                   key={item._member_id}
                 >
-                                        <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}>
-                      <p>{item.name}</p>
-                  {item.sessions_enrolled.indexOf(props.form_type==="edit"?props.selectedSession._id:sessionId) !==
-                    -1 ? (<Button variant="danger" onClick = {()=>handleRemovingOrgMembers(item._member_id)}>Remove</Button>):(<Button variant="primary" onClick = {()=>handleAddingOrgMembers(item._member_id)}>Add</Button>)}
-                    </div>
-                  
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p>{item.name}</p>
+                    {sessionParticipants.indexOf(item._member_id) !== -1 ? (
+                      <Button
+                        variant="danger"
+                        onClick={() =>
+                          handleRemovingOrgMembers(item._member_id)
+                        }
+                      >
+                        Remove
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        onClick={() => handleAddingOrgMembers(item._member_id)}
+                      >
+                        Add
+                      </Button>
+                    )}
+                  </div>
                 </ListGroup.Item>
               ))
             )}

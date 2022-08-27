@@ -8,6 +8,10 @@ import { Redirect,Route } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import AboutUs from './components/about-us/about-us';
+import Products from './components/products/products';
+import SetUp from './components/set-up/setUp';
+import LatestNews from './components/latest-news/lastestNews';
 
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
@@ -17,8 +21,12 @@ function App() {
     <div className="content">
     
     <Switch>
+    <Route path="/products" component={Products}/> 
+    <Route path="/setup" component={SetUp}/> 
+    <Route path="/latestnews" component={LatestNews}/> 
+    <Route path="/aboutus" component={AboutUs}/> 
      <Route path="/" component={Dashboard}/> 
-
+    
     </Switch>
     </div>
     </div>

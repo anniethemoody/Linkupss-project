@@ -28,10 +28,7 @@ class SideBar extends Component {
 
         return (
             
-                <div className = "sidebar-closed" 
-    
-                  
-                  >
+                <div className = "sidebar-closed">
                     
                 
                 <ul className="no-bull">

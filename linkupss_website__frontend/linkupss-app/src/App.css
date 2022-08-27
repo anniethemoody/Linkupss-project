@@ -1,3 +1,5 @@
+
+
 .App {
   text-align: center;
 }
@@ -216,6 +218,12 @@ padding-right:0;
 
 
 }
+.content-box-none{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height:80%;
+}
 
 .info-bar{
   background:#77e2f344;
@@ -232,12 +240,29 @@ padding-right:0;
   
 
 }
+.filter-dropdown{
+  z-index:10000 !important;
+  position: absolute !important;
+  right:23%;
+  top:9%;
+}
+
+.no-sessions-text{
+  color:#61dafb;
+  text-align: center;
+  align-self: center;
+}
+.sad-icon{
+  height:60px;
+  width:60px;
+}
 /*FLOATING ACTION BUTTON*/
 
 .floating-action-button{
   display:block;
-  height: 70px;
-  padding: 15px 15px 20px 15px; 
+  height: 65px;
+  width:auto !important;
+  padding: 13px 15px 20px 15px; 
   border-radius: 40px;
   border-width:0;
   position:fixed ;
@@ -304,18 +329,24 @@ transition: transform 0.35s ease-in;
   padding:5px 5px;
   
   }
+
   .card-spacing{
     padding: 5% 3% 5% 3%;
-    margin-top: 6%;
+    
     margin-left:3%;
     margin-right:3%;
+    margin-top: 4%;
+    margin-bottom: 4%;
     
-    }
+  }
+
     #card-grid-spacing{
       margin-left:5px;
-      margin-right:5px;
-      padding-top:15px;
+      margin-right:25px;
+      padding-top:20px;
+      height:300px;
     }
+
 
     /*SESSION FORM*/
     .session-form-size{
@@ -335,6 +366,12 @@ transition: transform 0.35s ease-in;
       overflow-y:auto !important;
       
     }
+    .form-listgroup-card-sidebar{
+      height:auto !important;
+      max-width:100% !important;
+      overflow-y:auto !important;
+      
+    }
     .form-listgroup-card-none{
       height:100% !important;
       max-width:100% !important;
@@ -344,4 +381,23 @@ transition: transform 0.35s ease-in;
       width:100% ! important;    
       padding: 0.5rem 0.3rem 0.5rem 0.3rem;
     }
-   
+    .form-listgroup-sidebar-item{
+      height: 3rem;
+      width:100% ! important;    
+      padding: 0.5rem 0.3rem 0.5rem 0.3rem;
+      display: flex !important;
+      justify-content: space-between !important;
+    }
+   /*CARD*/
+   .card-desc{
+    height:40px !important;
+    width:300px !important;
+    padding-left:15px;
+    overflow-wrap: break-word;
+    inline-size: 120px;
+   }
+/*CONFIRM DELETE POP UP*/
+.confirm-delete-form-size{
+  min-width:150px;
+  min-height:100px;
+}

@@ -5,10 +5,10 @@ class SessionGrid extends Component {
     render() { 
         return (
             <React.Fragment>
-            <div className = "row" id = "card-grid-spacing">
+            <div className = "row" id ="card-grid-spacing">
            {(this.props.sessions).map(
             item =>
-            <SessionCard key = {item._id} session={item} className = "" sessionEditClicked = {this.props.sessionEditClicked}/>
+            <SessionCard key = {item._id} session={item} sessionEditClicked = {this.props.sessionEditClicked} numOfSessions={this.props.numOfSessions} confirmDeleteSession = {this.props.confirmDeleteSession}/>
            )}
            </div>
            </React.Fragment>

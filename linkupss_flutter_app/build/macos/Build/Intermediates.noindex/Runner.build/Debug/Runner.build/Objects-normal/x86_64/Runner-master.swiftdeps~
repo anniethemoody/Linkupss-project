@@ -1,0 +1,9 @@
+version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
+options: "9a1a92567da5ba281853eeb8aa848932366c22d4c906cd6a3183548b7eafb970"
+build_start_time: [1661071041, 161885976]
+build_end_time: [1661071055, 333014011]
+inputs:
+  ? "/Users/sahilamin/Desktop/Sahil's Files/FlutterDev/projects/application_linkupss_flutter/macos/Flutter/GeneratedPluginRegistrant.swift"
+  : [1661070991, 179889202]
+  "/Users/sahilamin/Desktop/Sahil's Files/FlutterDev/projects/application_linkupss_flutter/macos/Runner/AppDelegate.swift": [1657708754, 0]
+  "/Users/sahilamin/Desktop/Sahil's Files/FlutterDev/projects/application_linkupss_flutter/macos/Runner/MainFlutterWindow.swift": [1657708754, 0]

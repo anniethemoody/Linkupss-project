@@ -40,8 +40,8 @@
 }
 /*NAVBAR*/
 .navpos{
-  position:fixed;
-  top:0
+  position:absolute !important;
+  top:0 !important;
 }
 
 .nav_list{
@@ -401,3 +401,25 @@ transition: transform 0.35s ease-in;
   min-width:150px;
   min-height:100px;
 }
+/*LEFT SIDEBAR*/
+.see-faq-btn{
+  width:100%;
+}
+/*PRODCUTS PAGE*/
+
+.product-content{
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+}
+.linkpad{
+  border-radius: 0 30px 30px 0;
+  display:flex;
+ 
+}
+
+.linkpad-col{
+  padding:50px 50px 50px 0 !important;
+}
+
+
+

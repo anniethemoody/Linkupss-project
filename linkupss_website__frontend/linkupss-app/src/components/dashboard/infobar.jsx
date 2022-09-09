@@ -12,17 +12,27 @@ import Tooltip from "react-bootstrap/Tooltip";
 import Help from "@mui/icons-material/Help";
 import Popover from "react-bootstrap/Popover";
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useEffect } from "react";
 
 const InfoBar = (props) => {
 
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
-  const [filterState, setFilterState] = useState(false);
+  const [filterButtonState, setfilterButtonState] = useState(false);
   const handleSearchSession = (e) => {
     const query = e.target.value;
     setSessionSearchQuery(query);
     props.handleSearchSession(query);
   };
-  const handleTooltipFilter = (props, ref) => {};
+  useEffect(()=>{
+    if(props.disableFilter){
+        setfilterButtonState(true);
+    }
+    else{
+        setfilterButtonState(false);
+    }
+    
+  },[props.disableFilter])
+  
   return (
     <div
       className="info-bar row"
@@ -53,33 +63,18 @@ const InfoBar = (props) => {
       </span>
       <span className="col-4" />
 
-      <span className="col">
-        
-      <Dropdown disabled={true} className = "filter-dropdown" >
-      <Dropdown.Toggle variant="success" id="dropdown-basic">
-      <FilterAltIcon  />
-      </Dropdown.Toggle>
 
-      <Dropdown.Menu >
-        <Dropdown.Item onClick ={()=>props.filterSessionByButton("name")}>Filter by session name</Dropdown.Item>
-        <Dropdown.Item onClick ={()=>props.filterSessionByButton("time")}>Filter by time</Dropdown.Item>
-        <Dropdown.Item onClick ={()=>props.filterSessionByButton("none")}>Remove all filtering</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-          
-        
-      </span>
       <span className="col">
         <OverlayTrigger
           placement="bottom"
           delay={{ show: 250, hide: 400 }}
-          overlay={<Tooltip id="button-tooltip">{"Organization"}</Tooltip>}
+          overlay={<Tooltip id="button-tooltip">{"Filter"}</Tooltip>}
         >
-          <CorporateFareIcon
-            onClick={() => props.openOffcanvas("Organization")}
+          <FilterAltIcon  
+            onClick={() => props.openOffcanvas("Filter")}
           />
         </OverlayTrigger>
-      </span>
+      </span> 
       <span className="col">
         <OverlayTrigger
           placement="bottom"

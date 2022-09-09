@@ -12,7 +12,7 @@ export const sessions = [
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "15:00",
     day_of_week: "Saturday",
-    meeting_link: "",
+    meeting_link: "yogalink",
 
    },
   {
@@ -24,7 +24,7 @@ export const sessions = [
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "08:30",
     day_of_week: "Friday",
-    meeting_link: "",
+    meeting_link: "bingolink",
   },
    {
     _id: uuidv4(),
@@ -35,7 +35,7 @@ export const sessions = [
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "12:00",
     day_of_week: "Thursday",
-    meeting_link: "",
+    meeting_link: "artsandcraftslink",
   },
   {
     _id: uuidv4(),
@@ -46,7 +46,7 @@ export const sessions = [
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "15:00",
     day_of_week: "Friday",
-    meeting_link: "",
+    meeting_link: "yushilink",
   },
   {
     _id: uuidv4(),
@@ -57,7 +57,7 @@ export const sessions = [
     org_id: "cvsb18273gdiasdbasduqwe",
     session_time: "10:00",
     day_of_week: "Friday",
-    meeting_link: "",
+    meeting_link: "frenchclasslink",
   }
 
   

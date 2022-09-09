@@ -22,6 +22,7 @@ import {
 } from "../../services/orgMembersService";
 import { v4 as uuidv4 } from "uuid";
 import { getAdminInfo, getAdminInfoByOrg } from "../../services/adminService";
+import { stubTrue } from "lodash";
 
 const SessionForm = (props) => {
   //----------All fields
@@ -43,6 +44,10 @@ const SessionForm = (props) => {
   const [sessionDayOfWeek, setSessionDayOfWeek] = useState(
     "Select day of week for session"
   );
+
+  const [sessionNameVal,setSessionNameVal] = useState("")
+  const [sessionDescVal, setSessionDescVal] = useState("");
+  const[sessionLinkVal,setSessionLinkVal] = useState("");
   const [sessionTime, setSessionTime] = useState(" ");
   const [datePickerTime, setDatePickerTime] = useState(
     new Date(null, null, null, 0, 0)
@@ -54,7 +59,17 @@ const SessionForm = (props) => {
     desc: "",
     meeting_link: "",
   });
+//validation variables
+  const [sessionNameValid,setSessionNameValid] = useState(false);
+  const [sessionDescValid,setSessionDescValid] = useState(false);
+  const [sessionLinkValid,setSessionLinkValid] = useState(false);
+  const [sessionDayOfWeekValid,setSessionDayOfWeekValid] = useState(false);
+  const [fullFormValid,setFullFormValid] = useState(false);
 
+  //focuesd
+  const [sessionNameFocused,setSessionNameFocused] = useState(false);
+  const [sessionDescFocused,setSessionDescFocused] = useState(false);
+  const [sessionLinkFocused,setSessionLinkFocused] = useState(false);
   //----------
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -71,13 +86,29 @@ const SessionForm = (props) => {
     }
   };
   const handleSessionName = (e) => {
-    setSessionName(e.target.value);
+    console.log(e.target.value)
+      setSessionNameVal(e.target.value)
+      //console.log(sessionNameVal);
+    if(handleValidation("name",e.target.value)){
+
+        setSessionName(e.target.value);
+        //console.log(sessionName)
+    }
+
   };
   const handleSessionDesc = (e) => {
-    setSessionDesc(e.target.value);
+    setSessionDescVal(e.target.value);
+    if(handleValidation("desc",e.target.value)){
+
+        setSessionDesc(e.target.value);
+    }
+    
   };
   const handleSessionLink = (e) => {
+    setSessionLinkVal(e.target.value);
+    if(handleValidation("link",e.target.value)){
     setSessionLink(e.target.value);
+    }
   };
   const handleSessionTimeDateToString = (date) => {
     console.log(date);
@@ -100,21 +131,35 @@ const SessionForm = (props) => {
     setAdminList(new_admin_list);
   };
   const handleSessionDayOfWeek = (e) => {
+    console.log(e)
+    
     setSessionDayOfWeek(e);
+    console.log(sessionDayOfWeek);
+    if(e ===  "Select day of week for session"){
+        console.log("sui")
+        
+        setSessionDayOfWeekValid(false);
+      }
+      else{
+        console.log("dayofweek validated")
+        setSessionDayOfWeekValid(true);
+        
+      }
+    console.log(sessionDayOfWeek);
   };
   const handleNameFocusing = () => {
     if (props.form_type === "new") {
-      setSessionName(" ");
+      setSessionNameFocused(true);
     }
   };
   const handleDescFocusing = () => {
     if (props.form_type === "new") {
-      setSessionDesc(" ");
+      setSessionDescFocused(true);
     }
   };
   const handleLinkFocusing = () => {
     if (props.form_type === "new") {
-      setSessionLink(" ");
+      setSessionLinkFocused(true);
     }
   };
   const handleSearchMember = (e) => {
@@ -147,7 +192,9 @@ const SessionForm = (props) => {
   };
   const handleRemoveOrgAdmins = (_admin_id) => {
     if (_admin_id === props.userinfo._admin_id) {
-      props.removeSelfFromSession();
+        console.log("selected session: ",props.selectedSession)
+        const session = props.selectedSession;
+      props.removeSelfFromSession(session);
     } else {
       console.log(_admin_id);
       let new_admin_list = [];
@@ -204,7 +251,6 @@ const SessionForm = (props) => {
     //   else{
     //     session_id_passed = props.selectedSession._id
     //   }
-
     //   const session_index = new_org_members[index].sessions_enrolled.indexOf(getSession(session_id_passed));
     //   new_org_members[index].sessions_enrolled.splice(session_id_passed,1);
     //   setOrgMembers(new_org_members);
@@ -216,25 +262,156 @@ const SessionForm = (props) => {
     new_participant_list.splice(_member_id, 1);
     setSessionParticipants(new_participant_list);
   };
-  const handleValidation = (input) => {
-    if (input === "name") {
-      if (sessionName.length > 10) {
+
+  const handleValidation = (input,value) => {
+    let validated = true;
+    
+    if(input=== "name"){
+      
+      if (value.length > 19) {
+        validated = false;
+        return validated;
       }
-      if (sessionName === "") {
+      else if  (value === "") {
+        setSessionNameValid(false);
+        if(sessionNameFocused){
+            setSessionNameFocused(true);
+            return true;
+        }
+        console.log("name invalid")
+        
+        
+    }
+        else{
+            console.log("name validated")
+            setSessionNameValid(true);
+        return validated;
       }
     }
-    if (input === "desc") {
-      if (sessionDesc.length > 18) {
+   if(input==="desc"){
+      if (value.length > 99) {
+        validated = false;
+        return validated;
+      }
+      else if  (value === "") {
+        setSessionDescValid(false);
+        if(sessionDescFocused){
+            setSessionDescFocused(true);
+            return true;
+        }
+        
+
+    }
+      else{
+        console.log("desc validated")
+        setSessionDescValid(true);
+        return validated;
       }
     }
-    if (input === "meeting-link") {
-      if (sessionLink === "") {
+    if(input === "link"){
+      if (value === "") {
+          setSessionLinkValid(false);
+        if(sessionLinkFocused){
+            setSessionLinkFocused(true);
+            return true;
+        }
+
+      }
+      else{
+        console.log("link validated")
+        setSessionLinkValid(true);
+        return validated;
       }
     }
+  
+
+    
   };
+//   const handleFullFormValidation = () => {
+//     console.log("validating...")
+//     if(sessionNameValid && sessionDescValid && sessionDayOfWeekValid && sessionLinkValid){
+//         console.log("success")
+//         setFullFormValid(true);
+//     }
+//     else{
+//         setFullFormValid(false);
+        
+//     }
+//   }
+//need to add if validation completed then let it save, in saveSession function
+const discardChanges = (props)=>{
+    if(props.form_type==="edit"){
+    props.hide();
+    setSessionName(props.selectedSession.name);
+    setSessionDesc(props.selectedSession.desc);
+    setSessionLink(props.selectedSession.meeting_link);
+       setSessionNameFocused(true);
+      setSessionDescFocused(true);
+      setSessionLinkFocused(true);
+    setSessionNameVal(props.selectedSession.name);
+    setSessionDescVal(props.selectedSession.desc);
+    setSessionLinkVal(props.selectedSession.meeting_link);
+    
+    console.log(props.selectedSession.participants);
+    //check that
+    if (typeof props.selectedSession.admins !== "undefined") {
+      setAdminList(props.selectedSession.admins);
+    } else {
+      setAdminList([]);
+    }
+    if (typeof getAdminInfoByOrg(props.userinfo.org_id) !== "undefined") {
+      setOrgAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+      setFilteredAdmins(getAdminInfoByOrg(props.userinfo.org_id));
+    } else {
+      setOrgAdmins([]);
+      setFilteredAdmins([]);
+    }
+
+    if (typeof props.selectedSession.participants !== "undefined") {
+      setSessionParticipants(props.selectedSession.participants);
+    } else {
+      setSessionParticipants([]);
+    }
+    //console.log(sessionParticipants);
+    if (typeof getOrgMembersByOrg(props.userinfo.org_id) !== "undefined") {
+      setOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+      setFilteredOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+    } else {
+      setOrgMembers([]);
+      setFilteredOrgMembers([]);
+    }
+    console.log(orgMembers);
+
+    // console.log(sessionParticipants);
+    setSessionDayOfWeek(props.selectedSession.day_of_week);
+    setSessionTime(props.selectedSession.session_time);
+    // console.log("session time:", props.selectedSession.session_time);
+
+    setDatePickerTime(
+      new Date(
+        null,
+        null,
+        null,
+        parseInt(props.selectedSession.session_time.substring(0, 2)),
+        parseInt(props.selectedSession.session_time.substring(3, 5))
+      )
+    );
+    console.log(sessionNameVal,sessionDescVal,sessionLinkVal,sessionDayOfWeek)
+    setSessionNameValid(true);
+    setSessionDescValid(true);
+    setSessionLinkValid(true);
+    setSessionDayOfWeekValid(true);
+      }
+      if(props.form_type==="new"){
+        props.hide()
+      }
+}
+
 
   const saveSession = (props) => {
-    console.log(props.selectedSession);
+    
+   
+    console.log("validated...")
     let passed_id = "";
     if (props.form_type === "edit") {
       passed_id = props.selectedSession._id;
@@ -257,12 +434,14 @@ const SessionForm = (props) => {
     setNewSession(session_saved);
     props.hide();
     props.saveSession({ session_saved });
+
   };
   useEffect(() => {
+    console.log(props.form_type)
     if (props.form_type === "edit") {
       console.log(props.selectedSession);
       //const {name,desc,meeting_link,session_time,day_of_week} = props.selectedSession;
-      console.log(props.selectedSession.name);
+      //console.log(props.selectedSession.name);
       //   let temp_admin = [];
       //   let temp_participants = [];
       //   temp_admin = temp_admin.concat(props.selectedSession.admins);
@@ -273,6 +452,13 @@ const SessionForm = (props) => {
       setSessionName(props.selectedSession.name);
       setSessionDesc(props.selectedSession.desc);
       setSessionLink(props.selectedSession.meeting_link);
+         setSessionNameFocused(true);
+        setSessionDescFocused(true);
+        setSessionLinkFocused(true);
+      setSessionNameVal(props.selectedSession.name);
+      setSessionDescVal(props.selectedSession.desc);
+      setSessionLinkVal(props.selectedSession.meeting_link);
+      
       console.log(props.selectedSession.participants);
       //check that
       if (typeof props.selectedSession.admins !== "undefined") {
@@ -317,6 +503,11 @@ const SessionForm = (props) => {
           parseInt(props.selectedSession.session_time.substring(3, 5))
         )
       );
+      console.log(sessionNameVal,sessionDescVal,sessionLinkVal,sessionDayOfWeek)
+      setSessionNameValid(true);
+      setSessionDescValid(true);
+      setSessionLinkValid(true);
+      setSessionDayOfWeekValid(true);
       //console.log(orgMembers);
     }
     if (props.form_type === "new") {
@@ -331,7 +522,7 @@ const SessionForm = (props) => {
       setSessionName("");
       setSessionDesc("");
       setSessionLink("");
-
+      setSessionParticipants([]);
 
         let new_admins = [];
         
@@ -357,8 +548,13 @@ const SessionForm = (props) => {
       setSessionDayOfWeek("Select day of week for session");
       setSessionTime("00:00");
       setDatePickerTime(new Date(null, null, null, 0, 0));
+      setSessionNameValid(false);
+      setSessionDescValid(false);
+      setSessionLinkValid(false);
+      setSessionDayOfWeekValid(false);
     }
-  }, [props.selectedSession, props.form_type]);
+
+  }, [props.selectedSession, props.form_type,props.userinfo]);
   return (
     <Modal
       show={props.show}
@@ -372,33 +568,46 @@ const SessionForm = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="session-form-size">
-        <InputGroup className="mb-3">
+        <InputGroup hasValidation className="mt-3">
           <InputGroup.Text>Name</InputGroup.Text>
           <Form.Control
             aria-label="Name of session"
             onChange={handleSessionName}
             onFocus={handleNameFocusing}
             value={sessionName}
+            
           />
+            {sessionName.length!==0 && <InputGroup.Text id="basic-addon2">{sessionName.length} /20</InputGroup.Text>}
         </InputGroup>
-        <InputGroup className="mb-3">
+       
+        <InputGroup hasValidation className="mt-3">
           <InputGroup.Text>Description</InputGroup.Text>
           <Form.Control
             aria-label="Description of session"
             onChange={handleSessionDesc}
             onFocus={handleDescFocusing}
             value={sessionDesc}
+            
+            
           />
+        {sessionDesc.length!==0 && <InputGroup.Text id="basic-addon2">{sessionDesc.length} /100</InputGroup.Text>}
+
         </InputGroup>
-        <InputGroup className="mb-3">
+       
+
+        <InputGroup hasValidation className="mt-3">
           <InputGroup.Text>Session Link</InputGroup.Text>
           <Form.Control
             aria-label="Meeting Link or Code of session"
             onChange={handleSessionLink}
             onFocus={handleLinkFocusing}
             value={sessionLink}
+            
+            
           />
+
         </InputGroup>
+        
 
         <hr className="rounded" />
         <div>
@@ -571,7 +780,7 @@ const SessionForm = (props) => {
 
         <hr className="rounded" />
         <p style={{ fontSize: "18px" }}>Session Scheduled Time</p>
-
+    
         <DatePicker
           selected={datePickerTime}
           onChange={handleSessionTimeDateToString}
@@ -582,6 +791,9 @@ const SessionForm = (props) => {
           timeCaption="Time"
           dateFormat="h:mm aa"
         />
+        <Form.Text className="text-muted">
+          Choose the starting time for your virtual session
+        </Form.Text>
 
         <hr className="rounded" />
         <p style={{ fontSize: "18px" }}>Session Scheduled Day of Week</p>
@@ -590,6 +802,9 @@ const SessionForm = (props) => {
           title={sessionDayOfWeek}
           id="input-group-dropdown-1"
           onSelect={handleSessionDayOfWeek}
+          
+         
+          
         >
           <Dropdown.Item eventKey="Monday">Monday</Dropdown.Item>
           <Dropdown.Item eventKey="Tuesday">Tuesday</Dropdown.Item>
@@ -601,12 +816,13 @@ const SessionForm = (props) => {
         </DropdownButton>
       </Modal.Body>
       <Modal.Footer>
-        <button className="btn btn-secondary" onClick={props.hide}>
+        <button className="btn btn-secondary" onClick={()=>discardChanges(props)}>
           Close
         </button>
-        <button className="btn btn-primary" onClick={() => saveSession(props)}>
+        <button className="btn btn-primary" disabled = {!sessionDayOfWeekValid || !sessionNameValid || !sessionDescValid || !sessionLinkValid} onClick={() => saveSession(props)}>
           Save
         </button>
+        {console.log(sessionNameValid)}
       </Modal.Footer>
     </Modal>
   );

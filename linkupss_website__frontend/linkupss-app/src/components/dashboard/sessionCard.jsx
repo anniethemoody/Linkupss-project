@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from "@mui/icons-material/Close";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -58,7 +59,7 @@ class SessionCard extends Component {
                 delay={{ show: 250, hide: 400 }}
                 overlay={<Tooltip id="button-tooltip">{`Edit ${session.name} session`}</Tooltip>}
               >
-                <RemoveRedEyeIcon
+                <EditIcon
                   className="session-edit-button centered"
                   style={{ width: "10%", height: "10%", float: "right" }}
                   onClick={() => sessionEditClicked({ session })}

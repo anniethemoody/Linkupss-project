@@ -32,7 +32,7 @@ const Dashboard = () => {
 
 useEffect(() => {
     setFilteredSessions(sessions);
-},[sessions])
+},[sessions,selectedSession])
 //HANDLERS
   const handleNewSessionForm = () => {
     setSessionFormType("new");
@@ -51,9 +51,16 @@ useEffect(() => {
     setConfirmSessionDeleteState(false);
   };
   const handleConfirmDeleteSession = ({session}) => {
-    console.log(session);
+    //console.log(selectedSession);
     //setDeleteSession(session);
-    setSelectedSession(session)
+    if(!sessionFormState){
+        setSelectedSession(session);
+    }
+    if(sessionFormState){
+        setSessionFormState(false);
+    }
+    
+   
     //console.log({deleteSession});
     setConfirmSessionDeleteState(true);
     console.log(session)
@@ -78,6 +85,7 @@ useEffect(() => {
     }
     if (sessionFormType === "new") {
       new_sessions.push(session_new);
+      setSessions(new_sessions);
       setFilteredSessions(new_sessions);
     }
     if (sessionFormType === "edit") {
@@ -147,9 +155,9 @@ const handleFilteringSessionsButton = (filter) => {
   //RENDERER
   return (
     <div className="below-nav row">
-      <LeftSideBar show={showOffCanvas} hide = {()=>setOffCanvasState(false)} content = {offCanvasContent} userinfo = {userInfo} sessions = {sessions}/>
+      <LeftSideBar show={showOffCanvas} hide = {()=>setOffCanvasState(false)} content = {offCanvasContent} userinfo = {userInfo} sessions = {sessions} filterSessionByButton={handleFilteringSessionsButton}/>
       <div className="col main-content-box">
-        <InfoBar orgInfo={orgInfo} handleSearchSession={handleSearchSession} openOffcanvas={handleOffCanvas} filterSessionByButton={handleFilteringSessionsButton}/>
+        <InfoBar orgInfo={orgInfo} handleSearchSession={handleSearchSession} openOffcanvas={handleOffCanvas} />
         <div className={!sessions.length ? "content-box-none":"content-box row"}>
           <FloatingActionButton createNewSession={handleNewSessionForm} />
           <DeletePopUp show = {confirmSessionDeleteState} hide = {()=>setConfirmSessionDeleteState(false)} selectedSession = {selectedSession} deleteSession = {handleDeleteSession}/>
@@ -159,7 +167,7 @@ const handleFilteringSessionsButton = (filter) => {
             selectedSession={selectedSession}
             form_type={sessionFormType}
             saveSession={handleSavingSession}
-            removeSelfFromSession = {()=>setConfirmSessionDeleteState(true)}
+            removeSelfFromSession = {handleConfirmDeleteSession}
             userinfo = {userInfo}
           />
           {!sessions.length ? (

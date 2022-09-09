@@ -12,7 +12,7 @@ import AboutUs from './components/about-us/about-us';
 import Products from './components/products/products';
 import SetUp from './components/set-up/setUp';
 import LatestNews from './components/latest-news/lastestNews';
-
+import FAQ from './components/faq';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   return (
@@ -21,6 +21,7 @@ function App() {
     <div className="content">
     
     <Switch>
+    <Route path="/faq" component={FAQ}/> 
     <Route path="/products" component={Products}/> 
     <Route path="/setup" component={SetUp}/> 
     <Route path="/latestnews" component={LatestNews}/> 

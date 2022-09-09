@@ -7,7 +7,7 @@ class NavBar extends Component {
         return (
 
           <nav className="nav collapsible">
-            <Link className="navbar__brand" to="/">Linkupss</Link>
+            <Link className="navbar__brand" to="/"  style={{ textDecoration: 'none' }}>Linkupss</Link>
             
 
           <ul className="list nav__list collapsible__content">

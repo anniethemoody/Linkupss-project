@@ -8,6 +8,12 @@ const DeletePopUp = (props) => {
         console.log(sess);
         props.deleteSession(sess);
     }
+    const handleReopenSessionForm = (props) => {
+        props.hide();
+        if(props.selectedSession){
+            
+        }
+    }
 
     return ( 
         <Modal

@@ -1,0 +1,5 @@
+DROP FUNCTION IF EXISTS get_pass;
+CREATE FUNCTION get_pass(pass varchar(64),salt varchar(32)) RETURNS varchar(100) deterministic RETURN (select
+md5(
+md5(concat(pass,salt))
+));

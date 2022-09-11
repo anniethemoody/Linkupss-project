@@ -1,0 +1,4 @@
+DROP FUNCTION IF EXISTS dec_org_code;
+CREATE FUNCTION dec_org_code(code varchar(32)) RETURNS varchar(100) deterministic RETURN (select
+from_base64(from_base64(from_base64(from_base64(code))))
+);

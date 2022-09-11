@@ -1,0 +1,18 @@
+sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
+(need to define password for phpmyadmin. * currently using same password as api.py for mysql connection)
+sudo apt install libapache2-mod-php
+goto /etc/apache2/conf-enabled
+ln -s /conf-available/phpmyadmin.conf 
+goto /etc/apache2
+change config file ports.conf : change 80 to 81, change 443 to 8443 ( because nginx is using these port)
+sudo service apache2 start
+goto /etc/nginx/site*ed/
+create conf for mysql 
+goto mysql 
+mysql -u linkupss -p
+run "  GRANT ALL ON linkupss_db.* to phpmyadmin@localhost with grant option;"
+login http://www1.linkupss.com/phpmyadmin 
+login user phpmyadmin use the same password as linkupss user for mysql
+
+
+ 

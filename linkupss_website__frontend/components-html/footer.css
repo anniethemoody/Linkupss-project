@@ -6,19 +6,12 @@ body{
     margin-top: 3%;
 }
 
-.team{
-    display: flex;
-    justify-content: center;
-}
-
-.col-6{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
-h1{
+.title{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.text{
+    font-size: 0.9vw;
 }
 
 @media only screen and (min-width: 900px){
@@ -27,7 +20,7 @@ h1{
         max-width: 150px;
     }
 
-    .card{
+    .col-2{
         height: 100%;
         max-width: 100%; 
     }
@@ -37,29 +30,14 @@ h1{
     .image{
         height: auto;
         max-width: 100%;
-        display: block;
-        margin: 0 auto;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
         
     }
 
-    .card{
+    .col-2{
         height: auto;
         max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
-}
-
-hr.dashed{
-    margin-top:3%;
-    border-top: 3px dashed #bbb;
-}
-
-.fs-2{
-    margin-top: 3%;
-}
-
-.fs-6{
-    margin-left: 30%;
-    margin-right: 30%;
 }

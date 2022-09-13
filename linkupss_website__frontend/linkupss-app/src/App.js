@@ -6,6 +6,7 @@ import React, { Component,useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import { Redirect,Route } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard';
+import Login from './components/login/login';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AboutUs from './components/about-us/about-us';
@@ -13,6 +14,7 @@ import Products from './components/products/products';
 import SetUp from './components/set-up/setUp';
 import LatestNews from './components/latest-news/lastestNews';
 import FAQ from './components/faq';
+import 'bootstrap/dist/css/bootstrap.min.css';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
     <Route path="/setup" component={SetUp}/> 
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
+    <Route path="/login" component={Login}/> 
      <Route path="/" component={Dashboard}/> 
     
     </Switch>

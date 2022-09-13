@@ -81,16 +81,7 @@ const InfoBar = (props) => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id="button-tooltip">{"Account"}</Tooltip>}
         >
-          <AccountCircleIcon onClick={() => props.openOffcanvas("Account")} />
-        </OverlayTrigger>
-      </span>
-      <span className="col">
-        <OverlayTrigger
-          placement="bottom"
-          delay={{ show: 250, hide: 400 }}
-          overlay={<Tooltip id="button-tooltip">{"Settings"}</Tooltip>}
-        >
-          <SettingsIcon onClick={() => props.openOffcanvas("Settings")} />
+          <SettingsIcon onClick={() => props.openOffcanvas("Account")} />
         </OverlayTrigger>
       </span>
       <span className="col">

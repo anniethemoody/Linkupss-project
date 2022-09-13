@@ -7,21 +7,21 @@ class NavBar extends Component {
         return (
 
           <nav className="nav collapsible">
-            <Link className="navbar__brand" to="/"  style={{ textDecoration: 'none' }}>Linkupss</Link>
+            <Link className="navbar__brand" to="/"  style={{ textDecoration: 'none' }}><h1 className="text-primary">Linkupss</h1></Link>
             
 
           <ul className="list nav__list collapsible__content">
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/setup">Set Up</NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/aboutus">About Us</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/setup"><h4 className="text-primary">Setup</h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/aboutus"><h4 className="text-primary">About Us</h4></NavLink></li>
                                  
-                <li className="nav__item" ><NavLink className= "nav-item nav-link col" to="/products">Products</NavLink></li>
+                <li className="nav__item" ><NavLink className= "nav-item nav-link col" to="/products"><h4 className="text-primary">Products</h4></NavLink></li>
                
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/latestnews">Latest News</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/latestnews"><h4 className="text-primary">Latest News</h4></NavLink></li>
                
                
                 <React.Fragment>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/">Login</NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/">Register</NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary">Login</h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/"><h4 className="text-primary">Register</h4></NavLink></li>
                 </React.Fragment>
                 
   

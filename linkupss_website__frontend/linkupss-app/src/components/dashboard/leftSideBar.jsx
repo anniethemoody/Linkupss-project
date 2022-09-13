@@ -298,14 +298,7 @@ const LeftSideBar = (props) => {
           </Accordion>
         </Offcanvas.Body>
       );
-    } else if (props.content === "Settings") {
-      setOffcanvasTitle("Settings");
-      setOffcanvasBody(
-        <Offcanvas.Body>
-          <p>Settings</p>
-        </Offcanvas.Body>
-      );
-    }
+    } 
   }, [
     props.content,
     accountNameState,

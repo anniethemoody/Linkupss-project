@@ -644,3 +644,6 @@ margin-right:15px;
   transform: scale(1.05);
   transition: transform 0.3s ease-in;
 }
+.input-g{
+  width:500px !important;
+}

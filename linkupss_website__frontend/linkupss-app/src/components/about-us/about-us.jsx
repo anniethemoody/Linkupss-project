@@ -5,6 +5,7 @@ import nico_pic from "../../media/nico-profile-pic.png";
 import ambrose_pic from "../../media/ambrose-profile-pic.png";
 import eric_pic from "../../media/eric-profile-pic.png";
 import sahil_pic from "../../media/sahil-profile-pic.png";
+import andrew_pic from "../../media/andrew-profile-pic.jpg";
 const AboutUs = () => {
   const title = "Meet Our Team";
   const desc =
@@ -37,9 +38,9 @@ const AboutUs = () => {
                         className="card-img-top"
                         alt="..."
                       />
-                    <div className="card-body">
-                                
-                                </div> 
+                      <div className="card-body">
+
+                      </div>
                     </div>
                   </div>
 
@@ -49,6 +50,9 @@ const AboutUs = () => {
                       style={{ width: "18rem" }}
                     >
                       <img src={eric_pic} className="card-img-top" alt="..." />
+                      <div className="card-body">
+                        
+                      </div>
                     </div>
                   </div>
 
@@ -58,6 +62,9 @@ const AboutUs = () => {
                       style={{ width: "18rem" }}
                     >
                       <img src={sahil_pic} className="card-img-top" alt="..." />
+                      <div className="card-body">
+                        
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -100,9 +107,7 @@ const AboutUs = () => {
             <div className="carousel-item active">
               <div className="container team">
                 <span className="d-flex justify-content-center mb-3">
-                  <h1 className="text-secondary">
-                    Hardware Team
-                  </h1>
+                  <h1 className="text-secondary">Hardware Team</h1>
                 </span>
                 <div className="row my-3">
                   <div className="col">

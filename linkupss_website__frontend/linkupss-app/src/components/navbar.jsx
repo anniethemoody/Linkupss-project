@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink,Link } from 'react-router-dom';
 import LinkupssLogo from './logo';
+import Badge from 'react-bootstrap/Badge'
 class NavBar extends Component {
     state = {  } 
     render() { 
@@ -20,8 +21,9 @@ class NavBar extends Component {
                
                
                 <React.Fragment>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary">Login</h4></NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/"><h4 className="text-primary">Register</h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary"><Badge>Admin ?</Badge></h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary"><Badge>Participant ?</Badge></h4></NavLink></li>
+
                 </React.Fragment>
                 
   

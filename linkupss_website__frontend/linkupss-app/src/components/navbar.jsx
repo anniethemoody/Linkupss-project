@@ -21,8 +21,8 @@ class NavBar extends Component {
                
                
                 <React.Fragment>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary"><Badge>Admin ?</Badge></h4></NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/login"><h4 className="text-primary"><Badge>Participant ?</Badge></h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/loginregister"><h4 className="text-primary"><Badge>Admin ?</Badge></h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/loginregister"><h4 className="text-primary"><Badge>Participant ?</Badge></h4></NavLink></li>
 
                 </React.Fragment>
                 

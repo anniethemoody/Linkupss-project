@@ -3,7 +3,7 @@ import { propTypes } from 'react-bootstrap/esm/Image';
 import Modal from 'react-bootstrap/Modal';
 import Badge from 'react-bootstrap/Badge';
 import Button from 'react-bootstrap/Button';
-
+//about us (personName,personRole,personDesc)--> aboutus modal 
 const AboutUsModal = (props) => {
     return ( 
             <Modal
@@ -19,7 +19,7 @@ const AboutUsModal = (props) => {
               <Modal.Body>
 
                 <h2 className="text-secondary" style={{textAlign:"center"}}>
-                {props.personName}
+                {props.name}
                 </h2>
 
                 <div className="d-flex justify-content-center">

@@ -5,15 +5,22 @@ import { Button } from "bootstrap";
 
 import Jumbotron from "../jumbotron";
 
-const Login = () => {
-  const [userName,setUserName] = useState("");
+const LoginRegister = () => {
+  const [loginUserName,setLoginUserName] = useState("");
+  const [loginUserPassword,setLoginUserPassword] = useState("");
+
+  const [registerUserName,setRegisterUserName] = useState("");
+  const [registerUserPassword,setRegisterUserPassword] = useState("");
+  const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const btnText = "Learn more";
+  
+
   return(
-    <div className="modal-header text-center ">
+    <div className="row modal-header text-center ">
       {/* Login Side */}
-      <div className="col-md-6">
+      <div className="col-md-6 align-items-start">
         <h1 className="text-primary">Login</h1>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
           <Form.Control
             placeholder="Username"
@@ -22,7 +29,7 @@ const Login = () => {
           />
         </InputGroup>
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="row d-flex justify-content-center">
         <InputGroup className="input-g mb-3">
           <Form.Control
             placeholder="Password"
@@ -32,7 +39,7 @@ const Login = () => {
         </InputGroup>
       </div>
        
-       <button type="button" class="btn btn-primary">Login</button>
+       <button type="button" className="btn btn-primary">Login</button>
     </div>
 
     {/* Register Side */}
@@ -74,11 +81,11 @@ const Login = () => {
           />
         </InputGroup>
         </div>
-       <button type="button" class="btn btn-primary">Sign Up</button>
+       <button type="button" className="btn btn-primary">Sign Up</button>
 
     </div>
   </div>
   );
 }
  
-export default Login;
+export default LoginRegister;

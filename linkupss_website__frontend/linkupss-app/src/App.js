@@ -6,7 +6,7 @@ import React, { Component,useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import { Redirect,Route } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard';
-import Login from './components/login/login';
+import LoginRegister from './components/loginregister/loginregister';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AboutUs from './components/about-us/about-us';
@@ -28,7 +28,7 @@ function App() {
     <Route path="/setup" component={SetUp}/> 
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
-    <Route path="/login" component={Login}/> 
+    <Route path="/loginregister" component={LoginRegister}/> 
      <Route path="/" component={Dashboard}/> 
     
     </Switch>

@@ -12,7 +12,7 @@ class NavBar extends Component {
             
 
           <ul className="list nav__list collapsible__content">
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/setup"><h4 className="text-primary">Setup</h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/home"><h4 className="text-primary">Setup</h4></NavLink></li>
                 <li className="nav__item"><NavLink className="nav-item nav-link col" to="/aboutus"><h4 className="text-primary">About Us</h4></NavLink></li>
                                  
                 <li className="nav__item" ><NavLink className= "nav-item nav-link col" to="/products"><h4 className="text-primary">Products</h4></NavLink></li>

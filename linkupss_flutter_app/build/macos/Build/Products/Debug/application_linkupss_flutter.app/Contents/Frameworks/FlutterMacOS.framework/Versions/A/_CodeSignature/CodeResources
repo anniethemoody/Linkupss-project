@@ -17,10 +17,6 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			jqU87p/MJtpIAzfj0wm59ZtbI3o=
-			</data>
 			<key>hash2</key>
 			<data>
 			aDYD1VCbX1UQIZikBOHcRjPXPmzUntLnd7K2cjnvfoQ=
@@ -28,10 +24,6 @@
 		</dict>
 		<key>Resources/icudtl.dat</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			5zcJ5BY+w7z+M0to6P+uUWPn04o=
-			</data>
 			<key>hash2</key>
 			<data>
 			yNAOslsdK6e70q88cOrqlKovbuH0GiUDe+ICgawnSrQ=

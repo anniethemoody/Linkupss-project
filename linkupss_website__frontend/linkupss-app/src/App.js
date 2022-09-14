@@ -14,6 +14,7 @@ import Products from './components/products/products';
 import SetUp from './components/set-up/setUp';
 import LatestNews from './components/latest-news/lastestNews';
 import FAQ from './components/faq';
+import Home from './components/home/home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
@@ -29,8 +30,8 @@ function App() {
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
     <Route path="/loginregister" component={LoginRegister}/> 
-     <Route path="/" component={Dashboard}/> 
-    
+    <Route path="/home" component={Home}/> 
+    <Route path="/" component={Dashboard}/> 
     </Switch>
     </div>
     </div>

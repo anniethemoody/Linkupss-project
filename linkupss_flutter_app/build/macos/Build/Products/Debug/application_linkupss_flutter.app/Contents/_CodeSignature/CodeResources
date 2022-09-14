@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		BKyjGE8vPmjFMbc+BHH7XQrwXz8=
+		t26XWwh4Aln0U4BZbKDOBrZn/7g=
 		</data>
 		<key>Resources/Base.lproj/MainMenu.nib/keyedobjects-101300.nib</key>
 		<data>
@@ -27,19 +27,19 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			t2G+07ZgIlbTcgWvZsIKD8fz42c=
+			/YXmW0oqExFUwkr3RFGrvQHM5iE=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"05c89f47c42e43d9025eb6b6d8ce13b20fed756b" or cdhash H"b761bed3b6602256d37205af66c20a0fc7f3e367"</string>
+			<string>cdhash H"fd85e65b4a2a131154c24af74451abbd01cce621"</string>
 		</dict>
 		<key>Frameworks/FlutterMacOS.framework</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			8Q/APCxDBslsEDQ/hIso/RC+4EY=
+			XHdX7GW9OUAzKjNp7SRVyD/8TZk=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"24e7f4f279bfc2c4179c22d0bb59bcdf708bf42b" or cdhash H"f10fc03c2c4306c96c10343f848b28fd10bee046"</string>
+			<string>cdhash H"5c7757ec65bd3940332a3369ed2455c83ffc4d99"</string>
 		</dict>
 		<key>Frameworks/libswiftAppKit.dylib</key>
 		<dict>
@@ -196,10 +196,6 @@
 		</dict>
 		<key>Resources/AppIcon.icns</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			H4osk2kAsQW0CEQ3FVPjpzwY8+I=
-			</data>
 			<key>hash2</key>
 			<data>
 			cNOcZfJM7nFaHVMl7JL0QphD9rVYByn+3XIjcLCBwIE=
@@ -207,21 +203,13 @@
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			BKyjGE8vPmjFMbc+BHH7XQrwXz8=
-			</data>
 			<key>hash2</key>
 			<data>
-			lKywh0i0Sgpvrnwl/sUdpNfVMw8tFKEjfBWsCj5H4gg=
+			9dMpAkmXarpzVr7bkYFfJqUnASIYgfx8JOOTwPfmOew=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MainMenu.nib/keyedobjects-101300.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			TuwyhOi6lMa3/DAbZ6gVR9bdsMc=
-			</data>
 			<key>hash2</key>
 			<data>
 			TNM1sSQQLkEYDW6TKYcI3sFKv04kSOq+e6f+OCA3130=
@@ -229,10 +217,6 @@
 		</dict>
 		<key>Resources/Base.lproj/MainMenu.nib/keyedobjects.nib</key>
 		<dict>
-			<key>hash</key>
-			<data>
-			cC7AiziIELs3rr84dH0A9o5UlxQ=
-			</data>
 			<key>hash2</key>
 			<data>
 			/pn+FbUC4BHC5YdGA3ZHIP4zttTfecYlBBlT14HLgok=

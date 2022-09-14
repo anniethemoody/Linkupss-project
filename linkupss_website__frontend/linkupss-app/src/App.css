@@ -647,3 +647,12 @@ margin-right:15px;
 .input-g{
   width:500px !important;
 }
+
+/*LOG IN PAGE*/
+.error-badge{
+  width:480px !important;
+  height:25px !important;
+  padding-top: 0!important;
+
+
+}

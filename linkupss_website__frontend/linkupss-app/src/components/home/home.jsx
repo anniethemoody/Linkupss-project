@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Jumbotron from '../jumbotron';
 const Home = () => {
     const title = "Linkupss"
     const desc = "To serve and simplify your community engagements with modern technology"

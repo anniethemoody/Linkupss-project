@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)"
-options: "79aef02e90101e4374d32f07dca42413333317180c201b33b648567cfb3a4aac"
-build_start_time: [1663129283, 246170997]
-build_end_time: [1663129286, 408509016]
-inputs:
-  "/Users/ambroseling/Desktop/Linkupss code/Linkupss-project/linkupss_flutter_app/macos/Flutter/GeneratedPluginRegistrant.swift": [1663129272, 6346225]
-  "/Users/ambroseling/Desktop/Linkupss code/Linkupss-project/linkupss_flutter_app/macos/Runner/AppDelegate.swift": [1662739149, 88502407]
-  "/Users/ambroseling/Desktop/Linkupss code/Linkupss-project/linkupss_flutter_app/macos/Runner/MainFlutterWindow.swift": [1662739149, 90215206]

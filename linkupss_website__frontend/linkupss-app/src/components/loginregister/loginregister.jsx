@@ -16,6 +16,7 @@ const LoginRegister = () => {
   const [registerName, setRegisterName] = useState("");
   const [registerUserName, setRegisterUserName] = useState("");
   const [registerUserPassword, setRegisterUserPassword] = useState("");
+  const [registerUserEmail,setRegisterUserEmail]=useState("")
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const [registerFormValidate, setRegisterFormValidate] = useState(false);
   const [errorLog, setErrorLog] = useState({});
@@ -25,14 +26,18 @@ const LoginRegister = () => {
     name: Joi.string().required().label("Name"),
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
-    newUsername: Joi.string().required().label("NewUsername"),
-    newPassword: Joi.string().required().label("NewPassword"),
+    newUsername: Joi.string().required().label("Username"),
+    newPassword: Joi.string().required().label("Password").min(8),
+    email:Joi.string().required().label("Email").email(),
+    orgId:Joi.string().required().label("Organization ID")
   };
   const doSubmitLogin = async (e) => {
-    console.log("blah");
+    await login()
 
   };
-
+  const doSubmitRegsiter = async (e) => {
+    
+  }
   // try {
   //   await login()
   // } catch (ex) {
@@ -72,17 +77,38 @@ const LoginRegister = () => {
     else delete errors["name"];
     setErrorLog(errors);
   }
-  const handleRegisterUserName = (e)=>{
 
+  const handleRegisterUserName = (e)=>{
+    setRegisterUserName(e.target.value);
+    const errormsg = validateProperty("newUsername", e.currentTarget.value);
+    const errors = { ...errorLog };
+    if (errormsg) errors["newUsername"] = errormsg;
+    else delete errors["newUsername"];
+    setErrorLog(errors);
   }
   const handleRegisterUserPassword = (e) => {
-
+    setRegisterUserPassword(e.target.value);
+    const errormsg = validateProperty("newPassword", e.currentTarget.value);
+    const errors = { ...errorLog };
+    if (errormsg) errors["newPassword"] = errormsg;
+    else delete errors["newPassword"];
+    setErrorLog(errors);
   }
   const handleRegisterUserEmail =(e)=>{
-
+    setRegisterUserEmail(e.target.value);
+    const errormsg = validateProperty("email", e.currentTarget.value);
+    const errors = { ...errorLog };
+    if (errormsg) errors["email"] = errormsg;
+    else delete errors["email"];
+    setErrorLog(errors);
   }
   const handleRegisterOrgId = (e) => {
-
+    setRegisterUserOrgId(e.target.value);
+    const errormsg = validateProperty("orgId", e.currentTarget.value);
+    const errors = { ...errorLog };
+    if (errormsg) errors["orgId"] = errormsg;
+    else delete errors["orgId"];
+    setErrorLog(errors);
   }
   // const handleLoginValidation  = () =>{
   //   const data = {loginUserName,loginUserPassword};
@@ -143,53 +169,81 @@ const LoginRegister = () => {
       {/* Register Side */}
       <Form className="col-md-6 align-items-start" noValidate>
         <h1 className="text-primary">Register</h1>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
             <Form.Control
               placeholder="Name"
               aria-label="Name"
               aria-describedby="basic-addon1"
-              value = {registerUserName}
+              value = {registerName}
               onChange={handleRegisterName}
 
             />
           </InputGroup>
+          {console.log(errorLog["name"])}
+          {errorLog["name"] && (
+            <Alert  className = "error-badge" variant={"danger"}>{errorLog["name"]}</Alert>
+          )}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
             <Form.Control
               placeholder="Username"
               aria-label="Username"
               aria-describedby="basic-addon1"
+              value={registerUserName}
+              onChange={handleRegisterUserName}
             />
           </InputGroup>
+          {console.log(errorLog["newUsername"])}
+          {errorLog["newUsername"] && (
+            <Alert  className = "error-badge" variant={"danger"}>{errorLog["newUsername"]}</Alert>
+          )}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
             <Form.Control
               placeholder="New Password"
               aria-label="Password"
               aria-describedby="basic-addon1"
+              value={registerUserPassword}
+              onChange={handleRegisterUserPassword}
             />
           </InputGroup>
+          {console.log(errorLog["newPassword"])}
+          {errorLog["newPassword"] && (
+            <Alert  className = "error-badge" variant={"danger"}>{errorLog["newPassword"]}</Alert>
+          )}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
             <Form.Control
               placeholder="Email Address"
               aria-label="Email Address"
               aria-describedby="basic-addon1"
+              value={registerUserEmail}
+              onChange={handleRegisterUserEmail}
             />
           </InputGroup>
+          {console.log(errorLog["email"])}
+          {errorLog["email"] && (
+            <Alert  className = "error-badge" variant={"danger"}>{errorLog["email"]}</Alert>
+          )}
         </div>
-        <div className="d-flex justify-content-center">
+        <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
             <Form.Control
               placeholder="Organization ID"
               aria-label="Organization ID"
               aria-describedby="basic-addon1"
+              value={registerUserOrgId}
+              onChange={handleRegisterOrgId}
             />
           </InputGroup>
+          {console.log(errorLog["orgId"])}
+          {errorLog["orgId"] && (
+            <Alert  className = "error-badge" variant={"danger"}>{errorLog["orgId"]}</Alert>
+          )}
         </div>
         <button type="submit" className="btn btn-primary">
           Sign Up

@@ -1,10 +1,11 @@
 #.DS_Store
 #**/build/
-#.dart_tool/
-#pubspec.lock
+#.dart_tool/pubspec.lock
 #.pub-cache/
 #.pub/
-#.flutter-plugins-dependencies
+.flutter-plugins-dependencies
+pubspec.lock
+Podfile.lock
 #**/doc/api/
 #.dart_tool/
 #.flutter-plugins

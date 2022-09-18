@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:application_linkupss_flutter/screens/landing_screen.dart';
+import 'package:linkupss_flutter_app/screens/landing_screen.dart';
 import 'package:flutter/services.dart';
 
 void main(){
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   static double padding = 25.0;

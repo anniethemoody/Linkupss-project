@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:application_linkupss_flutter/widgets/account_create.dart';
-import 'package:application_linkupss_flutter/widgets/account_login.dart';
+import 'package:linkupss_flutter_app/widgets/account_create.dart';
+import 'package:linkupss_flutter_app/widgets/account_login.dart';
 
 const double padding = 25.0;
 

@@ -3,7 +3,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:application_linkupss_flutter/main.dart';
+import 'package:linkupss_flutter_app/main.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class AccountLogin extends StatefulWidget {

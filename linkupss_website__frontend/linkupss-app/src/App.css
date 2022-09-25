@@ -647,6 +647,10 @@ margin-right:15px;
 .input-g{
   width:500px !important;
 }
+.carousel-icon{
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+}
 
 /*LOG IN PAGE*/
 .error-badge{

@@ -14,7 +14,9 @@ axios.interceptors.response.use(null,error=>{
     
     
   });//calls success() when response is received successfully,error() when unexpected error occurs
+  
 function setJwt(jwt){
+ 
   axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
@@ -24,5 +26,5 @@ function setJwt(jwt){
     post:axios.post,
     put:axios.put,
     delete:axios.delete.apply,
-    setJwt
+    
 }  

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:linkupss_flutter_app/screens/landing_screen.dart';
+//import 'package:linkupss_flutter_app/screens/landing_screen.dart';
+import 'package:linkupss_flutter_app/screens/dashboard.dart';
 import 'package:flutter/services.dart';
 
-void main(){
+void main() {
   runApp(MyApp());
 }
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge); 
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -28,9 +29,9 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      
+
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: LandingPage(),
+      home: Dashboard(),
     );
   }
 }

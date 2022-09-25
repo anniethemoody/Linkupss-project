@@ -7,13 +7,16 @@ import {BrowserRouter} from 'react-router-dom';
 //import "./App.css"
 //import "bootstrap/dist/css/bootstrap.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthProvider } from "./services/authProvider";
 
 
 //import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <AuthProvider>
       <App />
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

@@ -44,6 +44,7 @@ const SessionForm = (props) => {
   const [sessionDayOfWeek, setSessionDayOfWeek] = useState(
     "Select day of week for session"
   );
+  const [sessionReccuring,setSessionRecurring] = useState(false);
 
   const [sessionNameVal,setSessionNameVal] = useState("")
   const [sessionDescVal, setSessionDescVal] = useState("");
@@ -136,7 +137,7 @@ const SessionForm = (props) => {
     setSessionDayOfWeek(e);
     console.log(sessionDayOfWeek);
     if(e ===  "Select day of week for session"){
-        console.log("sui")
+        //console.log("sui")
         
         setSessionDayOfWeekValid(false);
       }
@@ -210,7 +211,9 @@ const SessionForm = (props) => {
       console.log(adminList);
     }
   };
+  const handleRecurring = () => {
 
+  }
   const handleAddingOrgMembers = (_member_id) => {
     // let session_id_passed="";
     // console.log(getOrgMember(_member_id));
@@ -455,6 +458,7 @@ const discardChanges = (props)=>{
          setSessionNameFocused(true);
         setSessionDescFocused(true);
         setSessionLinkFocused(true);
+        setSessionRecurring(false);
       setSessionNameVal(props.selectedSession.name);
       setSessionDescVal(props.selectedSession.desc);
       setSessionLinkVal(props.selectedSession.meeting_link);
@@ -523,6 +527,7 @@ const discardChanges = (props)=>{
       setSessionDesc("");
       setSessionLink("");
       setSessionParticipants([]);
+      setSessionRecurring(false);
 
         let new_admins = [];
         
@@ -814,6 +819,9 @@ const discardChanges = (props)=>{
           <Dropdown.Item eventKey="Saturday">Saturday</Dropdown.Item>
           <Dropdown.Item eventKey="Sunday">Sunday</Dropdown.Item>
         </DropdownButton>
+
+        <hr className="rounded" />
+        <p style={{ fontSize: "18px" }}>Recurring event ?</p>
       </Modal.Body>
       <Modal.Footer>
         <button className="btn btn-secondary" onClick={()=>discardChanges(props)}>

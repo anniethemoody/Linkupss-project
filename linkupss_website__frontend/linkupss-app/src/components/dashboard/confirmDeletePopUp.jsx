@@ -25,6 +25,7 @@ const DeletePopUp = (props) => {
          <Modal.Header>
         <Modal.Title>
           Remove Session Confirmation
+
         </Modal.Title>
         </Modal.Header>
         <Modal.Body className="confirm-delete-form-size">

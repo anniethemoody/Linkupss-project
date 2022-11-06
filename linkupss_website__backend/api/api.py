@@ -44,6 +44,9 @@ def createAdmin():
     name = request.json.get("name", None)
     username = request.json.get("user_name", None)
     password = request.json.get("user_password", None)
+
+    extra_info = request.json.get("extra_info", None)
+
     userDupeCheck = "SELECT * FROM admin WHERE user_name='"+username+"'"
     cursor = runSQL(userDupeCheck)
     numberOfRows = cursor.rowcount

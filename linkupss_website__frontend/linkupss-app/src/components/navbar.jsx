@@ -56,10 +56,6 @@ class NavBar extends Component {
                 </React.Fragment>
                 */}
                 
-        
-       
-    
-          
         </nav>
         );
     }

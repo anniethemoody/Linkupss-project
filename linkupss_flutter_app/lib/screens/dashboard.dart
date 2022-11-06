@@ -16,6 +16,9 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   late List<Participant>? _participantList = [];
+  List<bool> enrolledSessionList = List.filled(6, false, growable: true);
+  List<String> enrollSessionButtonText =
+      List.filled(20, "Enroll", growable: true);
   @override
   void initState() {
     log("hello");
@@ -26,6 +29,17 @@ class DashboardState extends State<Dashboard> {
   void _getData() async {
     _participantList = (await ApiService().getParticipants())!;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void enrollSessionButtonState(int index) {
+    setState(() {
+      if (enrolledSessionList[index]) {
+        enrollSessionButtonText[index] = "Joined";
+      } else {
+        enrollSessionButtonText[index] = "Enroll";
+      }
+      enrolledSessionList[index] = !enrolledSessionList[index];
+    });
   }
 
   @override
@@ -143,7 +157,7 @@ class DashboardState extends State<Dashboard> {
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
-                                          children: [
+                                      children: [
                                         ElevatedButton(
                                             onPressed: () {
                                               setState(() {});
@@ -157,12 +171,18 @@ class DashboardState extends State<Dashboard> {
                                             side: BorderSide(
                                                 color: Colors.blue, width: 1.5),
                                           ),
-                                          icon: Icon(Icons.add,
+                                          icon: Icon(
+                                              enrolledSessionList[index]
+                                                  ? Icons.add
+                                                  : Icons.done,
                                               color: Colors.blue),
-                                          label: Text(' Join',
+                                          label: Text(
+                                              enrollSessionButtonText[index],
                                               style: TextStyle(
                                                   color: Colors.blue)),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            enrollSessionButtonState(index);
+                                          },
                                         ),
                                       ]),
                                 ]));

@@ -49,19 +49,12 @@ const LoginRegister = () => {
     // }
 
     e.preventDefault();
-    let axiosConfig = {
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8",
-        "access-control-allow-origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        "Access-Control-Allow-Methods": "*",
-      },
-    };
+
     try {
       const response = await httpService.post(
         "http://api.linkupss.com/adminlogin",
         { user_name: loginUserName, user_password: loginUserPassword },
-        
+        {withCredentials:false}
       );
       console.log(response?.data);
       const accessToken = response?.data?.accessToken;
@@ -108,28 +101,28 @@ const LoginRegister = () => {
   const validateProperty = (type, val) => {
     const obj = { [type]: val };
     const schemas = { [type]: schema[type] };
-    console.log(obj, schemas);
+    // console.log(obj, schemas);
     const { error } = Joi.validate(obj, schemas); //youre picking the {error} property of the returned Joi object
     return error ? error.details[0].message : null;
   };
-  // const handleLoginUserName = (e) => {
-  //   setLoginUserName(e.target.value);
-  //   console.log(e.currentTarget.value);
-  //   const errormsg = validateProperty("username", e.currentTarget.value);
-  //   console.log(errormsg);
-  //   const errors = { ...errorLog };
-  //   if (errormsg) errors["username"] = errormsg;
-  //   else delete errors["username"];
-  //   setErrorLog(errors);
-  // };
-  // const handleLoginUserPassword = (e) => {
-  //   setLoginUserPassword(e.target.value);
-  //   const errormsg = validateProperty("password", e.currentTarget.value);
-  //   const errors = { ...errorLog };
-  //   if (errormsg) errors["password"] = errormsg;
-  //   else delete errors["password"];
-  //   setErrorLog(errors);
-  // };
+  const handleLoginUserName = (e) => {
+    setLoginUserName(e.target.value);
+    //console.log(e.currentTarget.value);
+    const errormsg = validateProperty("username", e.currentTarget.value);
+    //console.log(errormsg);
+    const errors = { ...errorLog };
+    if (errormsg) errors["username"] = errormsg;
+    else delete errors["username"];
+    setErrorLog(errors);
+  };
+  const handleLoginUserPassword = (e) => {
+    setLoginUserPassword(e.target.value);
+    const errormsg = validateProperty("password", e.currentTarget.value);
+    const errors = { ...errorLog };
+    if (errormsg) errors["password"] = errormsg;
+    else delete errors["password"];
+    setErrorLog(errors);
+  };
   const handleRegisterName = (e) => {
     setRegisterName(e.target.value);
     const errormsg = validateProperty("name", e.currentTarget.value);
@@ -193,11 +186,11 @@ const LoginRegister = () => {
               aria-describedby="basic-addon1"
               value={loginUserName}
               isInvalid={errorLog["username"]}
-              onChange={(e) => setLoginUserName(e.target.value)}
-              //onChange={handleLoginUserName}
+              //onChange={(e) => setLoginUserName(e.target.value)}
+              onChange={handleLoginUserName}
             />
           </InputGroup>
-          {console.log(errorLog["username"])}
+
           {errorLog["username"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["username"]}
@@ -212,8 +205,8 @@ const LoginRegister = () => {
               aria-describedby="basic-addon1"
               value={loginUserPassword}
               isInvalid={errorLog["password"]}
-              onChange={(e) => setLoginUserPassword(e.target.value)}
-              //onChange={handleLoginUserPassword}
+              //onChange={(e) => setLoginUserPassword(e.target.value)}
+              onChange={handleLoginUserPassword}
             />
           </InputGroup>
           {errorLog["password"] && (
@@ -245,7 +238,7 @@ const LoginRegister = () => {
               onChange={handleRegisterName}
             />
           </InputGroup>
-          {console.log(errorLog["name"])}
+
           {errorLog["name"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["name"]}
@@ -262,7 +255,7 @@ const LoginRegister = () => {
               onChange={handleRegisterUserName}
             />
           </InputGroup>
-          {console.log(errorLog["newUsername"])}
+
           {errorLog["newUsername"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["newUsername"]}
@@ -279,7 +272,7 @@ const LoginRegister = () => {
               onChange={handleRegisterUserPassword}
             />
           </InputGroup>
-          {console.log(errorLog["newPassword"])}
+
           {errorLog["newPassword"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["newPassword"]}
@@ -296,7 +289,7 @@ const LoginRegister = () => {
               onChange={handleRegisterUserEmail}
             />
           </InputGroup>
-          {console.log(errorLog["email"])}
+
           {errorLog["email"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["email"]}
@@ -313,7 +306,7 @@ const LoginRegister = () => {
               onChange={handleRegisterOrgId}
             />
           </InputGroup>
-          {console.log(errorLog["orgId"])}
+
           {errorLog["orgId"] && (
             <Alert className="error-badge" variant={"danger"}>
               {errorLog["orgId"]}

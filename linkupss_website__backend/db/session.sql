@@ -5,9 +5,10 @@ CREATE table if not exists session
  org_id int not null,
  tag varchar(100),
  url varchar(500) not null,
- start_time timestamp not null default now(),
- invite_sent boolean,
- password varchar(100),
+ start_time varchar(12) not null,
+ recurring tinyint not null,
+ password varchar(500),
+ day_of_week varchar(100),
  extra_info json,
  primary key(session_id)
  )

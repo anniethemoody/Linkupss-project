@@ -11,7 +11,7 @@ async def launch():
     with open('info.dat') as extract:
         file = extract.readlines()
         username = file[2]
-        url = file[0]
+        code = file[0]
         password = file[1]
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False, args=['--start-maximized', '--use-fake-ui-for-media-stream'])
@@ -19,7 +19,7 @@ async def launch():
         context = await browser.new_context()
         await context.grant_permissions(permissions=['microphone'])
         await context.grant_permissions(permissions=['camera'])
-        await page.goto(url)
+        await page.goto('https://zoom.com/wc/join/'+code)
         await asyncio.sleep(0.1)
         await page.locator('#inputname').fill(username)
         await asyncio.sleep(0.1)
@@ -33,7 +33,6 @@ async def launch():
             if currentCommand == "leave":
                 print(currentCommand)
                 currentCommand = "idle"
-                
                 await browser.close()
                 return
             if currentCommand == "mic":

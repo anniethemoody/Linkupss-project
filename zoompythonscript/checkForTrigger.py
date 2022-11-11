@@ -23,10 +23,10 @@ async def curl():
             if key == 'meetinginfo':
                 if len(value) > 0:
                     print('Meeting found!')
-                    URL = value[0]['url']
+                    code = value[0]['code']
                     password = value[0]['password']
                     with open('info.dat', 'w+') as store:
-                        store.write(URL+'\n')
+                        store.write(code+'\n')
                         store.write(password+'\n')
                         store.write(name)
                     asyncio.ensure_future(launch())

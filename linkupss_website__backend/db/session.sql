@@ -4,7 +4,7 @@ CREATE table if not exists session
  name varchar(100) not null,
  org_id int not null,
  tag varchar(100),
- url varchar(500) not null,
+ code bigint not null,
  start_time varchar(12) not null,
  recurring tinyint not null,
  password varchar(500),

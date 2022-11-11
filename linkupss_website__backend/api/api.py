@@ -115,7 +115,8 @@ def createSession():
     orgID = request.json.get("org_id", None)
     orgID = str(orgID)
     tag = request.json.get("tag", None)
-    url = request.json.get("url", None)
+    code = request.json.get("code", None)
+    code = str(code)
     startTime = request.json.get("start_time", None)
     recurring = request.json.get("recurring", None)
     if recurring > 1:
@@ -123,7 +124,7 @@ def createSession():
     recurring = str(recurring)
     password = request.json.get("password", None)
     dayOfWeek = request.json.get("day_of_week", None)
-    query = "INSERT INTO session (name, org_id, tag, url, start_time, recurring, password, day_of_week) SELECT '"+name+"','"+orgID+"','"+tag+"','"+url+"','"+startTime+"','"+recurring+"','"+password+"','"+dayOfWeek+"'"
+    query = "INSERT INTO session (name, org_id, tag, code, start_time, recurring, password, day_of_week) SELECT '"+name+"','"+orgID+"','"+tag+"','"+code+"','"+startTime+"','"+recurring+"','"+password+"','"+dayOfWeek+"'"
     cursor = runSQL(query)
     cursor.close()
     return jsonify({"code":200, "msg":"Created", "result":[]}), 200
@@ -202,6 +203,7 @@ def runSQL(query):
     cursor = connect.cursor()
     cursor.execute(query)
     connect.commit()
+    print(query)
     return cursor
 
 def verifyLogin(username, password):

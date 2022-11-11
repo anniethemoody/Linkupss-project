@@ -41,7 +41,6 @@ def adminLogin():
     else:
         accessToken = create_access_token(identity = username)
         response = jsonify(access_token = accessToken,result=returnValue[1])
-        #response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.route("/adminregister", methods=["POST"])
@@ -61,7 +60,6 @@ def createAdmin():
         cursor = runSQL(query)
         accessToken = create_access_token(identity = username)
         response = jsonify(access_token = accessToken)
-        #response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.route("/organizationjoin", methods=["POST"])
@@ -96,9 +94,7 @@ def createParticipant():
     cursor = runSQL(query)
     cursor.close()
     query ="SELECT participant_id FROM participant WHERE JSON_EXTRACT(extra_info,'\$.uuid')='"+uuidstr+"'";
-    #query="SELECT * FROM participant";
     cursor = runSQL(query)
-    #Executed_DATA = cursor.fetchall()
     r = [dict((cursor.description[i][0], value)
     for i, value in enumerate(row)) for row in cursor.fetchall()]
     return jsonify({"code":200, "msg":"Registered", "result":r}), 200
@@ -135,11 +131,8 @@ def createSession():
 @app.route("/fetchinfo", methods=["POST"])
 @jwt_required()
 def fetchorgdata():
-    
     adminID = request.json.get("admin_id", None)
-    
     query = "select org.*, dec_org_code(org.org_code) display_org_code from organization org join admin adm on org.org_id=adm.org_id and admin_id="+str(adminID)
-    
     r=fetchData(query)
     query = "select s.* from session s,organization o,admin a where a.org_id=o.org_id and o.org_id=s.org_id and admin_id="+str(adminID)
     r2=fetchData(query)
@@ -151,9 +144,10 @@ def participantList():
     adminID = request.json.get("admin_id", None)
     query = "select p.* from participant p,organization o,admin a where a.org_id=o.org_id and o.org_id=p.org_id and admin_id="+str(adminID)
     r=fetchData(query)
-    return jsonify({"code":200, "msg":"orgdata", "participants":r}), 200
+    return jsonify({"code":200, "msg":"data", "participants":r}), 200
 
 @app.route("/addtosession", methods=["POST"])
+@jwt_required()
 def joinSession():
     participantID = request.json.get("participant_id", None)
     sessionID = request.json.get("session_id", None)
@@ -162,15 +156,25 @@ def joinSession():
     cursor.close()
     return jsonify({"code":200, "msg":"Added","result":[]}), 200
     
+@app.route("/removefromsession", methods=["POST"])
+@jwt_required()
+def removeFromSession():
+    participantID = request.json.get("participant_id", None)
+    sessionID = request.json.get("session_id", None)
+    query = "delete from participant_session where participant_id="+str(participantID)+" and session_id="+str(sessionID)
+    cursor = runSQL(query)
+    cursor.close()
+    return jsonify({"code":200, "msg":"Removed","result":[]}), 200
+    
 @app.route("/checkfortrigger", methods=["POST"])
 def checkTrigger():
     participantID = request.json.get("participant_id", None)
     query = "select url, password from session s, participant_session ps where ps.session_id=s.session_id and invite=1 and participant_id="+str(participantID)
-    print(query)
     r=fetchData(query)
     return jsonify({"code":200, "msg":"triggermeeting","meetinginfo":r}), 200
 
 @app.route("/triggermeeting", methods=["POST"])
+@jwt_required()
 def triggerMeeting():
     sessionID = request.json.get("session_id", None)
     query = "update participant_session set invite=1 where session_id="+str(sessionID)
@@ -180,13 +184,20 @@ def triggerMeeting():
     cursor = runSQL(query)
     cursor.close()
     return jsonify({"code":200, "msg":"trigger sent","result":[]}), 200
+
+@app.route("/participantsessionlist", methods=["POST"])
+@jwt_required()
+def listParticipantSession():
+    sessionID = request.json.get("session_id", None)
+    query = "select p.name, p.participant_id from participant p, participant_session ps where p.participant_id=ps.participant_id and ps.session_id="+str(sessionID)
+    r = fetchData(query)
+    return jsonify({"code":200, "msg":"data", "participants in session":r})
     
 def generateOrgCode():
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for i in range(7))
 
 def runSQL(query):
-    print(query)
     connect = mysql.connect()
     cursor = connect.cursor()
     cursor.execute(query)
@@ -201,7 +212,6 @@ def verifyLogin(username, password):
     r = [dict((cursor.description[i][0], value)
     for i, value in enumerate(row)) for row in cursor.fetchall()]
     cursor.close()
-    #print(r)
     return numberOfRows, r
     
 def fetchData(query):

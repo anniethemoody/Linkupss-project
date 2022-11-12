@@ -18,7 +18,9 @@ class SessionCard extends Component {
     }
     return badge_class_name;
   }
-
+  async doStartSession ({session}) {
+//call backend and trigger playwright script on client computer
+  }
   render() {
     const { session, sessionEditClicked, numOfSessions ,confirmDeleteSession} = this.props;
 
@@ -50,7 +52,7 @@ class SessionCard extends Component {
               className="bottom-card"
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <button className="btn btn-primary centered" onClick={() => {}}>
+              <button className="btn btn-primary centered" onClick={() => this.doStartSession({session})}>
                 Start Session
               </button>
 

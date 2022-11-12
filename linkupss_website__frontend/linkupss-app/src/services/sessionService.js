@@ -13,6 +13,7 @@ export const sessions = [
     session_time: "15:00",
     day_of_week: "Saturday",
     meeting_link: "yogalink",
+    recurring: "false",
 
    },
   {
@@ -25,6 +26,7 @@ export const sessions = [
     session_time: "08:30",
     day_of_week: "Friday",
     meeting_link: "bingolink",
+    recurring: "false",
   },
    {
     _id: uuidv4(),
@@ -36,6 +38,7 @@ export const sessions = [
     session_time: "12:00",
     day_of_week: "Thursday",
     meeting_link: "artsandcraftslink",
+    recurring: "false",
   },
   {
     _id: uuidv4(),
@@ -47,6 +50,7 @@ export const sessions = [
     session_time: "15:00",
     day_of_week: "Friday",
     meeting_link: "yushilink",
+    recurring: "false",
   },
   {
     _id: uuidv4(),
@@ -58,6 +62,7 @@ export const sessions = [
     session_time: "10:00",
     day_of_week: "Friday",
     meeting_link: "frenchclasslink",
+    recurring: "false",
   }
 
   

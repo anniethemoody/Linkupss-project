@@ -29,7 +29,7 @@ void setup()
     micButton.setDebounceTime(25);
     camButton.setDebounceTime(25);
 
-    //david's code for pinModes of each input switch goes here:
+    //david's code for pinModes of each input switch goes here: 
 
 
 
@@ -52,6 +52,7 @@ void loop()
     digitalWrite(joinLED, joinState);
     digitalWrite(leaveLED, leaveState);
 
+    //david's LED code might be a simpler basis to deal with logic, but not entirely sure about that
     
     if (micState == HIGH)
     {

@@ -74,8 +74,8 @@ async def launch():
                 await page.evaluate("()=>{var a=document.querySelector('#wc-footer');a.classList.remove('footer--hidden');}")
                 await page.click(cameraButton)
                 currentCommand = "idle"
-
-#finds arduino port and saves it to comPort for further use?
+# bam
+# finds arduino port and saves it to comPort for further use?
 async def findCOM():
     global comPort
     while True:

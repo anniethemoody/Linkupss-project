@@ -15,6 +15,7 @@ import SetUp from './components/set-up/setUp';
 import LatestNews from './components/latest-news/lastestNews';
 import FAQ from './components/faq';
 import Home from './components/home/home';
+import TestCreateSession from './components/dashboard/testCreateSession';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
@@ -30,7 +31,7 @@ function App() {
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
     <Route path="/loginregister" component={LoginRegister}/> 
-    <Route path="/dashboard" component={Dashboard}/> 
+    <Route path="/dashboard" component={TestCreateSession}/> 
     <Route path="/" component={Home}/> 
     </Switch>
     </div>

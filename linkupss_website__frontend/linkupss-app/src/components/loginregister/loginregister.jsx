@@ -11,6 +11,8 @@ import AuthContext from "../../services/authProvider";
 import httpService from "../../services/httpService";
 import setAuthToken from "../../services/httpService";
 import { useHistory } from "react-router-dom";
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 const LoginRegister = () => {
   const history = useHistory();
@@ -25,9 +27,11 @@ const LoginRegister = () => {
   const [registerUserPassword, setRegisterUserPassword] = useState("");
   const [registerUserEmail, setRegisterUserEmail] = useState("");
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
+  const [registerError,setRegisterError] = useState("");
   const [registerFormValidate, setRegisterFormValidate] = useState(false);
   const [errorLog, setErrorLog] = useState({});
   const [loginFailed, setLoginFailed] = useState(false);
+  const [registerFailed,setRegisterFailed] = useState(false);
   const btnText = "Learn more";
 
   const schema = {
@@ -42,15 +46,22 @@ const LoginRegister = () => {
 
   const doSubmitLogin = async (e) => {
     e.preventDefault();
+
+    localStorage.removeItem("userToken");
     localStorage.clear();
     const user = { loginUserName, loginUserPassword };
     try {
       const response = await httpService.post(
-        "http://api.linkupss.com/adminlogin",
+        "https://api.linkupss.com/adminlogin",
         { user_name: loginUserName, user_password: loginUserPassword }
       );
       console.log(response?.data);
       const token = response?.data?.access_token;
+      localStorage.setItem("userToken", JSON.stringify(token));
+      if(loginUserName== "" && loginUserPassword==""){
+        throw "Login Failed";
+
+      }
       // setJwt(accessToken);
       //  setAuth({
       //    user_name: loginUserName,
@@ -61,7 +72,6 @@ const LoginRegister = () => {
       // setUser(response.data);
       // // store the user in localStorage
 
-      localStorage.setItem("userToken", JSON.stringify(token));
       //setAuthToken(token);
       return history.push("/dashboard");
     } catch (err) {
@@ -81,6 +91,9 @@ const LoginRegister = () => {
   const doSubmitRegister = async (e) => {
     e.preventDefault();
     try {
+      if(registerUserName==""||registerUserOrgId==""||registerUserEmail==""||registerUserPassword==""){
+        throw "Missing fields. Please try again"
+      }
       const response = await httpService.post(
         "https://api.linkupss.com/adminregister",
         JSON.stringify({
@@ -94,10 +107,22 @@ const LoginRegister = () => {
           withCredentials: false,
         }
       );
+
+      const token = response?.data?.access_token;
+      localStorage.setItem("userToken", JSON.stringify(token));
       // TODO: remove console.logs before deployment
-      console.log(JSON.stringify(response?.data));
-      console.log("Success");
+      console.log(response.data.msg);
+      if(response.data.msg){
+        setRegisterFailed(true);
+        setRegisterError(response.data.msg+". Please try again")
+      }
+      else{
+
+        setRegisterFailed(false);
+      }
+      
     } catch (err) {
+      console.log(err);
       if (!err?.response) {
         console.log("No Server Response");
       } else if (err.response?.status === 409) {
@@ -105,7 +130,37 @@ const LoginRegister = () => {
       } else {
         console.log("Registration Failed");
       }
+      setRegisterError(err);
     }
+    const token = localStorage.getItem("userToken");
+    console.log(token);
+        let headers = {
+      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2ODM1NTEyMywianRpIjoiNDhmZWFkYmEtOGM3Ny00NDY5LTg4NjUtNDg5OWNhM2IyZjkwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im1pZ2h0eWVtYnJ5byIsIm5iZiI6MTY2ODM1NTEyMywiZXhwIjoxNjY4MzU2MDIzfQ.zxe9Njt0MeNi_1ELgQ0dfMFthqn21QbitJZjLmtRSjM`,
+      "Content-Type": "application/json",
+    };
+//checking if org with that org code exists
+try{
+  const response = await httpService.post(
+    "https://api.linkupss.com/organizationjoin",
+    JSON.stringify({
+      org_code: registerUserOrgId,
+      user_name: registerUserName,
+    }),
+    {
+      headers: headers
+    }
+  );
+  console.log(response);
+}
+catch(err){
+
+}
+
+
+
+
+
+
   };
 
   const validateProperty = (type, val) => {
@@ -239,11 +294,12 @@ const LoginRegister = () => {
               {"Login Failed. Please try again."}
             </Alert>
           )}
+                    
         </div>
       </Form>
 
       {/* Register Side */}
-      <Form className="col-md-6 align-items-start" noValidate>
+      <Form className="col-md-6 align-items-start" noValidate onSubmit={doSubmitRegister}>
         <h1 className="text-primary">Register</h1>
         <div className="row d-flex justify-content-center">
           <InputGroup className="input-g mb-3">
@@ -330,9 +386,16 @@ const LoginRegister = () => {
             </Alert>
           )}
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" > 
           Sign Up
         </button>
+        <div className="row d-flex justify-content-center">
+          {registerFailed && (
+            <Alert className="error-badge mt-3" variant={"danger"}>
+              {registerError}
+            </Alert>
+          )}
+        </div>
       </Form>
     </div>
   );

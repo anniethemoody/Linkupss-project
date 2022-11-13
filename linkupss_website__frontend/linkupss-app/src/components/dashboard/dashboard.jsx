@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 import SideBar from "../sidebar";
+import axios from "axios";
 import FloatingActionButton from "../floatingActionButton";
 import SessionGrid from "./sessionGrid";
 import { getSession, getSessions } from "../../services/sessionService";
@@ -12,6 +13,8 @@ import DeletePopUp from "./confirmDeletePopUp";
 import { getAdminInfo } from "../../services/adminService";
 import { useEffect } from "react";
 import _ from "lodash";
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 import httpService from "../../services/httpService";
 const Dashboard = () => {
   const [userInfo, setUserInfo] = useState(getAdminInfo("96383888"));
@@ -19,7 +22,7 @@ const Dashboard = () => {
   const [orgInfo, setOrgInfo] = useState(getOrgInfo("cvsb18273gdiasdbasduqwe"));
   const [showOffCanvas, setOffCanvasState] = useState(false);
   const [offCanvasContent, setOffCanvasContent] = useState("");
-  const [userToken,setUserToken] = useState();
+  const [userToken, setUserToken] = useState();
   const [sessions, setSessions] = useState(
     getSessions(orgId, userInfo._admin_id)
   );
@@ -34,7 +37,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     setFilteredSessions(sessions);
-    const token = localStorage.getItem('userToken');
+    const token = localStorage.getItem("userToken");
     console.log(token);
     setUserToken(token);
   }, [sessions, selectedSession]);
@@ -88,36 +91,29 @@ const Dashboard = () => {
     }
     if (sessionFormType === "new") {
       new_sessions.push(session_new);
-      try {
-        console.log(JSON.parse(localStorage.getItem("userToken")));
-        const response = await httpService.post(
-          "http://api.linkupss.com/createsession",
-          {
-            name: session_new._id,
-            org_id: session_new.orgId,
-            tag: session_new.desc,
-            code: session_new.meeting_link,
-            start_time: session_new.session_time,
-            recurring: session_new.recurring,
-            password: session_new.orgId,
-            day_of_week: session_new.day_of_week,
-          },{userToken}
-          ,{
-            headers: {
-              'Authorization': 'Bearer '+ userToken,
-              'accept' : 'application/json',
-              'Content-Type': 'application/json'
-          }
-          }
-          
-          
-          );
 
-          console.log(response);
-          }
-          
-        
-       catch (err) {
+      var config = { headers: { Authorization: `Bearer ` + userToken } };
+
+      try {
+        //console.log(typeof session_new.meeting_link);
+        //console.log(JSON.parse(localStorage.getItem("userToken")));
+        const response = await axios.post(
+          "https://api.linkupss.com/createsession",
+          {
+            "name": "testing2345",
+            "org_id": "5",
+            "tag": "test",
+            "code": "12345678901",
+            "start_time": "12:00",
+            "recurring": "1",
+            "password": "password",
+            "day_of_week": "Monday"
+          },
+          config
+        );
+
+        console.log(response);
+      } catch (err) {
         console.log("cannot post session");
       }
 
@@ -201,6 +197,19 @@ const Dashboard = () => {
   //RENDERER
   return (
     <div className="below-nav row">
+
+<ToastContainer>
+      <Toast>
+        <Toast.Header>
+          <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+          <strong className="me-auto">Welcome back, {/*decode token stored in local storage to get username*/}</strong>
+          <small className="text-muted">just now</small>
+        </Toast.Header>
+        <Toast.Body>See? Just like this.</Toast.Body>
+      </Toast>
+    </ToastContainer>
+
+
       <LeftSideBar
         show={showOffCanvas}
         hide={() => setOffCanvasState(false)}

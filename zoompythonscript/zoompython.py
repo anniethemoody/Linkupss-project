@@ -54,6 +54,8 @@ async def launch():
         await page.locator('#inputpasscode').fill(password)
         await asyncio.sleep(0.1)
         await page.locator('#joinBtn').click()
+        # meeting has been joined at this point 
+
         while True:
             await asyncio.sleep(0.1)
             if currentCommand == "leave":
@@ -73,26 +75,29 @@ async def launch():
                 await page.click(cameraButton)
                 currentCommand = "idle"
 
+#finds arduino port and saves it to comPort for further use?
 async def findCOM():
     global comPort
     while True:
-        await asyncio.sleep(0.1)
-        ports = list(serial.tools.list_ports.comports())
+        await asyncio.sleep(0.1) # delay for 0.1s
+        ports = list(serial.tools.list_ports.comports()) # lists all serial ports connected? - SA
         for i in ports:
             if ("Arduino" in i.manufacturer):
                 comPort = i.device
 
 async def arduino():
-    global currentCommand
-    global comPort
+    global currentCommand # references same currentCommand from launch(), with same value
+    global comPort # references same comPort from findCom(), with same value
     await asyncio.sleep(0.5)
-    arduino = serial.Serial(comPort, 9600, timeout=0)
+    arduino = serial.Serial(comPort, 9600, timeout=0) # opening arduino port found in findCom, getting data from arduino about commands? - SA
+    
+    # takes arduino current "state" and puts it into currentCommand i think
     while True:
         await asyncio.sleep(0.1)
         arduinoRaw = arduino.readline()
         arduinoRaw2 = arduinoRaw.decode("utf-8")
         arduinoRead = arduinoRaw2.rstrip('\r\n')
-        if arduinoRead == "join":
+        if arduinoRead == "join": #runs launch if meeting needs to be joined
             print(arduinoRead)
             currentCommand = arduinoRead
             asyncio.ensure_future(launch())
@@ -113,11 +118,17 @@ async def arduino():
 #             #    meetingAvailable == True
 
 async def main():
-    findComLoop = asyncio.get_running_loop()
+    # findComLoop and arduinoSerialLoop create repeating event loops for specific coroutines
+    findComLoop = asyncio.get_running_loop() 
     arduinoSerialLoop = asyncio.get_running_loop()
+
+    # a task is created within each event loop, executing the respective coroutine passed in
     findComLoop.create_task(findCOM())
     arduinoSerialLoop.create_task(arduino())
+
+    # runs the event loops forever
     findComLoop.run_forever()
     arduinoSerialLoop.run_forever()
 
+# runs main coroutine
 asyncio.run(main())

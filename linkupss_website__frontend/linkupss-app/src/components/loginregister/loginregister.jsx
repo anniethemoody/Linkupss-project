@@ -52,12 +52,15 @@ const LoginRegister = () => {
     const user = { loginUserName, loginUserPassword };
     try {
       const response = await httpService.post(
-        "https://api.linkupss.com/adminlogin",
+        "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/adminlogin",
         { user_name: loginUserName, user_password: loginUserPassword }
       );
       console.log(response?.data);
       const token = response?.data?.access_token;
       localStorage.setItem("userToken", JSON.stringify(token));
+      const admin_id = response?.data?.result[0]?.admin_id;
+      console.log(admin_id);
+    localStorage.setItem("adminId", JSON.stringify(admin_id));
       if(loginUserName== "" && loginUserPassword==""){
         throw "Login Failed";
 
@@ -109,7 +112,10 @@ const LoginRegister = () => {
       );
 
       const token = response?.data?.access_token;
+      const admin_id = response?.data?.result[0];
+        console.log(admin_id);
       localStorage.setItem("userToken", JSON.stringify(token));
+      localStorage.setItem("adminId", JSON.stringify(admin_id));
       // TODO: remove console.logs before deployment
       console.log(response.data.msg);
       if(response.data.msg){

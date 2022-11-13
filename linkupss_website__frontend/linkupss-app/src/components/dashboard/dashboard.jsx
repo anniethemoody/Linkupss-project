@@ -16,8 +16,15 @@ import _ from "lodash";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import httpService from "../../services/httpService";
+import getCurrentUser from "../../services/authService";
+import jwtDecode from "jwt-decode";
 const Dashboard = () => {
-  const [userInfo, setUserInfo] = useState(getAdminInfo("96383888"));
+  const [userInfo, setUserInfo] = useState({
+    _admin_id:"",
+    admin_name:"",
+    org_id: "",
+    role:"admin",
+  });
   const [orgId, setOrgId] = useState("cvsb18273gdiasdbasduqwe");
   const [orgInfo, setOrgInfo] = useState(getOrgInfo("cvsb18273gdiasdbasduqwe"));
   const [showOffCanvas, setOffCanvasState] = useState(false);
@@ -39,9 +46,44 @@ const Dashboard = () => {
     setFilteredSessions(sessions);
     const token = localStorage.getItem("userToken");
     console.log(token);
-    setUserToken(token);
+    if(token!=null){
+      setUserToken(token);
+      const jwtdecoded = jwtDecode(token);
+      const response = fetchAdminInfo();
+      console.log(response);
+      setUserInfo({
+        _admin_id:jwtdecoded.sub,
+        admin_name:jwtdecoded,
+        org_id: "",
+        role:"admin" 
+      });
+
+    }
+    //console.log(userInfo)
   }, [sessions, selectedSession]);
   //HANDLERS
+
+const fetchAdminInfo = async () =>{
+  var config = { headers: { Authorization: `Bearer ` + userToken } };
+  console.log(localStorage.getItem("adminId"));
+  try{
+
+    const response = await axios.post(
+      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/fetchinfo",
+      {
+        "admin_id":localStorage.getItem("adminId")
+      },
+      config
+  
+    );
+    return response;
+  }
+  catch(error){
+
+  }
+  
+}
+
   const handleNewSessionForm = () => {
     setSessionFormType("new");
     setSelectedSession({});
@@ -97,19 +139,25 @@ const Dashboard = () => {
       try {
         //console.log(typeof session_new.meeting_link);
         //console.log(JSON.parse(localStorage.getItem("userToken")));
+        const data = {
+          name: "testing2345",
+          org_id: 5,
+          tag: "test",
+          code: "12345678901",
+          start_time: "12:00",
+          recurring: 5,
+          password: "password",
+          day_of_week: "Monday"
+        }
+
+        const requestOptions = {
+          method: "POST",
+          headers: { Authorization: `Bearer ` + userToken},
+          body: JSON.stringify(data),
+        };
         const response = await axios.post(
-          "https://api.linkupss.com/createsession",
-          {
-            "name": "testing2345",
-            "org_id": "5",
-            "tag": "test",
-            "code": "12345678901",
-            "start_time": "12:00",
-            "recurring": "1",
-            "password": "password",
-            "day_of_week": "Monday"
-          },
-          config
+          "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/createsession",
+          requestOptions
         );
 
         console.log(response);

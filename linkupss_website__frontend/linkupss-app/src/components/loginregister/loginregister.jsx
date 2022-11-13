@@ -9,11 +9,15 @@ import Joi from "joi-browser";
 import Alert from "react-bootstrap/Alert";
 import AuthContext from "../../services/authProvider";
 import httpService from "../../services/httpService";
+import setAuthToken from "../../services/httpService";
+import { useHistory } from "react-router-dom";
 
 const LoginRegister = () => {
+  const history = useHistory();
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
   const { setAuth } = useContext(AuthContext);
+  const [user, setUser] = useState();
   const [success, setSuccess] = useState(false);
 
   const [registerName, setRegisterName] = useState("");
@@ -23,6 +27,7 @@ const LoginRegister = () => {
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const [registerFormValidate, setRegisterFormValidate] = useState(false);
   const [errorLog, setErrorLog] = useState({});
+  const [loginFailed, setLoginFailed] = useState(false);
   const btnText = "Learn more";
 
   const schema = {
@@ -36,30 +41,29 @@ const LoginRegister = () => {
   };
 
   const doSubmitLogin = async (e) => {
-    //await login()
-    // e.preventDefault();
-    // const response = await login({
-    //   loginUserName,
-    //   loginUserPassword
-    // });
-    // if ('token' in response) {
-    //   window.alert("yes")
-    // } else {
-    //   window.alert("no")
-    // }
-
     e.preventDefault();
-
+    localStorage.clear();
+    const user = { loginUserName, loginUserPassword };
     try {
       const response = await httpService.post(
         "http://api.linkupss.com/adminlogin",
-        { user_name: loginUserName, user_password: loginUserPassword },
-        {withCredentials:false}
+        { user_name: loginUserName, user_password: loginUserPassword }
       );
       console.log(response?.data);
-      const accessToken = response?.data?.accessToken;
-      setAuth({ loginUserName, loginUserPassword, accessToken });
-      console.log("Success?");
+      const token = response?.data?.access_token;
+      // setJwt(accessToken);
+      //  setAuth({
+      //    user_name: loginUserName,
+      //    user_password: loginUserPassword,
+      //    accessToken,
+      //  });
+      // // set the state of the user
+      // setUser(response.data);
+      // // store the user in localStorage
+
+      localStorage.setItem("userToken", JSON.stringify(token));
+      //setAuthToken(token);
+      return history.push("/dashboard");
     } catch (err) {
       if (!err?.response) {
         console.log("No Server Response");
@@ -70,33 +74,39 @@ const LoginRegister = () => {
       } else {
         console.log("Login Failed");
       }
+      setLoginFailed(true);
     }
-
-    // try {
-    //   //console.log("here");
-    //   await login(this.state.data.loginUserName,this.state.data.loginUserPassword)
-    //   console.log('Submitted');
-    //   const {state} = this.props.location;
-    //   window.location = state ? state.from.pathname : '/';
-    //   window.alert("yes");
-    // } catch (ex) {
-    //   if(ex.response && ex.response.status === 400){
-    //     console.log('not');
-    //     window.alert("nn");
-    //     const errors = {...this.state.errors};
-    //     errors.username = ex.response.data;
-    //     this.setState({errors:errors});
-    //   }
-
-    // }
   };
 
-  const doSubmitRegsiter = async (e) => {};
-  // try {
-  //   await login()
-  // } catch (ex) {
-
-  // }
+  const doSubmitRegister = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await httpService.post(
+        "https://api.linkupss.com/adminregister",
+        JSON.stringify({
+          name: registerName,
+          user_name: registerUserName,
+          user_password: registerUserPassword,
+          extra_info: registerUserEmail,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: false,
+        }
+      );
+      // TODO: remove console.logs before deployment
+      console.log(JSON.stringify(response?.data));
+      console.log("Success");
+    } catch (err) {
+      if (!err?.response) {
+        console.log("No Server Response");
+      } else if (err.response?.status === 409) {
+        console.log("Username Taken");
+      } else {
+        console.log("Registration Failed");
+      }
+    }
+  };
 
   const validateProperty = (type, val) => {
     const obj = { [type]: val };
@@ -223,6 +233,13 @@ const LoginRegister = () => {
         >
           Login
         </button>
+        <div className="row d-flex justify-content-center">
+          {loginFailed && (
+            <Alert className="error-badge mt-3" variant={"danger"}>
+              {"Login Failed. Please try again."}
+            </Alert>
+          )}
+        </div>
       </Form>
 
       {/* Register Side */}

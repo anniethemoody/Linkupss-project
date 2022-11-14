@@ -31,7 +31,7 @@ function App() {
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
     <Route path="/loginregister" component={LoginRegister}/> 
-    <Route path="/dashboard" component={TestCreateSession}/> 
+    <Route path="/dashboard" component={Dashboard}/> 
     <Route path="/" component={Home}/> 
     </Switch>
     </div>

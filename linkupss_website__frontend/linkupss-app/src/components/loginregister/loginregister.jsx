@@ -57,7 +57,7 @@ const LoginRegister = () => {
       );
       console.log(response?.data);
       const token = response?.data?.access_token;
-      localStorage.setItem("userToken", JSON.stringify(token));
+      localStorage.setItem("userToken", token);
       const admin_id = response?.data?.result[0]?.admin_id;
       console.log(admin_id);
     localStorage.setItem("adminId", JSON.stringify(admin_id));

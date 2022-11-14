@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 //axios.defaults.headers.common['x-auth-token'] = getJwt();//get rid of bidirectional dependency
 axios.interceptors.response.use(null, (error) => {
   console.log("INTERCEPTOR CALLED");
+  console.log(error);
   const expectedError =
     error.response &&
     error.response.status >= 400 &&
@@ -15,21 +16,7 @@ axios.interceptors.response.use(null, (error) => {
   }
   return Promise.reject(error);
 }); //calls success() when response is received successfully,error() when unexpected error occurs
-axios.interceptors.request.use(async (config) => {
-  const token = localStorage.getItem('userToken');
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-
-  return config;
-});
-export const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  }
-   else delete axios.defaults.headers.common["Authorization"];
-};
 
 export default {
   get: axios.get,

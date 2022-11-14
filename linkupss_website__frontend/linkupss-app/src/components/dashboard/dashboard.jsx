@@ -25,15 +25,18 @@ const Dashboard = () => {
     org_id: "",
     role:"admin",
   });
-  const [orgId, setOrgId] = useState("cvsb18273gdiasdbasduqwe");
+  const [orgId, setOrgId] = useState("");
+  const [adminName,setAdminName] = useState("");
+  const [infoRetrieved,setInfoRetrieved] = useState(false);
   const [orgInfo, setOrgInfo] = useState(getOrgInfo("cvsb18273gdiasdbasduqwe"));
   const [showOffCanvas, setOffCanvasState] = useState(false);
   const [offCanvasContent, setOffCanvasContent] = useState("");
-  const [userToken, setUserToken] = useState();
+  const [userToken, setUserToken] = useState("");
   const [sessions, setSessions] = useState(
     getSessions(orgId, userInfo._admin_id)
   );
   const [filteredSessions, setFilteredSessions] = useState(sessions);
+  const [response,setResponse] = useState();
 
   const [sessionFormType, setSessionFormType] = useState("view");
   const [sessionFormState, setSessionFormState] = useState(false);
@@ -41,30 +44,120 @@ const Dashboard = () => {
   const [confirmSessionDeleteState, setConfirmSessionDeleteState] =
     useState(false);
   // const [deleteSession,setDeleteSession] = useState({});
-
-  useEffect(() => {
-    setFilteredSessions(sessions);
+  useEffect(()=>{
     const token = localStorage.getItem("userToken");
     console.log(token);
-    if(token!=null){
-      setUserToken(token);
-      const jwtdecoded = jwtDecode(token);
-      const response = fetchAdminInfo();
-      console.log(response);
-      setUserInfo({
-        _admin_id:jwtdecoded.sub,
-        admin_name:jwtdecoded,
-        org_id: "",
-        role:"admin" 
-      });
+    setUserToken(token);
+  },[userToken]);
+    useEffect(()=>{
+      //console.log(userToken)
+      //let mounted = true;
+      //fetchAdminInfo();
+      const abortController = new AbortController();
 
-    }
+
+      (async () => {
+        try {
+          const authtoken = "Bearer "+localStorage.getItem("userToken");
+          console.log(authtoken);
+          setUserToken(localStorage.getItem("userToken"));
+          setOrgId("");
+          setAdminName("");
+          var config = { headers: { Authorization: authtoken } };
+          const response = axios.post(
+            "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/fetchinfo",
+            {
+              "admin_id":localStorage.getItem("adminId")
+            },
+            config
+        
+          ).then(
+            result => {
+            //   console.log(result)
+            //   var adminUsername = "";
+            //   var orgnID = "";
+            //   adminUsername = result.data.orgdata[0].name;
+            //   orgnID = result.data.orgdata[0].display_org_code;
+      
+            //   console.log(orgnID);
+            //   console.log(adminUsername);    
+            //  setOrgId(orgnID);
+            //  setAdminName(adminUsername);
+              //console.log(orgId);
+              //console.log(adminName);
+              return result;
+            }
+          );
+          const result = await response;
+          console.log(result);
+                      console.log(result)
+              var adminUsername = "";
+              var orgnID = "";
+              adminUsername = result.data.orgdata[0].name;
+              orgnID = result.data.orgdata[0].display_org_code;
+      
+              setOrgId(orgnID);
+              setAdminName(adminUsername);
+        } catch (e) {
+          if(!abortController.signal.aborted){
+            console.error(e);
+         }
+        }
+      })();
+
+      //fetchInfo();
+      console.log(orgId);
+      console.log(adminName);
+      //fetchAdminInfo();
+      
+  
+        //setUserToken(token);
+        // const jwtdecoded = jwtDecode(localStorage.getItem("userToken"));
+        // const response = fetchAdminInfo();
+       // return ()=>mounted = false;
+        
+        //console.log(response);
+        // (
+        //   async() => {
+        //     const response = await fetchAdminInfo();
+        //     console.log(response)
+        //   }
+        // )();
+  
+         //console.log(userInfo);
+        //const response = fetchAdminInfo().then(result=>{return result});
+        // console.log(response);
+        // setUserInfo({
+        //   _admin_id:jwtdecoded.sub,
+        //   admin_name:jwtdecoded,
+        //   org_id: "",
+        //   role:"admin" 
+        // });
+        return () => {
+          ac.abort(); // cancel pending fetch request on component unmount
+      };
+      
+    },[])
+  useEffect(() => {
+    setFilteredSessions(sessions);
     //console.log(userInfo)
-  }, [sessions, selectedSession]);
+  }, [sessions, selectedSession,]);
   //HANDLERS
+const handleAdminInfo = (adminName,orgid) => {
+        setUserInfo({
+        _admin_id:localStorage.getItem("adminId"),
+        admin_name:adminName,
+        org_id: orgid,
+        role:"admin",
 
+      });
+      console.log(userInfo)
+}
 const fetchAdminInfo = async () =>{
-  var config = { headers: { Authorization: `Bearer ` + userToken } };
+  const authtoken = "Bearer "+localStorage.getItem("userToken");
+  console.log(authtoken);
+  setUserToken(localStorage.getItem("userToken"));
+  var config = { headers: { Authorization: authtoken } };
   console.log(localStorage.getItem("adminId"));
   try{
 
@@ -75,8 +168,26 @@ const fetchAdminInfo = async () =>{
       },
       config
   
+    ).then(
+      result => {
+        console.log(result)
+        var adminUsername = "";
+        var orgnID = "";
+        adminUsername = result.data.orgdata[0].name;
+        orgnID = result.data.orgdata[0].display_org_code;
+
+        console.log(orgnID);
+        console.log(adminUsername);    
+       setOrgId(orgnID);
+       setAdminName(adminUsername);
+        console.log(orgId);
+        console.log(adminName);
+        //return result;
+      }
     );
-    return response;
+   // console.log(response);
+    
+   // return response;
   }
   catch(error){
 
@@ -134,37 +245,40 @@ const fetchAdminInfo = async () =>{
     if (sessionFormType === "new") {
       new_sessions.push(session_new);
 
-      var config = { headers: { Authorization: `Bearer ` + userToken } };
-
+      var config = { headers: { Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2ODM3NzYwMSwianRpIjoiZmMwNDhkMGYtN2Y4YS00YTIyLThkY2YtZDI4OGU3MzRkNTU2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFtYnJvc2UxMDE1IiwibmJmIjoxNjY4Mzc3NjAxLCJleHAiOjE2NjgzNzg1MDF9.542QCsp9n-8JLiZF0TQUaCeDUQwjazzwl2MIGRrP4cg"} };
+      const recurring = session_new.recurring? 1:0;
+      
+      console.log(session_new._id);
+      console.log(session_new.desc);
+      console.log(session_new.meeting_link);
+      console.log(session_new.session_time);
+      console.log(session_new.recurring);
+      console.log(session_new.day_of_week);
+      console.log(session_new.org_id);
+      console.log(session_new.name);
       try {
-        //console.log(typeof session_new.meeting_link);
-        //console.log(JSON.parse(localStorage.getItem("userToken")));
-        const data = {
-          name: "testing2345",
-          org_id: 5,
-          tag: "test",
-          code: "12345678901",
-          start_time: "12:00",
-          recurring: 5,
-          password: "password",
-          day_of_week: "Monday"
+
+        var data = {
+          "name": "testing2345",
+          "org_id": 5,
+          "tag": "test",
+          "code": "12345678901",
+          "start_time": "12:00",
+          "recurring": 1,
+          "password": "password",
+          "day_of_week": "Monday"
         }
 
-        const requestOptions = {
-          method: "POST",
-          headers: { Authorization: `Bearer ` + userToken},
-          body: JSON.stringify(data),
-        };
         const response = await axios.post(
           "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/createsession",
-          requestOptions
+          data,
+          config
         );
 
         console.log(response);
       } catch (err) {
         console.log("cannot post session");
       }
-
       // make api call to /createSession
 
       setSessions(new_sessions);
@@ -245,7 +359,6 @@ const fetchAdminInfo = async () =>{
   //RENDERER
   return (
     <div className="below-nav row">
-
 <ToastContainer>
       <Toast>
         <Toast.Header>

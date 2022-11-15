@@ -301,13 +301,25 @@ const SessionForm = (props) => {
       }
     }
     if (input === "link") {
-      if (value === "") {
+      console.log(value)
+      if(value.length>11 || !+value){
+        // setSessionLinkValid(false);
+        if(value==""){
+          validated = true;
+          return validated;
+        }
+         validated = false;
+         return validated;
+       }
+      else if (value === "") {
         setSessionLinkValid(false);
         if (sessionLinkFocused) {
           setSessionLinkFocused(true);
           return true;
         }
-      } else {
+      } 
+
+      else {
         console.log("link validated");
         setSessionLinkValid(true);
         return validated;
@@ -596,11 +608,14 @@ const SessionForm = (props) => {
         <InputGroup hasValidation className="mt-3">
           <InputGroup.Text>Session Link</InputGroup.Text>
           <Form.Control
-            aria-label="Meeting Link or Code of session"
+            aria-label="Meeting Link or Code of session (11 Digit Code)"
             onChange={handleSessionLink}
             onFocus={handleLinkFocusing}
             value={sessionLink}
           />
+              <InputGroup.Text id="basic-addon2">
+              11 digit code
+            </InputGroup.Text>
         </InputGroup>
 
         <hr className="rounded" />

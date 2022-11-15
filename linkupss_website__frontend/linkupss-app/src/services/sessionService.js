@@ -83,3 +83,24 @@ export function getSessionParticipants(id){
     }
     return sessions.find((m) => m._id === id).participants;
 }
+export function getAllSessions(retrieved_sessions){
+  const new_sessions = retrieved_sessions.map((item)=>{
+       return { 
+    _id: item.session_id,
+    name: item.name,
+    desc:item.tag,
+    participants: [],
+    admins: String(localStorage.getItem("adminId")).split("").map((item)=>{
+      return Number(item)
+    }),
+    org_id: JSON.stringify(item.org_id),
+    session_time: item.start_time,
+    day_of_week: item.day_of_week,
+    meeting_link: JSON.stringify(item.code),
+    recurring: item.recurring==0?false:true,}
+    }
+
+  )
+  return new_sessions;
+
+}

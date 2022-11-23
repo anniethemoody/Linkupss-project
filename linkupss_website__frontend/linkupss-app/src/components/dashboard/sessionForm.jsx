@@ -13,6 +13,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import "react-datepicker/dist/react-datepicker.css";
 import Toggle from "react-toggle";
 import "react-toggle/style.css";
+import axios from "axios"
 import {
   getSession,
   getSessionParticipants,
@@ -35,7 +36,7 @@ const SessionForm = (props) => {
   const [filteredOrgMembers, setFilteredOrgMembers] = useState([]);
   const [filteredAdmins, setFilteredAdmins] = useState([]);
   const [orgMembers, setOrgMembers] = useState([]);
-  //console.log(orgMembers);
+
   const [orgAdmins, setOrgAdmins] = useState(
     getAdminInfoByOrg(props.userinfo.org_id)
   );
@@ -213,55 +214,62 @@ const SessionForm = (props) => {
     setSessionRecurring(clicked);
   };
   const handleAddingOrgMembers = (_member_id) => {
-    // let session_id_passed="";
-    // console.log(getOrgMember(_member_id));
-    // const index = orgMembers.indexOf(getOrgMember(_member_id));
-    // const new_org_members = [];
-    // for (var i of orgMembers) {
-    //     new_org_members.push(i);
-    //   }
-    //   if(props.form_type == "new"){
-    //     session_id_passed = sessionId;
-    //   }
-    //   else{
-    //     session_id_passed = props.selectedSession._id
-    //   }
-
-    //   new_org_members[index].sessions_enrolled.push(session_id_passed);
-    //   setOrgMembers(new_org_members);
     const new_participant_list = [];
     for (var i of sessionParticipants) {
       new_participant_list.push(i);
     }
-    new_participant_list.push(_member_id);
-    setSessionParticipants(new_participant_list);
+    //orgMembers.find(_member_id=>)
 
-    // console.log(new_org_members);
+    
+    new_participant_list.push(orgMembers.find((m) => m._member_id === _member_id));
+
+    setSessionParticipants(new_participant_list);
+    const authtoken = "Bearer " + localStorage.getItem("userToken");
+    var config = { headers: { Authorization: authtoken } };
+    console.log(props.selectedSession._id);
+    if(props.form_type == "edit"){
+
+    }
+    const response = axios.post(
+      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/addtosession",
+      {
+        participant_id:_member_id,
+        session_id:props.selectedSession._id
+      },
+      config
+    ).then(result=>{return result}).then(result=>{console.log(result)}).catch(
+      error=>{
+        window.alert("Cannot add participant to session. Please try again later.")
+      }
+    )
+    //console.log(_member_id);
+
+     console.log(new_participant_list);
   };
   const handleRemovingOrgMembers = (_member_id) => {
-    // let session_id_passed="";
-    // const index = orgMembers.indexOf(getOrgMember(_member_id));
-    // console.log(index);
-    // const new_org_members = [];
-    // for (var i of orgMembers) {
-    //     new_org_members.push(i);
-    //   }
-    //   if(props.form_type == "new"){
-    //     session_id_passed = sessionId;
-    //   }
-    //   else{
-    //     session_id_passed = props.selectedSession._id
-    //   }
-    //   const session_index = new_org_members[index].sessions_enrolled.indexOf(getSession(session_id_passed));
-    //   new_org_members[index].sessions_enrolled.splice(session_id_passed,1);
-    //   setOrgMembers(new_org_members);
 
     const new_participant_list = [];
     for (var i of sessionParticipants) {
       new_participant_list.push(i);
     }
-    new_participant_list.splice(_member_id, 1);
+    new_participant_list.splice(new_participant_list.indexOf(orgMembers.find((m) => m._member_id === _member_id)), 1);
     setSessionParticipants(new_participant_list);
+    const authtoken = "Bearer " + localStorage.getItem("userToken");
+    var config = { headers: { Authorization: authtoken } };
+  
+    const response = axios.post(
+      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/removefromsession",
+      {
+        
+        session_id:props.selectedSession._id,
+        participant_id:_member_id
+      },
+      config
+    ).then(result=>{return result}).then(result=>{console.log(result)}).catch(
+      error=>{
+        window.alert("Cannot remove participant from session. Please try again later.")
+      }
+    )
   };
 
   const handleValidation = (input, value) => {
@@ -326,18 +334,7 @@ const SessionForm = (props) => {
       }
     }
   };
-  //   const handleFullFormValidation = () => {
-  //     console.log("validating...")
-  //     if(sessionNameValid && sessionDescValid && sessionDayOfWeekValid && sessionLinkValid){
-  //         console.log("success")
-  //         setFullFormValid(true);
-  //     }
-  //     else{
-  //         setFullFormValid(false);
 
-  //     }
-  //   }
-  //need to add if validation completed then let it save, in saveSession function
   const discardChanges = (props) => {
     if (props.form_type === "edit") {
       props.hide();
@@ -411,7 +408,29 @@ const SessionForm = (props) => {
       props.hide();
     }
   };
+const fetchParticipants =  () => {
+  const authtoken = "Bearer " + localStorage.getItem("userToken");
+  var config = { headers: { Authorization: authtoken } };
 
+ const repsonse = axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/participantlist",
+ {
+  admin_id: localStorage.getItem("adminId")
+ }
+ ,config).then(result=>{
+  console.log(result)
+ //const res = await result;
+  const members = result.data.participants.map((item)=>{
+    return{
+      _member_id: item.participant_id,
+      name: item.name,
+      email: null,
+      org_enrolled: item.org_id,
+    }
+  });
+  setOrgMembers(members);
+  setFilteredOrgMembers(members);
+ })
+}
   const saveSession = (props) => {
     console.log("validated...");
     let passed_id = "";
@@ -442,15 +461,7 @@ const SessionForm = (props) => {
     console.log(props.form_type);
     if (props.form_type === "edit") {
       console.log(props.selectedSession);
-      //const {name,desc,meeting_link,session_time,day_of_week} = props.selectedSession;
-      //console.log(props.selectedSession.name);
-      //   let temp_admin = [];
-      //   let temp_participants = [];
-      //   temp_admin = temp_admin.concat(props.selectedSession.admins);
-      //   temp_participants = temp_participants.concat(
-      //     props.selectedSession.participants
-      //   );
-      //setAdminList(temp_admin);
+
       setSessionName(props.selectedSession.name);
       setSessionDesc(props.selectedSession.desc);
       setSessionLink(props.selectedSession.meeting_link);
@@ -464,6 +475,7 @@ const SessionForm = (props) => {
 
       console.log(props.selectedSession.participants);
       //check that
+
       if (typeof props.selectedSession.admins !== "undefined") {
         setAdminList(props.selectedSession.admins);
       } else {
@@ -482,9 +494,9 @@ const SessionForm = (props) => {
       } else {
         setSessionParticipants([]);
       }
-      //console.log(sessionParticipants);
+
       if (typeof getOrgMembersByOrg(props.userinfo.org_id) !== "undefined") {
-        setOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+        fetchParticipants();
         setFilteredOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
       } else {
         setOrgMembers([]);
@@ -546,8 +558,7 @@ const SessionForm = (props) => {
       }
 
       if (typeof getOrgMembersByOrg(props.userinfo.org_id) !== "undefined") {
-        setOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
-        setFilteredOrgMembers(getOrgMembersByOrg(props.userinfo.org_id));
+          fetchParticipants();
       } else {
         setOrgMembers([]);
         setFilteredOrgMembers([]);
@@ -694,11 +705,20 @@ const SessionForm = (props) => {
         {/*Participant card */}
         <p style={{ fontSize: "18px" }}>Participants</p>
         <Card>
-          {Array.isArray(orgMembers) && !orgMembers.length ? (
+          {props.form_type==="new" ? (
             <Card.Header>
               <span style={{ paddingRight: "20px" }}>
-                There are no users enrolled in this organisation. Ask your
-                members to register before picking participants !
+              {
+                  props.form_type==="new" && 
+                  <span>
+                    Add your participants on your dashboard by editing your sessions ! 
+                    </span>
+                }
+              {(props.form_type==="edit" && !orgMembers.length )&& <span>
+                  There are no participants enrolled in this organisation. Ask your
+                  members to register before picking participants !
+                </span>}
+
               </span>
             </Card.Header>
           ) : (
@@ -713,78 +733,59 @@ const SessionForm = (props) => {
               />
             </Card.Header>
           )}
+          
           <ListGroup
-            variant="flush"
-            className={
-              !orgMembers.length || orgMembers.length <= 2
-                ? "form-lisgroup-card-none"
-                : "form-listgroup-card"
-            }
-          >
-            {!orgMembers.length ? (
-              <div></div>
-            ) : (
-              filteredOrgMembers.map((item) => (
-                <ListGroup.Item
-                  className="form-listgroup-item"
-                  key={item._member_id}
+          variant="flush"
+          className={
+            !orgMembers.length || orgMembers.length <=2|| props.form_type==="new"
+              ? "form-listgroup-card-none"
+              : "form-listgroup-card"
+          }
+        >
+          {!orgMembers.length || props.form_type==="new"? (
+            <div></div>
+          ) : (
+            filteredOrgMembers.map((item) => (
+              <ListGroup.Item
+                className="form-listgroup-item"
+                key={item._member_id}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
-                  >
-                    <p>{item.name}</p>
-                    {sessionParticipants.indexOf(item._member_id) !== -1 ? (
-                      <Button
-                        variant="danger"
-                        onClick={() =>
-                          handleRemovingOrgMembers(item._member_id)
-                        }
-                      >
-                        Remove
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        onClick={() => handleAddingOrgMembers(item._member_id)}
-                      >
-                        Add
-                      </Button>
-                    )}
-                  </div>
-                </ListGroup.Item>
-              ))
-            )}
-            {/* 
-            <ListGroup.Item className="form-listgroup-item">
-                <div style={{display:"flex",justifyContent: "space-between",alignItems:"center"}}>
-              <span style={{alignSelf:"center"}}>Hello</span>
-              <Button style={{alignSelf:"center"}} variant="danger">Remove</Button>
-              </div>
-            </ListGroup.Item>
+                  <p>{item.name}</p>
+                  {sessionParticipants.indexOf(item) !== -1 ? (
+                    <Button
+                      variant="danger"
+                      onClick={() =>
+                        handleRemovingOrgMembers(item._member_id)
+                      }
+                    >
+                      Remove
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      onClick={() => handleAddingOrgMembers(item._member_id)}
+                    >
+                      Add
+                    </Button>
+                  )}
+                </div>
+              </ListGroup.Item>
+            ))
+          )}
 
-            <ListGroup.Item className="form-listgroup-item">
-                <div style={{display:"flex",justifyContent: "space-between",alignItems:"center"}}>
-              <p>Hello</p>
-              <Button variant="danger">Remove</Button>
-              </div>
-            </ListGroup.Item>
-            <ListGroup.Item className="form-listgroup-item">
-                <div style={{display:"flex",justifyContent: "space-between",alignItems:"center"}}>
-              <p>Hello</p>
-              <Button variant="danger">Remove</Button>
-              </div>
-            </ListGroup.Item>
-            <ListGroup.Item className="form-listgroup-item">
-                <div style={{display:"flex",justifyContent: "space-between",alignItems:"center"}}>
-              <p>Hello</p>
-              <Button variant="danger">Remove</Button>
-              </div>
-            </ListGroup.Item> */}
-          </ListGroup>
+        </ListGroup>
+
+
+
+          
+
         </Card>
 
         <hr className="rounded" />
@@ -850,7 +851,7 @@ const SessionForm = (props) => {
         >
           Save
         </button>
-        {console.log(sessionNameValid)}
+       
       </Modal.Footer>
     </Modal>
   );

@@ -17,6 +17,7 @@ import FAQ from './components/faq';
 import Home from './components/home/home';
 import TestCreateSession from './components/dashboard/testCreateSession';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ParticipantRegister from './components/loginregister/participantRegister';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
     <Route path="/setup" component={SetUp}/> 
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
-    <Route path="/loginregister" component={LoginRegister}/> 
+    <Route path="/adminloginregister" component={LoginRegister}/> 
+    <Route path="/participantregister" component={ParticipantRegister}/> 
     <Route path="/dashboard" component={Dashboard}/> 
     <Route path="/" component={Home}/> 
     </Switch>

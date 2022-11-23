@@ -4,6 +4,8 @@ import SideBar from "../sidebar";
 import axios from "axios";
 import FloatingActionButton from "../floatingActionButton";
 import SessionGrid from "./sessionGrid";
+import SessionLaunchedPopUp from "./sessionLaunchedPopUp";
+
 import {
   getSession,
   getSessions,
@@ -23,6 +25,7 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 import httpService from "../../services/httpService";
 import getCurrentUser from "../../services/authService";
 import jwtDecode from "jwt-decode";
+import ConfirmLogOutPopUp from "./confirmLogOutPopUp";
 
 const Dashboard = () => {
   const [userInfo, setUserInfo] = useState({
@@ -50,6 +53,8 @@ const Dashboard = () => {
   const [selectedSession, setSelectedSession] = useState({});
   const [confirmSessionDeleteState, setConfirmSessionDeleteState] =
   useState(false);
+  const [confirmLogOutState,setConfirmLogOutState] = useState(false);
+  const [launchSessionState,setLaunchSessionState] = useState(false);
   const [deleteSession, setDeleteSession] = useState({});
   function useStateWithCallBack(initlaValue, callBack) {
     const [state, setState] = useState(initlaValue);
@@ -65,74 +70,6 @@ const Dashboard = () => {
     //localStorage.setItem("needData",1);
       console.log(needData)
   }, [userToken]);
-  //   useEffect(()=>{
-  //     const fetchAdminInfo = async () =>{
-  //       const authtoken = "Bearer "+localStorage.getItem("userToken");
-  //       console.log(authtoken);
-  //       setUserToken(localStorage.getItem("userToken"));
-  //       var config = { headers: { Authorization: authtoken } };
-  //       console.log(localStorage.getItem("adminId"));
-  //       try{
-
-  //         const response = await axios.post(
-  //           "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/fetchinfo",
-  //           {
-  //             "admin_id":localStorage.getItem("adminId")
-  //           },
-  //           config
-
-  //         )
-  //         const data = await response;
-  //         console.log(data);
-  //             var adminUsername = "";
-  //             var orgnID = "";
-  //             var sessions = {};
-  //             adminUsername = data.data.orgdata[0].name;
-  //             orgnID = data.data.orgdata[0].org_id;
-  //             sessions = data.data.sessions;
-  //             console.log(orgnID);
-  //             console.log(sessions);
-  //             setOrgId(orgnID);
-  //             setAdminName(adminUsername);
-  //         // .then(
-  //         //   result => {
-  //         //     //console.log(result)
-  //         //     var adminUsername = "";
-  //         //     var orgnID = "";
-  //         //     var sessions = {};
-  //         //     adminUsername = result.data.orgdata[0].name;
-  //         //     orgnID = result.data.orgdata[0].org_id;
-  //         //     sessions = result.data.sessions;
-  //         //     console.log(orgnID);
-  //         //     console.log(sessions);
-  //         //     setOrgId(orgnID);
-  //         //     setAdminName(adminUsername);
-  //         //     const mapped_sessions = getAllSessions(sessions);
-  //         //     //localStorage.setItem("sessions",JSON.stringify(mapped_sessions));
-
-  //         //     setUserSessions(mapped_sessions);
-  //         //     //console.log(localStorage.getItem("sessions"));
-  //         //     //console.log(adminName);
-  //         //     //console.log(userSessions);
-  //         //     //return result;
-  //         //   }
-  //         // );
-  //        // console.log(response);
-
-  //        // return response;
-  //       }
-  //       catch(error){
-
-  //       }
-
-  //     };
-  //     fetchAdminInfo();
-  //     console.log(orgId);
-  //     console.log(adminName);
-  //     console.log(userSessions);
-  //   },[])
-
-
 
      const  fetchData = () => {
       const authtoken = "Bearer " + localStorage.getItem("userToken");
@@ -150,98 +87,77 @@ const Dashboard = () => {
       ).then(
         result=>{
 
-        //  const data = response;
-         // console.log(data);
+
          console.log(result)
           var adminUsername = "";
           var orgnID = "";
           var sessions_ew = {};
-          adminUsername = result.data.orgdata[0].name;
-          orgnID = result.data.orgdata[0].org_id;
+          adminUsername = result.data.orgdata[0]?.name;
+          orgnID = result.data.orgdata[0]?.org_id;
           sessions_ew = result.data.sessions;
           sessions_ew = getAllSessions(sessions_ew);
+
           console.log(sessions_ew)
           setOrgId(orgnID);
           setAdminName(adminUsername);
+          setUserInfo({
+            _admin_id: localStorage.getItem("adminId"),
+            admin_name: adminUsername,
+            org_id: orgnID,
+            role: "admin",
+          })
           setSessions(sessions_ew);
          setFilteredSessions(sessions_ew);
           //response.current = reuslt;
         }
+      ).catch(
+        error=>{
+          console.log(error)
+          window.alert("Oops it seems like you're disconnected or not logged in :(\n Please try logging in or try again later");
+          window.location.href = "/adminloginregister";
+        }
       )
+
 
     }
       
     useEffect(() => {
-      //setMounted(true);
-     // let isCancelled = false;
-    // console.log(needData)
 
       fetchData();
       console.log("fetching")
 
-      //console.log(response.current);
 
     },[]);
-    console.log(userSessions)
-  // const fetchAdminInfo = useCallback(async () =>{
-  //   const authtoken = "Bearer "+localStorage.getItem("userToken");
-  //   console.log(authtoken);
-  //   setUserToken(localStorage.getItem("userToken"));
-  //   var config = { headers: { Authorization: authtoken } };
-  //   console.log(localStorage.getItem("adminId"));
-  //   try{
 
-  //     const response = await axios.post(
-  //       "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/fetchinfo",
-  //       {
-  //         "admin_id":localStorage.getItem("adminId")
-  //       },
-  //       config
-
-  //     ).then(
-  //       result => {
-  //         //console.log(result)
-  //         var adminUsername = "";
-  //         var orgnID = "";
-  //         var sessions = {};
-  //         adminUsername = result.data.orgdata[0].name;
-  //         orgnID = result.data.orgdata[0].org_id;
-  //         sessions = result.data.sessions;
-  //         //console.log(orgnID);
-  //         //console.log(sessions);
-  //         setOrgId(orgnID);
-  //         setAdminName(adminUsername);
-  //         const mapped_sessions = getAllSessions(sessions);
-  //         //localStorage.setItem("sessions",JSON.stringify(mapped_sessions));
-
-  //         setUserSessions(mapped_sessions);
-  //         //console.log(localStorage.getItem("sessions"));
-  //         //console.log(adminName);
-  //         //console.log(userSessions);
-  //         //return result;
-  //       }
-  //     );
-  //    // console.log(response);
-
-  //    // return response;
-  //   }
-  //   catch(error){
-
-  //   }
-
-  // });
 
   const handleNewSessionForm = () => {
     setSessionFormType("new");
     setSelectedSession({});
     setSessionFormState(true);
   };
-  const handleDeleteSession = (session) => {
+  const handleDeleteSession = async (session) => {
     console.log(session);
     const delete_id = session.id;
     //const { _id } = session;
+    const authtoken = "Bearer " + localStorage.getItem("userToken");
+    var config = { headers: { Authorization: authtoken } };
+
     const new_sessions = sessions.filter((m) => m._id !== session._id);
     setSessions(new_sessions);
+    setFilteredSessions(new_sessions);
+    try{
+      const response = await axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/deletesession",
+      {
+        session_id: session._id
+      },
+      config
+      )
+      const result = await response;
+      console.log(result);
+    }
+    catch(err){
+      window.alert(alert);
+    }
     if (sessionFormState === true) {
       setSessionFormState(false);
     }
@@ -320,6 +236,7 @@ const Dashboard = () => {
 
       setSessions(new_sessions);
       setFilteredSessions(new_sessions);
+      fetchData();
     }
     if (sessionFormType === "edit") {
       const index = new_sessions.indexOf(
@@ -392,7 +309,9 @@ const Dashboard = () => {
       setFilteredSessions(sessions);
     }
   };
-
+  const handleLaunchingSession =()=>{
+    setLaunchSessionState(true);
+  }
   //RENDERER
   return (
     <div className="below-nav row">
@@ -429,6 +348,7 @@ const Dashboard = () => {
         <InfoBar
           orgInfo={orgInfo}
           handleSearchSession={handleSearchSession}
+          logout = {()=>setConfirmLogOutState(true)}
           openOffcanvas={handleOffCanvas}
         />
         <div
@@ -441,6 +361,15 @@ const Dashboard = () => {
             selectedSession={selectedSession}
             deleteSession={handleDeleteSession}
           />
+          <SessionLaunchedPopUp
+            show={launchSessionState}
+            hide={() => setLaunchSessionState(false)}
+            selectedSession={selectedSession}
+          />
+          <ConfirmLogOutPopUp
+          show={confirmLogOutState}
+          hide={() => setConfirmLogOutState(false)}
+          />
           <SessionForm
             show={sessionFormState}
             hide={() => setSessionFormState(false)}
@@ -451,23 +380,30 @@ const Dashboard = () => {
             userinfo={userInfo}
           />
 
-          { sessions ===undefined  ? (
-            <span className="no-sessions-text">
-              <span style={{ fontSize: "30px", color: "" }}>
-                
-                There are no sessions set up for your organisation{" "}
-                <SentimentDissatisfiedIcon className="sad-icon" /> <br /> Click
-                Create Session to start connecting with your members !
+          { !sessions.length ? (
+
+              
+              
+              <span className="no-sessions-text">
+                <span style={{ fontSize: "30px", color: "" }}>
+                  
+                  There are no sessions set up for your organisation{" "}
+                  <SentimentDissatisfiedIcon className="sad-icon" /> <br /> Click
+                  Create Session to start connecting with your members !
+                </span>
               </span>
-            </span>
+
+            
           ) : (
             <SessionGrid
               sessions={filteredSessions}
               sessionEditClicked={handleSessionEditClicked}
               confirmDeleteSession={handleConfirmDeleteSession}
+              launchSession = {handleLaunchingSession}
               numOfSessions={filteredSessions.length}
             />
           )}
+          
         </div>
       </div>
     </div>

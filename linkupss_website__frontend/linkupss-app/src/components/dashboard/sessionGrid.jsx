@@ -10,7 +10,7 @@ class SessionGrid extends Component {
                 {console.log(this.props.sessions)}
            {(this.props.sessions).map(
             (item) =>
-            <SessionCard key = {item._id} session={item} sessionEditClicked = {this.props.sessionEditClicked} numOfSessions={this.props.numOfSessions} confirmDeleteSession = {this.props.confirmDeleteSession}/>
+            <SessionCard key = {item._id} session={item} sessionEditClicked = {this.props.sessionEditClicked} numOfSessions={this.props.numOfSessions} confirmDeleteSession = {this.props.confirmDeleteSession} launchSession = {this.props.launchSession}/>
            )}
            </div>
            </React.Fragment>

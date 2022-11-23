@@ -3,7 +3,10 @@ import { NavLink,Link } from 'react-router-dom';
 import LinkupssLogo from './logo';
 import Badge from 'react-bootstrap/Badge'
 class NavBar extends Component {
-    state = {  } 
+    state = { adminName:"" } 
+    componentDidMount(){
+      localStorage.getItem("userToken")
+    }
     render() { 
         return (
 
@@ -21,8 +24,8 @@ class NavBar extends Component {
                
                
                 <React.Fragment>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/loginregister"><h4 className="text-primary"><Badge>Admin ?</Badge></h4></NavLink></li>
-                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/loginregister"><h4 className="text-primary"><Badge>Participant ?</Badge></h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/adminloginregister"><h4 className="text-primary"><Badge>Admin ?</Badge></h4></NavLink></li>
+                <li className="nav__item"><NavLink className="nav-item nav-link col" to="/participantregister"><h4 className="text-primary"><Badge>Participant ?</Badge></h4></NavLink></li>
 
                 </React.Fragment>
                 

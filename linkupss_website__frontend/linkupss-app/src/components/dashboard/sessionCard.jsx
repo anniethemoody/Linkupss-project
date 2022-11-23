@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from "@mui/icons-material/Close";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import axios from "axios";
 class SessionCard extends Component {
   findBadgeType() {
     let badge_class_name = "flex badge bg-";
@@ -20,9 +21,28 @@ class SessionCard extends Component {
   }
   async doStartSession ({session}) {
 //call backend and trigger playwright script on client computer
+const authtoken = "Bearer " + localStorage.getItem("userToken");
+var config = { headers: { Authorization: authtoken } };
+    this.props.launchSession();
+    try{
+
+      const response = await axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/triggermeeting",
+      {
+        session_id:session._id
+      }
+      ,config
+      );
+      const result = await response;
+      console.log(result);
+    }
+    catch(err){
+      if(err.code === "ERR_BAD_RESPONSE"){
+        window.alert("It seems like you already started a sessioon.")
+      }
+    }
   }
   render() {
-    const { session, sessionEditClicked, numOfSessions ,confirmDeleteSession} = this.props;
+    const { session, sessionEditClicked, numOfSessions ,confirmDeleteSession,launchSession} = this.props;
 
     return (
       <div className="col-sm-4 pb-2">

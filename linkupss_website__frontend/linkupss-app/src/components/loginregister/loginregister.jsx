@@ -13,14 +13,12 @@ import setAuthToken from "../../services/httpService";
 import { useHistory } from "react-router-dom";
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-
+import axios from "axios";
 const LoginRegister = () => {
   const history = useHistory();
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
-  const { setAuth } = useContext(AuthContext);
-  const [user, setUser] = useState();
-  const [success, setSuccess] = useState(false);
+
 
   const [registerName, setRegisterName] = useState("");
   const [registerUserName, setRegisterUserName] = useState("");
@@ -28,7 +26,6 @@ const LoginRegister = () => {
   const [registerUserEmail, setRegisterUserEmail] = useState("");
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const [registerError,setRegisterError] = useState("");
-  const [registerFormValidate, setRegisterFormValidate] = useState(false);
   const [errorLog, setErrorLog] = useState({});
   const [loginFailed, setLoginFailed] = useState(false);
   const [registerFailed,setRegisterFailed] = useState(false);
@@ -51,6 +48,10 @@ const LoginRegister = () => {
     localStorage.clear();
     const user = { loginUserName, loginUserPassword };
     try {
+      if(loginUserName== "" && loginUserPassword==""){
+        throw "Login Failed. Please try again";
+
+      }
       const response = await httpService.post(
         "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/adminlogin",
         { user_name: loginUserName, user_password: loginUserPassword }
@@ -61,10 +62,7 @@ const LoginRegister = () => {
       const admin_id = response?.data?.result[0]?.admin_id;
       console.log(admin_id);
     localStorage.setItem("adminId", JSON.stringify(admin_id));
-      if(loginUserName== "" && loginUserPassword==""){
-        throw "Login Failed";
 
-      }
       // setJwt(accessToken);
       //  setAuth({
       //    user_name: loginUserName,
@@ -79,48 +77,63 @@ const LoginRegister = () => {
       return history.push("/dashboard");
     } catch (err) {
       if (!err?.response) {
-        console.log("No Server Response");
+        window.alert("Missing fields. Please try again.")
       } else if (err.response?.status === 400) {
-        console.log("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        console.log("Unauthorized");
-      } else {
-        console.log("Login Failed");
+        window.alert("Missing Username or Password");
+      }
+      else if(err.response.data.msg){
+        window.alert(err.response.data.msg)
+      } 
+      else if (err.response?.status === 401) {
+      window.alert("Unauthorized");
+    }
+      else if(err.code == "ERR_NETWORK"){
+        console.log(err.code)
+       // window.alert("Oops. It seems like you're disconnected. Please try again.")
+      }
+      else {
+        window.alert(err)
+
       }
       setLoginFailed(true);
     }
   };
 
   const doSubmitRegister = async (e) => {
+    //setRegisterClicked(true);
+    var failed = false;
+    var token_retrieved = "";
     e.preventDefault();
     try {
-      if(registerUserName==""||registerUserOrgId==""||registerUserEmail==""||registerUserPassword==""){
+      console.log(registerUserName,registerUserOrgId)
+      if(registerName==""|registerUserName==""||registerUserOrgId==""||registerUserEmail==""||registerUserPassword==""){
         throw "Missing fields. Please try again"
       }
       const response = await httpService.post(
-        "https://api.linkupss.com/adminregister",
-        JSON.stringify({
+        "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/adminregister",
+       {
           name: registerName,
           user_name: registerUserName,
           user_password: registerUserPassword,
           extra_info: registerUserEmail,
-        }),
+        },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: false,
         }
       );
+        console.log(response);
+      const token = response.data.access_token;
+      //**********************************************//
+      // NEED TO RETRIEVE ADMIN ID FROM /adminregister
+      localStorage.setItem("userToken", token);
+      token_retrieved = token;
 
-      const token = response?.data?.access_token;
-      const admin_id = response?.data?.result[0];
-        console.log(admin_id);
-      localStorage.setItem("userToken", JSON.stringify(token));
-      localStorage.setItem("adminId", JSON.stringify(admin_id));
-      // TODO: remove console.logs before deployment
-      console.log(response.data.msg);
       if(response.data.msg){
         setRegisterFailed(true);
-        setRegisterError(response.data.msg+". Please try again")
+       // setRegisterError(response.data.msg+". Please try again")
+        failed = true
+        window.alert(response.data.msg+". Please try again")
       }
       else{
 
@@ -129,52 +142,65 @@ const LoginRegister = () => {
       
     } catch (err) {
       console.log(err);
-      if (!err?.response) {
+      if (!err.response) {
         console.log("No Server Response");
-      } else if (err.response?.status === 409) {
+      } else if (err.response.status === 409) {
         console.log("Username Taken");
+        failed = true;
       } else {
         console.log("Registration Failed");
       }
-      setRegisterError(err);
+      if(err.code == "ERR_NETWORK"){
+        window.alert("Oops. It seems like you're disconnected. Please try again.")
+        setRegisterFailed(true);
+      }
+      else{
+        failed = true;
+        window.alert(err);
+      }
     }
-    const token = localStorage.getItem("userToken");
-    console.log(token);
-        let headers = {
-      Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY2ODM1NTEyMywianRpIjoiNDhmZWFkYmEtOGM3Ny00NDY5LTg4NjUtNDg5OWNhM2IyZjkwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im1pZ2h0eWVtYnJ5byIsIm5iZiI6MTY2ODM1NTEyMywiZXhwIjoxNjY4MzU2MDIzfQ.zxe9Njt0MeNi_1ELgQ0dfMFthqn21QbitJZjLmtRSjM`,
-      "Content-Type": "application/json",
-    };
-//checking if org with that org code exists
-try{
-  const response = await httpService.post(
-    "https://api.linkupss.com/organizationjoin",
-    JSON.stringify({
-      org_code: registerUserOrgId,
-      user_name: registerUserName,
-    }),
-    {
-      headers: headers
+
+console.log(registerFailed)
+
+if(!failed){
+  try{
+    var auth = "Bearer "+token_retrieved;
+    console.log(auth)
+    var config = { headers: { Authorization: "Bearer "+token_retrieved } };
+    console.log(registerUserOrgId,registerUserName);
+    console.log(config,registerUserOrgId,registerUserName);
+
+    const response = await axios.post(
+      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/organizationjoin",
+     {
+        org_code: registerUserOrgId,
+        user_name:registerUserName,
+      },
+      config
+    );
+    console.log(response);
+    return history.push("/dashboard");
+  }
+  catch(err){
+    failed = true;
+    if(err.code == "ERR_NETWORK"){
+      window.alert("Oops. It seems like you're disconnected. Please try again.")
     }
-  );
-  console.log(response);
+    else{
+      window.alert("Invalid Organisation Code. Please try again or contact your organization.");
+    }
+  }
+
+
 }
-catch(err){
+};
 
-}
-
-
-
-
-
-
-  };
-
-  const validateProperty = (type, val) => {
-    const obj = { [type]: val };
-    const schemas = { [type]: schema[type] };
-    // console.log(obj, schemas);
-    const { error } = Joi.validate(obj, schemas); //youre picking the {error} property of the returned Joi object
-    return error ? error.details[0].message : null;
+const validateProperty = (type, val) => {
+  const obj = { [type]: val };
+  const schemas = { [type]: schema[type] };
+  // console.log(obj, schemas);
+  const { error } = Joi.validate(obj, schemas); //youre picking the {error} property of the returned Joi object
+  return error ? error.details[0].message : null;
   };
   const handleLoginUserName = (e) => {
     setLoginUserName(e.target.value);
@@ -294,14 +320,14 @@ catch(err){
         >
           Login
         </button>
-        <div className="row d-flex justify-content-center">
+        {/* <div className="row d-flex justify-content-center">
           {loginFailed && (
             <Alert className="error-badge mt-3" variant={"danger"}>
               {"Login Failed. Please try again."}
             </Alert>
           )}
                     
-        </div>
+        </div> */}
       </Form>
 
       {/* Register Side */}
@@ -396,11 +422,11 @@ catch(err){
           Sign Up
         </button>
         <div className="row d-flex justify-content-center">
-          {registerFailed && (
+          {/* {registerFailed && (
             <Alert className="error-badge mt-3" variant={"danger"}>
               {registerError}
             </Alert>
-          )}
+          )} */}
         </div>
       </Form>
     </div>

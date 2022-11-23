@@ -119,7 +119,7 @@ const LeftSideBar = (props) => {
               placeholder="Organization name"
               aria-label="Organization name"
               aria-describedby="basic-addon1"
-              defaultValue={getOrgInfo(props.userinfo.org_id).org_name}
+              defaultValue={"SLEC"}
               disabled={true}
             />
           </InputGroup>

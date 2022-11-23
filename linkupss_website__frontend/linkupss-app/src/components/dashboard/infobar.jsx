@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import HelpIcon from "@mui/icons-material/Help";
+import LogoutIcon from '@mui/icons-material/Logout';
 import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Form from "react-bootstrap/Form";
@@ -18,6 +19,7 @@ const InfoBar = (props) => {
 
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
   const [filterButtonState, setfilterButtonState] = useState(false);
+  const [logOutPopUpState,setLogOutPopUpState] = useState(false);
   const handleSearchSession = (e) => {
     const query = e.target.value;
     setSessionSearchQuery(query);
@@ -91,6 +93,15 @@ const InfoBar = (props) => {
           overlay={<Tooltip id="button-tooltip">{"Need help?"}</Tooltip>}
         >
           <HelpIcon onClick={() => props.openOffcanvas("Need help")} />
+        </OverlayTrigger>
+      </span>
+      <span className="col">
+        <OverlayTrigger
+          placement="bottom"
+          delay={{ show: 250, hide: 400 }}
+          overlay={<Tooltip id="button-tooltip">{"Log out?"}</Tooltip>}
+        >
+          <LogoutIcon onClick={() => props.logout()} />
         </OverlayTrigger>
       </span>
     </div>

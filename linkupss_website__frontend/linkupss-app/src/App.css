@@ -397,6 +397,11 @@ transition: transform 0.35s ease-in;
   min-width:150px;
   min-height:100px;
 }
+.confirm-logout-form-size{
+  min-width :100px;
+  min-height:50px;
+
+}
 /*LEFT SIDEBAR*/
 .see-faq-btn{
   width:100%;

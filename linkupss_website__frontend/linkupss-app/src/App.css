@@ -106,6 +106,7 @@
   .nav__list {
     width: auto;
     display: flex;
+    align-items: center;
     max-height: 100%;
     opacity: 1;
     margin-bottom:0px;
@@ -664,4 +665,131 @@ margin-right:15px;
   padding-top: 0!important;
 
 
+}
+.download_button{
+  width: 200px !important;
+  height: 200px !important;
+  color: rgb(130, 128, 128);
+  border-radius: 3px 3px 3px 3px;
+  border-width: 3px;
+  background-color: rgba(130, 128, 128, 0);
+  transition: background-color 0.5s ease-in;
+}
+.download_button:hover{
+border-radius: 3px 3px 3px 3px;
+background-color: rgb(215, 215, 215);
+transition: background-color 0.5s ease-in;
+}
+.custom-tooltip {
+  --bs-tooltip-bg: var(--bs-primary);
+}
+.files-list-width{
+  width:200px !important;
+}
+.home-icons{
+
+  width:200px !important;
+  height:200px !important;
+}
+.home-icons-hug{
+
+  width:400px !important;
+  height:400px !important;
+}
+.home-icons-happy{
+
+  width:50px !important;
+  height:50px !important;
+}
+/* .container-homepage{
+  wid
+} */
+.container-homepage{
+  margin-left:800px !important;
+  margin-right: 800px !important;
+  width:max-content;
+  height:fit-content;
+}
+.home-page-card{
+  width:600px !important;
+  height:600px !important;
+  text-align: center;
+  justify-content: center;
+  align-items: center !important;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-top: 10px !important; /* Added */
+  border-radius: 50% !important;
+}
+.card-img-homepage{
+  width:500px;
+  height:500px;
+  color:cornflowerblue !important;
+  transform:rotate(46deg) translateX(-110px) !important;
+}
+.home-page-card-body{
+  text-align: center !important;
+}
+.logo-font{
+  font-size: 80px !important;
+  font-weight: 400;
+}
+.home-page-card-2{
+  margin-top: 70px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  width:1500px !important;
+  transform: translateX(-10%) !important;
+}
+.homepage-btn-text{
+  width:500px;
+  /* margin-left: 20% !important;
+  margin-right: 60% !important; */
+
+}
+.admin-intro-text{
+  font-size: 25px;
+}
+.participant-intro-text{
+  font-size: 25px;
+}
+.learnmorelinkpad-btn{
+  height:90%;
+}
+.home-circle-1{
+  width:250px !important;
+  height:250px !important;
+  border-radius: 50% !important;
+  position:relative !important; 
+  text-align: center;
+  justify-content: center;
+  align-items: center !important;
+  /* left:50% !important */
+  bottom:-12.5%
+}
+
+.home-circle-2{
+  width:250px !important;
+  height:250px !important;
+  border-radius: 50% !important;
+  position:relative !important; 
+  text-align: center;
+  justify-content: center;
+  align-items: center !important;
+  /* left:50% !important */
+right:53%;
+bottom:-13%;
+}
+
+.home-circle-3{
+  width:250px !important;
+  height:250px !important;
+  border-radius: 50% !important;
+  position:relative !important; 
+  text-align: center;
+  justify-content: center;
+  align-items: center !important;
+  /* left:50% !important */
+left:57%;
+bottom:21%;
 }

@@ -60,6 +60,9 @@ const ParticipantRegister = () => {
                 }
           ).then(result=>{
               console.log(result);
+             if(result.data.code  == 200){
+              history.push("/participants")
+             }
           });
 
         

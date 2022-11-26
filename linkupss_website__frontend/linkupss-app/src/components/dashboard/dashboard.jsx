@@ -100,6 +100,7 @@ const Dashboard = () => {
           console.log(sessions_ew)
           setOrgId(orgnID);
           setAdminName(adminUsername);
+          console.log(adminName)
           setUserInfo({
             _admin_id: localStorage.getItem("adminId"),
             admin_name: adminUsername,
@@ -329,7 +330,7 @@ const Dashboard = () => {
               className="rounded me-2"
               alt=""
             />
-            <strong className="me-auto">Greetings, {adminName} !</strong>
+            <strong className="me-auto">Greetings, {localStorage.getItem("adminUserName")} !</strong>
             <small className="text-muted">just now</small>
           </Toast.Header>
           <Toast.Body>Welcome back to your dashboard. Get started with managing your online sessions!</Toast.Body>

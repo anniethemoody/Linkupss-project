@@ -24,6 +24,7 @@ class SessionCard extends Component {
 const authtoken = "Bearer " + localStorage.getItem("userToken");
 var config = { headers: { Authorization: authtoken } };
     this.props.launchSession();
+    
     try{
 
       const response = await axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/triggermeeting",

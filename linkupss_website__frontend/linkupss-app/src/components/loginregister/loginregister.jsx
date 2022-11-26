@@ -62,6 +62,7 @@ const LoginRegister = () => {
       const admin_id = response?.data?.result[0]?.admin_id;
       console.log(admin_id);
     localStorage.setItem("adminId", JSON.stringify(admin_id));
+    localStorage.setItem("adminUserName",loginUserName);
 
       // setJwt(accessToken);
       //  setAuth({
@@ -123,13 +124,15 @@ const LoginRegister = () => {
         }
       );
         console.log(response);
-      const token = response.data.access_token;
+      const token = response.data.token;
+      const adminid_retrieved = response.data.data[0].admin_id
       //**********************************************//
       // NEED TO RETRIEVE ADMIN ID FROM /adminregister
       localStorage.setItem("userToken", token);
+      localStorage.setItem("adminId",adminid_retrieved);
       token_retrieved = token;
 
-      if(response.data.msg){
+      if(response.data.msg !="Registered"){
         setRegisterFailed(true);
        // setRegisterError(response.data.msg+". Please try again")
         failed = true
@@ -178,6 +181,7 @@ if(!failed){
       },
       config
     );
+    localStorage.setItem("adminUserName",registerUserName);
     console.log(response);
     return history.push("/dashboard");
   }
@@ -273,6 +277,10 @@ const validateProperty = (type, val) => {
   return (
     <div className="row modal-header text-center ">
       {/* Login Side */}
+      {/* <div class="spinner-border text-primary" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div> */}
+
       <Form className="col-md-6 align-items-start" onSubmit={doSubmitLogin}>
         <h1 className="text-primary">Login</h1>
         <div className="row d-flex justify-content-center">

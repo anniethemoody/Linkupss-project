@@ -59,8 +59,9 @@ def createAdmin():
         query = "INSERT INTO admin (name, user_name, user_password, extra_info) SELECT '"+name+"', '"+username+"', get_pass('"+password+"', 'secret'), '{\"email\":\""+email+"\"}'"
         cursor = runSQL(query)
         accessToken = create_access_token(identity = username)
-        response = jsonify(access_token = accessToken)
-        return response
+        query = "select admin_id from admin where user_name='"+username+"'"
+        r = fetchData(query)
+        return jsonify({"code":200, "token":accessToken, "data":r}), 200
 
 @app.route("/organizationjoin", methods=["POST"])
 @jwt_required()
@@ -89,8 +90,9 @@ def createOrganization():
 def createParticipant():
     name = request.json.get("name", None)
     name = name.replace("'","''")
+    email = request.json.get("extra_info", None)
     uuidstr = str(uuid.uuid4())
-    query = "INSERT INTO participant (name, extra_info) SELECT '"+name+"', '{\"uuid\":\""+uuidstr+"\"}'"
+    query = "INSERT INTO participant (name, extra_info) SELECT '"+name+"', '{\"uuid\":\""+uuidstr+"\", \"email\":\""+email+"\"}'"
     cursor = runSQL(query)
     cursor.close()
     query ="SELECT participant_id FROM participant WHERE JSON_EXTRACT(extra_info,'\$.uuid')='"+uuidstr+"'";
@@ -181,7 +183,7 @@ def triggerMeeting():
     query = "update participant_session set invite=1 where session_id="+str(sessionID)
     cursor = runSQL(query)
     cursor.close()
-    query = "create event update_session on schedule at current_timestamp + interval 1 minute do update participant_session set invite = 0 where session_id="+str(sessionID)
+    query = "create event update_session on schedule at current_timestamp + interval 5 second do update participant_session set invite = 0 where session_id="+str(sessionID)
     cursor = runSQL(query)
     cursor.close()
     return jsonify({"code":200, "msg":"trigger sent","result":[]}), 200

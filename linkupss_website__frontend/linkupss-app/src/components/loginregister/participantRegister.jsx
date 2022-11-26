@@ -32,7 +32,7 @@ const ParticipantRegister = () => {
                 "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/participantregister",
                 {
                     name: registerParticipantName,
-                    extra_info: ","+registerParticipantEmail
+                    extra_info:registerParticipantEmail
                 },
                 {
                     headers: { "Content-Type": "application/json" },

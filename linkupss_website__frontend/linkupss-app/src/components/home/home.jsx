@@ -48,7 +48,7 @@ const Home = () => {
               Here To Serve Your Community Engagements With Technology
             </AnimatedText>
           </h1>
-          <h4 className="display-7" >
+          <h4 className="display-6" >
 
           <AnimatedText
               type="words" // animate words or chars
@@ -115,12 +115,7 @@ const Home = () => {
                   <div className="card border-primary home-circle-3">
                       <span className="display-6 text-secondary">Automation-driven</span>
                   </div>
-                  {/* <div className="card home-circle-1">
-                      Digital Inclusion
-                  </div>
-                  <div className="card home-circle-1">
-                      Digital Inclusion
-                  </div> */}
+
                   </div>
                 </div>
 
@@ -133,9 +128,9 @@ const Home = () => {
               <div className="card-body row">
                 <span className="col">
 
-                <h1>We make it simple</h1>
+                <h1 className="display-5">We make it simple</h1>
                 </span>
-                <span className="col"> 
+                <span className="col lead"> 
                 Technology can be confusing sometimes for new users or
                         people less exposed to technology, which is why Linkupss
                         aims to break that norm and by starting from elderly
@@ -148,9 +143,9 @@ const Home = () => {
               <div className="card-body row">
                 <span className="col">
 
-                <h1>We want to include you</h1>
+                <h1 className="display-5">We want to include you</h1>
                 </span>
-                <span className="col"> 
+                <span className="col lead"> 
                   Digital inclusion is so important to us, as we believe that
                   nobody deserves to be left out from the benefits of technology
                   and whether you are a senior or a child, we should have equal
@@ -162,10 +157,10 @@ const Home = () => {
             <div className="card mt-5">
               <div className="card-body row">
                 <span className="col">
-                    <h1>We want to hear your voice</h1>
+                    <h1 className="display-5">We want to hear your voice</h1>
                 </span>
-                <span className="col">
-                    The Linkupss team believes everyone's voice is equally valuable when it comes to technology usage, here we promote 
+                <span className="col lead">
+                    The Linkupss team believes everyone's voice is equally valuable when it comes to technology usage, here we promote equal representation in the world of technology. 
                 </span>
               </div>
             </div>
@@ -184,7 +179,7 @@ const Home = () => {
             online meetings to manage their sessions cleaner and easier. This
             online platform acts as an extension to the Linkpad.
           </span>
-          <div className="card home-page-card text-center">
+          <div className="card home-page-card-diagram  text-center mt-4">
             <div className="card-body">
               <img src={websiteflow} className="" alt="..." />
             </div>
@@ -209,7 +204,7 @@ const Home = () => {
               <p className="participant-intro-text">Designed for the participants, the Linkpad is an external device that is connected to the client computer and serves as a simplied interface for online meeting softwares, such as Zoom, Google Meets, etc.</p>
               </button>
               <Link to="/products">
-              <button type="button" className="btn btn-md btn-outline-primary learnmorelinkpad-btn">
+              <button type="button" className="btn btn-lg btn-outline-primary learnmorelinkpad-btn">
                 Learn more about Linkpad
               </button>
               </Link>
@@ -224,31 +219,25 @@ const Home = () => {
         <div className="container-fluid py-5">
           <div className="row">
             <div className="col text-center">
-              <SupportAgentIcon className="text-primary" fontSize="large" />
+              <SupportAgentIcon className="text-primary home-page-icons" fontSize="large" />
               <h1 className="text-primary">Tech Support</h1>
-              <div className="text-primary">
-            The Linkupss is eager to provide a wide range of resources to help users with any problems or concerns they have with our products.
-            To see F.A.Q, click here. 
+              <div className="lead text-primary">
+            Linkupss is eager to provide a wide range of resources to help users with any problems or concerns they have with our products.
+            To see F.A.Q, click here. For more resources, you can contact the Linkupss team direcrly through your organization.
               </div>
             </div>
             <div className="col text-center">
-              <PublicIcon className="text-primary" fontSize="large" />
+              <PublicIcon className="text-primary home-page-icons" fontSize="large" />
               <h1 className="text-primary" >Eco-friendly</h1>
-              <div className="text-primary">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus
-                dolore quas nam modi ipsum? Impedit numquam aperiam
-                exercitationem at autem optio consectetur aliquid officiis
-                laboriosam delectus tempore dolorem, ratione perspiciatis?
+              <div className="lead text-primary">
+              Linkupss truly believes in creating a greener and more sustainble environment, which is why we aim to use recyclable, biodegradable and biosourced materials in our 3D modelling processes as well as minimizing waste or unneeded resources.
               </div>
             </div>
             <div className="col text-center">
-              <SecurityIcon className="text-primary" fontSize="large" />
+              <SecurityIcon className="text-primary home-page-icons" fontSize="large" />
               <h1 className="text-primary">High Security</h1>
-              <div className="text-primary">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta
-                saepe ducimus reiciendis quod culpa, modi, autem suscipit quis
-                doloremque harum repudiandae. Sed corrupti, nulla aut tempora
-                aliquam impedit facilis debitis.
+              <div className="lead text-primary">
+            Linkupss keeps your information secure with base 64 encoding in our database, and disallowing sensitive information to be kept on our website. Linkupss values information security as one of their top priorities and will do everything in their power to keep admins and participants's experience.
               </div>
             </div>
           </div>

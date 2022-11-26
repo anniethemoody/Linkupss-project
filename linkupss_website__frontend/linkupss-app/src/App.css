@@ -469,6 +469,16 @@ transition:transform 0.3s ease-in !important;
 
 
 
+.linkpad-colour-txt{
+  width:400px;
+  height:500px;
+  display: flex !important;
+justify-content: center !important;
+align-items: center !important;
+}
+
+
+
 .linkpad-product-phone-icon-color{
   color:rgb(98,105,115);
 }
@@ -792,4 +802,19 @@ bottom:-13%;
   /* left:50% !important */
 left:57%;
 bottom:21%;
+}
+.home-page-card-diagram{
+  width:400px !important;
+  height:400px !important;
+  text-align: center;
+  justify-content: center;
+  align-items: center !important;
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-top: 10px !important; /* Added */
+  border-radius: 50% !important;
+}
+.home-page-icons{
+  width:100px !important;
+  height:100px !important;
 }

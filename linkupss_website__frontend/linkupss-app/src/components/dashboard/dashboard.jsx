@@ -219,7 +219,7 @@ const Dashboard = () => {
           code: session_new.meeting_link,
           start_time: session_new.session_time,
           recurring: recurring,
-          password: session_new.meeting_link,
+          password: session_new.desc,
           day_of_week: session_new.day_of_week,
         };
         const response = await axios.post(

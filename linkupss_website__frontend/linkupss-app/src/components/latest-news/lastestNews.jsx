@@ -17,7 +17,9 @@ const LatestNews = () => {
             {text}
         </button> */}
         <div className="p-5 mb-4 bg-light rounded-3 container ">
-            
+            <span className = "display-6">
+                There are currently no updates. Stay tuned for any latest information about Linkupss !
+            </span>
         </div>
 
     </div>

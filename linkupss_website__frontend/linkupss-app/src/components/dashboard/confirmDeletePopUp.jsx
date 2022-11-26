@@ -36,7 +36,6 @@ const DeletePopUp = (props) => {
         <button className="btn btn-secondary" onClick={props.hide}>
           Dismiss
         </button>
-        {console.log(props.selectedSession)}
         <button className="btn btn-danger" onClick={()=>deleteSelectedSession(props)}>
           Delete
         </button>

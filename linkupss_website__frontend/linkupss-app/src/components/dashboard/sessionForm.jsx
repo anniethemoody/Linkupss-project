@@ -602,9 +602,9 @@ const fetchParticipants =  () => {
         </InputGroup>
 
         <InputGroup hasValidation className="mt-3">
-          <InputGroup.Text>Description</InputGroup.Text>
+          <InputGroup.Text>Session Password</InputGroup.Text>
           <Form.Control
-            aria-label="Description of session"
+            aria-label="Passcode of session"
             onChange={handleSessionDesc}
             onFocus={handleDescFocusing}
             value={sessionDesc}

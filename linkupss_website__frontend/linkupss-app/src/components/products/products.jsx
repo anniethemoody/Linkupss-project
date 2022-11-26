@@ -24,6 +24,7 @@ import elderly_zoom from "../../media/elderly-zoom.png";
 import elderly_tech from "../../media/elderly-tech.png";
 import flutter_logo from "../../media/flutter_logo_2.webp";
 import windows_logo from "../../media/windows-logo.svg";
+import arduinopython from "../../media/arduinopython.webp";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -151,10 +152,8 @@ const Products = () => {
                   Join your organization in virtual meetings
                 </h1>
                 <p style={{ fontSize: "20px" }}>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Incidunt eaque repudiandae ex, cupiditate necessitatibus
-                  eveniet assumenda asperiores animi nostrum corrupti?
-                </p>
+                  As online meetings have become more prevalent across the past few years under COVID-19, Linkupss believes there are groups,from seniors to young children, that struggle with such an experience due to confusing user interfaces that are not intuitive. Hence the linkpad is the bridge betwwen you and your meeting. 
+                    </p>
               </div>
             </div>
             <div className="col-6">
@@ -183,11 +182,10 @@ const Products = () => {
                   Linkpad will do everything for you
                 </h1>
                 <p style={{ fontSize: "20px", textAlign: "right" }}>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Incidunt eaque repudiandae ex, cupiditate necessitatibus
-                  eveniet assumenda asperiores animi nostrum corrupti?
+                The Linkpad is a way of simplifying everything a participant sees when they want to join their online meetings. With literally a push of a button on the pad, ir direcrly brings you into the meeting without any extra effort in understadning interfaces, learning the software.
+
                 </p>
-                <span
+                {/* <span
                   className="learn-more-section d-flex align-items-center justify-content-around"
                   style={{ float: "right" }}
                 >
@@ -196,7 +194,7 @@ const Products = () => {
                   </span>
 
                   <ArrowRightAltIcon className="learn-more-icon" />
-                </span>
+                </span> */}
               </div>
             </div>
           </div>
@@ -204,12 +202,10 @@ const Products = () => {
             <div className="col">
               <div>
                 <h1 className="text-primary">
-                  Connect with your community using the Linkpad app
+                  Start using Linkpad with the Linkpad packages
                 </h1>
                 <p style={{ fontSize: "20px" }}>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Incidunt eaque repudiandae ex, cupiditate necessitatibus
-                  eveniet assumenda asperiores animi nostrum corrupti?
+In order to operate the Linkpad, users will need to install the packages from the Linkupss website for the Linkpad to have the proper software requirements. The package includes scripts which drive the Linkpad as well as browser automation software.
                 </p>
                 <span className="learn-more-section d-flex align-items-center">
                   <button className="btn btn-lg btn-primary download-app-btn d-flex align-items-center">
@@ -220,11 +216,11 @@ const Products = () => {
                     <span className="mac-text">Download on macOS</span>
                     <AppleIcon fontSize="large" />
                   </button>
-
+{/* 
                   <span className="d-flex justify-content-between align-items-center">
                     <h4 className="learn-more-text text-warning">Learn more</h4>
                     <ArrowRightAltIcon className="learn-more-icon" />
-                  </span>
+                  </span> */}
                 </span>
               </div>
             </div>
@@ -232,7 +228,7 @@ const Products = () => {
               <div>
                 <img
                   className="how-does-it-work-img3 d-block w-100 "
-                  src={flutter_logo}
+                  src={arduinopython}
                   alt="First slide"
                 />
               </div>
@@ -271,7 +267,7 @@ const Products = () => {
           </div>
           <div className="col d-flex align-items-center flex-column justify-content-center">
             <Card
-              className="mb-3 bg-success border border-success"
+              className="mb-3 bg-success border border-success text-center"
               style={{ width: "100%" }}
             >
               <Card.Body>
@@ -288,7 +284,7 @@ const Products = () => {
               </Card.Body>
             </Card>
             <Card
-              className="mb-3 bg-primary border border-success"
+              className="mb-3 bg-primary border border-success text-center"
               style={{ width: "100%", fontSize: "35px" }}
             >
               <Card.Body>
@@ -308,7 +304,7 @@ const Products = () => {
         </div>
         <div className="linkpadcol-second row my-3">
           <div className="col d-flex align-items-center flex-column justify-content-center">
-            <Card className="mb-3 bg-warning" style={{ width: "100%" }}>
+            <Card className="mb-3 bg-warning text-center " style={{ width: "100%" }}>
               <Card.Body>
                 <Card.Title
                   style={{ color: "white", fontWeight: "", fontSize: "25px" }}
@@ -322,14 +318,15 @@ const Products = () => {
                 </Card.Text>
               </Card.Body>
             </Card>
-            <Card className="mb-3 bg-danger" style={{ width: "100%" }}>
-              <Card.Body>
+            <Card className="mb-3 bg-danger align-middle" style={{ width: "100%" }}>
+              <Card.Body className="">
                 <Card.Title
+                className="text-center align-center"
                   style={{ color: "white", fontWeight: "", fontSize: "25px" }}
                 >
                   Easy implementation at your organization
                 </Card.Title>
-                <Card.Text style={{ color: "white", fontSize: "22px" }}>
+                <Card.Text className = "text-center" style={{ color: "white", fontSize: "22px" }}>
                   The Linkpad has very simple implementation steps, simply
                   connect the pad to your computer and start accessing your
                   sessions right away

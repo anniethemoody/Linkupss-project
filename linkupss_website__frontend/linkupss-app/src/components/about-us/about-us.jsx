@@ -18,6 +18,8 @@ import abaidullah_pic from "../../media/abaidullah-profile-pic.png";
 import arman_pic from "../../media/arman-profile-pic.png";
 
 import annie_pic from "../../media/annie-profile-pic.png";
+import david_pic from "../../media/david-profile-pic.jpg";
+import liza_pic from "../../media/liza-profile-pic.jpg";
 const AboutUs = () => {
   const title = "Meet Our Team";
   const desc =
@@ -30,6 +32,8 @@ const AboutUs = () => {
   const ambrose_desc = "";
   const eric_desc = "";
   const sahil_desc = "";
+  const liza_desc = "";
+  const david_desc = "";
   const andrew_desc =
     "In the last decade, tech has completely revolutionized the way we operate every day. A lot of emphasis has been put on creating newer and faster things, yet I believe we still have some work to do in terms of accessibility to allow everyone to truly take advantage of the incredible things that tech offers. Working on this project gives me the chance to use my skills to significantly improve the lives of many users. I’m excited to see what we can achieve!";
   const arman_desc =
@@ -130,7 +134,52 @@ const annie_desc = "Zoompad is not only an application about enhancing adapitibi
                     </div>
                   </div>
 
+
+
+
+
                   <div className="col d-flex justify-content-center">
+                    <div
+                      className="aboutus-card card"
+                      style={{ width: "18rem" }}
+                      onClick={() =>
+                        handleAboutUsModal(
+                          "Liza Abraham",
+                          "Developer",
+                          liza_desc
+                        )
+                      }
+                    >
+                      <img src={liza_pic} className="card-img-top" alt="..." />
+                      <div className="card-body">
+                        <h4
+                          className="text-primary"
+                          style={{ textAlign: "center" }}
+                        >
+                          Liza Abraham
+                        </h4>
+                        <h5
+                          className="text-secondary"
+                          style={{ textAlign: "center" }}
+                        >
+                          Developer
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div className="carousel-item">
+              <div className="container">
+                <span className="row d-flex justify-content-center mb-3">
+                  <h1 className="text-secondary">Software Team</h1>
+                </span>
+                <div className="row my-3">
+
+
+                <div className="col d-flex justify-content-center">
                     <div
                       className="aboutus-card card"
                       style={{ width: "18rem" }}
@@ -159,15 +208,15 @@ const annie_desc = "Zoompad is not only an application about enhancing adapitibi
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="carousel-item">
-              <div className="container">
-                <span className="row d-flex justify-content-center mb-3">
-                  <h1 className="text-secondary">Software Team</h1>
-                </span>
-                <div className="row my-3">
+
+
+
+
+
+
+
+
+
                 <div className="col d-flex justify-content-center">
                     <div
                       className="aboutus-card card"
@@ -280,6 +329,41 @@ const annie_desc = "Zoompad is not only an application about enhancing adapitibi
                       </div>
                     </div>
                   </div>
+
+                  <div className="col d-flex justify-content-center">
+                    <div
+                      className="aboutus-card card"
+                      style={{ width: "18rem" }}
+                      onClick={() =>
+                        handleAboutUsModal(
+                          "David Montes de Oca",
+                          "Developer & Hardware Engineer",
+                          david_desc
+                        )
+                      }
+                    >
+                      <img
+                        src={david_pic}
+                        className="card-img-top"
+                        alt="..."
+                      />
+                      <div className="card-body">
+                        <h4
+                          className="text-primary"
+                          style={{ textAlign: "center" }}
+                        >
+                         David Montes de Oca
+                        </h4>
+                        <h5
+                          className="text-secondary"
+                          style={{ textAlign: "center" }}
+                        >
+                          Developerer &amp; Hardware engineer
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+
 
                   <div className="col d-flex justify-content-center">
                     <div

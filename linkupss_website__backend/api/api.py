@@ -172,7 +172,7 @@ def removeFromSession():
 @app.route("/checkfortrigger", methods=["POST"])
 def checkTrigger():
     participantID = request.json.get("participant_id", None)
-    query = "select url, password from session s, participant_session ps where ps.session_id=s.session_id and invite=1 and participant_id="+str(participantID)
+    query = "select code, password from session s, participant_session ps where ps.session_id=s.session_id and invite=1 and participant_id="+str(participantID)
     r=fetchData(query)
     return jsonify({"code":200, "msg":"triggermeeting","meetinginfo":r}), 200
 

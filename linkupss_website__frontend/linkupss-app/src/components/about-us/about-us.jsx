@@ -324,7 +324,7 @@ const annie_desc = "Zoompad is not only an application about enhancing adapitibi
                           className="text-secondary"
                           style={{ textAlign: "center" }}
                         >
-                          Developerer &amp; Hardware engineer
+                          Developer &amp; Hardware engineer
                         </h5>
                       </div>
                     </div>
@@ -358,7 +358,7 @@ const annie_desc = "Zoompad is not only an application about enhancing adapitibi
                           className="text-secondary"
                           style={{ textAlign: "center" }}
                         >
-                          Developerer &amp; Hardware engineer
+                          Developer &amp; Hardware engineer
                         </h5>
                       </div>
                     </div>

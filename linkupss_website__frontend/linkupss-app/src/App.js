@@ -19,12 +19,14 @@ import TestCreateSession from './components/dashboard/testCreateSession';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ParticipantRegister from './components/loginregister/participantRegister';
 import Participants from './components/participants/participants';
+import Footer from './components/footer';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   return (
     <div className="box">
     <NavBar className="navpos"/>
     <div className="content">
+    <Footer className = "footerpos"/>
     
     <Switch>
     <Route path="/faq" component={FAQ}/> 
@@ -36,6 +38,7 @@ function App() {
     <Route path="/participantregister" component={ParticipantRegister}/> 
     <Route path="/dashboard" component={Dashboard}/> 
     <Route path="/participants" component = {Participants}/>
+    <Route path="/footer" component={Footer}/> 
     <Route path="/" component={Home}/> 
     </Switch>
     </div>

@@ -818,3 +818,9 @@ bottom:21%;
   width:100px !important;
   height:100px !important;
 }
+
+/* FOOTER */
+.footerpos{
+  position:absolute !important ;
+  bottom:0!important ;
+}

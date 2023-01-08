@@ -26,8 +26,6 @@ function App() {
     <div className="box">
     <NavBar className="navpos"/>
     <div className="content">
-    <Footer className = "footerpos"/>
-    
     <Switch>
     <Route path="/faq" component={FAQ}/> 
     <Route path="/products" component={Products}/> 
@@ -38,11 +36,12 @@ function App() {
     <Route path="/participantregister" component={ParticipantRegister}/> 
     <Route path="/dashboard" component={Dashboard}/> 
     <Route path="/participants" component = {Participants}/>
-    <Route path="/footer" component={Footer}/> 
     <Route path="/" component={Home}/> 
     </Switch>
     </div>
+    <Footer className = "footerpos"/>
     </div>
+    
   );
 }
 

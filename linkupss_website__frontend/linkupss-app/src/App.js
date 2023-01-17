@@ -22,9 +22,11 @@ import Participants from './components/participants/participants';
 import Footer from './components/footer';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
+  document.body.style.backgroundColor = "#dbe3ff";
+  document.body.style.margin = "0";
   return (
     <div className="box">
-    <NavBar className="navpos"/>
+    <NavBar/>
     <div className="content">
     <Switch>
     <Route path="/faq" component={FAQ}/> 
@@ -39,7 +41,7 @@ function App() {
     <Route path="/" component={Home}/> 
     </Switch>
     </div>
-    <Footer className = "footerpos"/>
+    {/* <Footer className = "footerpos"/> */}
     </div>
     
   );

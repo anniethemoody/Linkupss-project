@@ -17,7 +17,7 @@ const TestCreateSession = () => {
           }
 
         const response = await axios.post(
-          "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/createsession",
+          "https://api.linkupss.com/createsession",
           data,
           config
         );

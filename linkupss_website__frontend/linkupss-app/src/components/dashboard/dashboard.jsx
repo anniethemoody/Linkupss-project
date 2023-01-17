@@ -79,7 +79,7 @@ const Dashboard = () => {
       console.log(localStorage.getItem("adminId"));
 
       const response =  axios.post(
-        "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/fetchinfo",
+        "https://api.linkupss.com/fetchinfo",
         {
           admin_id: localStorage.getItem("adminId"),
         },
@@ -147,7 +147,7 @@ const Dashboard = () => {
     setSessions(new_sessions);
     setFilteredSessions(new_sessions);
     try{
-      const response = await axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/deletesession",
+      const response = await axios.post("https://api.linkupss.com/deletesession",
       {
         session_id: session._id
       },
@@ -223,7 +223,7 @@ const Dashboard = () => {
           day_of_week: session_new.day_of_week,
         };
         const response = await axios.post(
-          "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/createsession",
+          "https://api.linkupss.com/createsession",
           data,
           config
         );

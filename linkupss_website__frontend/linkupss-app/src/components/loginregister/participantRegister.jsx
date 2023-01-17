@@ -29,7 +29,7 @@ const ParticipantRegister = () => {
           }
         
             const response = axios.post(
-                "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/participantregister",
+                "https://api.linkupss.com/participantregister",
                 {
                     name: registerParticipantName,
                     extra_info:registerParticipantEmail

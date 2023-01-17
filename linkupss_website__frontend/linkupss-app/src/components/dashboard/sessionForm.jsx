@@ -231,7 +231,7 @@ const SessionForm = (props) => {
 
     }
     const response = axios.post(
-      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/addtosession",
+      "https://api.linkupss.com/addtosession",
       {
         participant_id:_member_id,
         session_id:props.selectedSession._id
@@ -258,7 +258,7 @@ const SessionForm = (props) => {
     var config = { headers: { Authorization: authtoken } };
   
     const response = axios.post(
-      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/removefromsession",
+      "https://api.linkupss.com/removefromsession",
       {
         
         session_id:props.selectedSession._id,
@@ -412,7 +412,7 @@ const fetchParticipants =  () => {
   const authtoken = "Bearer " + localStorage.getItem("userToken");
   var config = { headers: { Authorization: authtoken } };
 
- const repsonse = axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/participantlist",
+ const repsonse = axios.post("https://api.linkupss.com/participantlist",
  {
   admin_id: localStorage.getItem("adminId")
  }

@@ -28,7 +28,7 @@ var config = { headers: { Authorization: authtoken } };
 
     try{
 
-      const response = await axios.post("https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/triggermeeting",
+      const response = await axios.post("https://api.linkupss.com/triggermeeting",
       {
         session_id:session._id
       }

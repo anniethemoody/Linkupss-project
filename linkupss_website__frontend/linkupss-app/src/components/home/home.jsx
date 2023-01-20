@@ -209,7 +209,8 @@ const Valuedesc = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
+  margin-left:-60px;
 `;
 const Group0 = styled.div`
   height: 171px;
@@ -657,7 +658,7 @@ const Login_Text = styled.div`
   font-family: Outfit;
 `;
 const Linkpad = styled.div`
-  width: 27em;
+  width: 28em;
   gap: 14px;
   display: flex;
   flex-direction: column;
@@ -670,13 +671,13 @@ const Linkpad = styled.div`
   background-color: #fcfcfc;
 `;
 const Linkpad_Top = styled.div`
-  width: 23.81em;
+  width: 26em;
   gap: 47px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
-  padding: 0.94em 0.44em 1em 0.44em;
+  align-items: center;
+  padding: 0.94em 0em 1.5em 1em;
   background-size: cover;
   background-image: url("https://file.rendit.io/n/uy6cm7wE47SGILItmAro.svg");
 `;
@@ -687,7 +688,7 @@ const Join = styled.img`
   align-self: center;
 `;
 const Leave = styled.img`
-  width: 10.88em;
+  width: 11em;
   height: 151px;
   justify-content: center;
   align-self: center;
@@ -709,21 +710,22 @@ const Mic = styled.div`
   align-items: center;
 `;
 const Mic_Box = styled.div`
-  width: 12em;
-  height: 160px;
+  width: 16em;
+  height: 200px;
 
   gap: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1em 1.94em 0.94em 1.94em;
+  padding: 1.8em 0em 2em 0em;
   border-radius: 30px;
   background-color: rgba(203, 252, 255, 0.71);
 `;
 const Mic_Icon = styled.img`
-  width: 7.88em;
+  width: 9em;
   height: 153px;
   position: relative;
+
 `;
 const Camera = styled.div`
 width:100%;
@@ -967,7 +969,7 @@ const Apple_2_Top_Section = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 0px 0px 0px 0.63em;
-  margin-left:12em;
+  margin-left:-10em;
   margin-top:-10px;
 `;
 const Apple_2_Title = styled.div`
@@ -978,6 +980,7 @@ const Apple_2_Title = styled.div`
   font-size: 50px;
   font-weight: 700;
   font-family: Outfit;
+  margin-left:-5em;
 `;
 const Apple_2_Desc = styled.div`
   width: 26.6em;
@@ -1000,6 +1003,7 @@ const Apple_2_Button_Section = styled.div`
   align-items: flex-start;
   padding: 0px 15em 0px 9.94em;
   margin-top: 5px;
+  margin-right:10px;
 `;
 const Part_Signup_Button = styled.button`
   width: 7.5em;
@@ -1054,7 +1058,7 @@ const Apple_2_Bot_Desc = styled.div`
   font-family: Outfit;
   text-align: center;
   white-space: pre-wrap;
-  margin-left:8em;
+  margin-left:-5em;
   margin-top:1em;
 `;
 
@@ -1138,7 +1142,7 @@ const Get_Started_Text = styled.div`
 const Home = () => {
   return (
     <React.Fragment>
-      <div className="space-box" />
+      <div className="space-box-hero" />
 
       <HeroSectionRootRootRoot>
         <Hero_Leftcol>

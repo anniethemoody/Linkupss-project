@@ -51,16 +51,33 @@ class NavBar extends Component{
     render(){
       return(
         <NavbarBoxRootRootRoot>
-        <Text1>LINKUPSS</Text1>
+        <NavLink style={{ textDecoration: 'none' }} to="/">
+          <Text1>LINKUPSS</Text1>
+        </NavLink>
         <Group>
           <GroupA>
+          <NavLink style={{ textDecoration: 'none' }} to="/setup">
+
             <Text2>Setup</Text2>
-            <Text3>About Us</Text3>
+          </NavLink>
+          <NavLink style={{ textDecoration: 'none' }} to="/aboutus">
+          <Text3>About Us</Text3>
+          </NavLink>
+
+           <NavLink style={{ textDecoration: 'none' }} to="/products">
+
             <Text4>Products</Text4>
+           </NavLink>
           </GroupA>
           <GroupB>
+            <NavLink style={{ textDecoration: 'none' }} to ="/adminloginregister">
+
             <Text5>Login</Text5>
+            </NavLink>
+            <NavLink style={{ textDecoration: 'none' }} to ="/adminloginregister">
             <Text6>Sign Up</Text6>
+
+</NavLink>
           </GroupB>
         </Group>
       </NavbarBoxRootRootRoot>

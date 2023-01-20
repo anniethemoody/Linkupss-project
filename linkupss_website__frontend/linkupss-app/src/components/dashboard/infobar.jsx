@@ -48,13 +48,15 @@ const InfoBar = (props) => {
       <span className="col-5">
         <InputGroup>
           <span
-            className="badge bg-primary"
+            className="badge info-bar-badge"
             style={{ display: "flex", alignItems: "center" }}
           >
             {props.orgInfo.org_name}
           </span>{" "}
           {/*30 Characters*/}
           <Form.Control
+          type="search-bar"
+          className="search-bar-style"
             placeholder="Search for a session in your organisation"
             aria-label="Search for a session in your org"
             aria-describedby="basic-addon1"

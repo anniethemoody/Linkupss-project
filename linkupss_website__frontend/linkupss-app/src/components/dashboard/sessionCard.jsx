@@ -4,18 +4,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from "@mui/icons-material/Close";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
 import axios from "axios";
 class SessionCard extends Component {
   findBadgeType() {
-    let badge_class_name = "flex badge bg-";
+    let badge_class_name = "flex badge ";
     const time_type = this.props.session.session_time;
     //console.log(time_type);
     //console.log(time_type.charAt(0));
     if (time_type.charAt(0) === "0") {
-      badge_class_name += "warning";
+      badge_class_name += "am-colour";
       // console.log(badge_class_name)
     } else {
-      badge_class_name += "primary";
+      badge_class_name += "pm-colour";
     }
     return badge_class_name;
   }
@@ -47,7 +49,7 @@ var config = { headers: { Authorization: authtoken } };
     const { session, sessionEditClicked, numOfSessions ,confirmDeleteSession,launchSession} = this.props;
 
     return (
-      <div className="col-sm-4 pb-2">
+      <div className="col-sm-4 pb-2 card-style">
         <div className="card card-outline-info card-spacing">
           <div className="card-block">
             <button
@@ -64,8 +66,14 @@ var config = { headers: { Authorization: authtoken } };
                   className={this.findBadgeType()}
                   style={{ fontSize: "15px" }}
                 >
+                  <span>
+
                   {session.session_time + " " + session.day_of_week}
+                  </span>
+                 { this.findBadgeType()=="flex badge am-colour"?
+                 <WbSunnyIcon/>:<ModeNightIcon/>}
                 </span>
+               
               </span>
             </div>
             <div className="card-desc">{session.desc} </div>
@@ -74,7 +82,7 @@ var config = { headers: { Authorization: authtoken } };
               className="bottom-card"
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <button className="btn btn-primary centered" onClick={() => this.doStartSession({session})}>
+              <button className="btn centered start-session-button" onClick={() => this.doStartSession({session})}>
                 Start Session
               </button>
 

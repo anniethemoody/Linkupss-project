@@ -327,6 +327,32 @@ padding-right:0;
   
 
 }
+.info-bar-badge{
+background-color: #798dac;
+color: #f8f8f8 !important;
+font-family: Outfit !important;
+}
+.search-bar-style::placeholder{
+font-family: Outfit !important;
+color:#798dac !important;
+
+}
+
+input[type=search-bar], select, textarea{
+  font-family: Outfit !important;
+  color:#798dac !important;
+}
+
+/* .search-bar-style::first-letter{
+  font-family: Outfit !important;
+  color:#798dac !important;
+  
+  } */
+/* .search-bar-style::first-line{
+font-family: Outfit !important;
+color:#798dac !important;
+
+} */
 .filter-dropdown{
   z-index:10000 !important;
   position: absolute !important;
@@ -350,6 +376,8 @@ padding-right:0;
   height: 65px;
   width:auto !important;
   padding: 13px 15px 20px 15px; 
+  color:#f8f8f8;
+  background-color: #798dac;
   border-radius: 40px;
   border-width:0;
   position:fixed ;
@@ -373,6 +401,7 @@ padding-right:0;
 
 .floating-action-button-text{
   font-size:22px;
+  font-family: Outfit;
   transform:scaleX(0);
   width:0;
   transition: transform 0.35s ease-in,width 0.35s ease-in;
@@ -410,11 +439,18 @@ transition: transform 0.35s ease-in;
 }
 /**/
 .session-edit-button{
-  color:rgba(53,121,246);
+  color:#f8f8f8;
   box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.19);
   border-radius: 50%;
   padding:5px 5px;
   
+  }
+
+
+  .card{
+    border-radius: 20px !important;
+    background-color: rgba(156,178,225,72%) !important;
+    border: none !important;
   }
 
   .card-spacing{
@@ -426,6 +462,17 @@ transition: transform 0.35s ease-in;
     margin-bottom: 4%;
     
   }
+  .card-style{
+    border-radius: 20px;
+  }
+  .card-title{
+    font-family: Outfit;
+    color:rgb(99,104,151);
+  }
+  .card-desc{
+    font-family: Outfit;
+    color:rgb(99,104,151);
+  }
 
     #card-grid-spacing{
       margin-left:5px;
@@ -434,7 +481,20 @@ transition: transform 0.35s ease-in;
       height:300px;
     }
 
+    .start-session-button{
+      background-color: #798dac !important;
+      border-radius: 20px !important;
+      font-family: Outfit !important;
+      color: #f8f8f8 !important;
+      
+    }
+.am-colour{
+  background-color:rgba(255,229,136) !important;
+}
+.pm-colour{
+  background-color:rgba(136,191,255) !important;
 
+}
     /*SESSION FORM*/
     .session-form-size{
       min-width:200px;
@@ -962,4 +1022,43 @@ font-weight: 700;
   align-items: center;
   align-self:center;
   margin-top:10px;
+}
+.space-box-hero{
+  height:100px;
+}
+.admin-btn-grp{
+  border-top-left-radius:20px !important;
+  border-bottom-left-radius:20px !important;
+
+  background-color: #f8f8f8;
+  color: #798dac;
+  border:none;
+}
+
+.part-btn-grp{
+  border-top-right-radius:20px !important;
+  border-bottom-right-radius:20px !important;
+
+  background-color: #f8f8f8;
+  color: #798dac;
+  border:none;
+}
+.part-btn-grp .admin-btn-grp,.part-btn-grp{
+  border:3px #798dac !important;
+}
+.admin-part-btn-grp{
+  color: #798dac;
+  transform:scale(1.5);
+  
+}
+.space-register{
+  width:100% !important;
+  height:100px !important;
+}
+.button-group-flex{
+  width:100%;
+  padding: 3%;
+  padding-left:35%;
+  padding-right:40%;
+  padding-bottom: 8%;
 }

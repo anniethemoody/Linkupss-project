@@ -3,7 +3,7 @@ import Jumbotron from "../jumbotron";
 import AboutUsModal from "./about-us-modal";
 import jayson_pic from "../../media/jayson-profile-pic.png";
 
-import nico_pic from "../../media/nico-profile-pic.png";
+import nico_pic from "../../media/nico-profile-pic.jpeg";
 
 import ambrose_pic from "../../media/ambrose-profile-pic.png";
 

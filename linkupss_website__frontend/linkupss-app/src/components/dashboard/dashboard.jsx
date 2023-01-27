@@ -322,7 +322,7 @@ const Dashboard = () => {
           show={showNotification}
           delay={3000}
           autohide
-          bg = "info"
+          className="welcome-back-toast"
         >
           <Toast.Header>
             <img

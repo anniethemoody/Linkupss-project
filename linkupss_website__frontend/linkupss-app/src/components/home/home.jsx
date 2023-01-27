@@ -210,7 +210,7 @@ const Valuedesc = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left:-60px;
+  margin-left: -60px;
 `;
 const Group0 = styled.div`
   height: 171px;
@@ -593,7 +593,7 @@ const Signup_Button = styled.button`
   border-radius: 50px;
   box-sizing: content-box;
   background-color: #f4f0f1;
-  margin-top:2em;
+  margin-top: 2em;
   cursor: pointer;
   &: hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
@@ -633,7 +633,7 @@ const Login_Button = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top:1.8em;
+  margin-top: 1.8em;
   align-items: flex-start;
   padding: 0px;
   padding-top: 1em;
@@ -693,66 +693,41 @@ const Leave = styled.img`
   justify-content: center;
   align-self: center;
 `;
+
 const Linkpad_Bottom = styled.div`
   gap: 18px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-self: flex-end;
   align-items: flex-start;
 `;
-const Mic = styled.div`
-  width: 100%;
-  position: relative;
+const MicBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-`;
-const Mic_Box = styled.div`
-  width: 16em;
-  height: 200px;
-
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1.8em 0em 2em 0em;
+  align-items: flex-start;
+  padding: 0.88em 1.94em 0.94em 1.94em;
   border-radius: 30px;
   background-color: rgba(203, 252, 255, 0.71);
 `;
-const Mic_Icon = styled.img`
-  width: 9em;
+const MicIcon = styled.img`
+  width: 7.88em;
   height: 153px;
-  position: relative;
-
 `;
-const Camera = styled.div`
-width:100%;
-  gap: 0px;
+const CameraBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 2.44em 1.06em 2.44em 1.5em;
-`;
-const Camera_Box = styled.div`
-width: 12em;
-height: 160px;
-
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2.44em 1.06em 2.44em 1.5em;
+  align-items: flex-start;
+  padding: 2.44em 1.19em 2.44em 1.38em;
   background-size: cover;
-  background-image: url("https://file.rendit.io/n/SzyUkhyT3faI5V4AQGde.svg");
+  background-image: url("https://file.rendit.io/n/0rzNNHZjmgzacTxsCUio.svg");
 `;
-const Camera_Icon = styled.img`
+const CameraIcon = styled.img`
   width: 9.19em;
   height: 104px;
-  position: relative;
-`;
+`; 
+
 const Right_Col = styled.div`
   height: 1737px;
   position: relative;
@@ -768,11 +743,12 @@ const Website_Dummy = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 0px 0px 0px 10em;
+  margin: 0px 0px 0px 12em;
   padding: 1.11em 0.66em 1.11em 0.49em;
   border-radius: 20px;
   background-color: #ffffff;
   box-shadow: 0px 4px 4px 0px rgba(243, 110, 90, 0.44);
+  transform:scale(1.3);
 `;
 const Window_Buttons = styled.img`
   width: 4.58em;
@@ -780,7 +756,7 @@ const Window_Buttons = styled.img`
   margin: 0px 0px 0.67em 0.57em;
 `;
 const Website_Line = styled.img`
-  width: 39.94em;
+  width: 45em;
   height: 2px;
   margin: 0px 0px 1.51em 0px;
 `;
@@ -948,11 +924,11 @@ const ParticipantCirrcle = styled.div`
   padding: 10.5em 0px 10.5em 5.44em;
 `;
 const Apple_2 = styled.div`
-  transform:scale(2.3,2.3);
+  transform: scale(2.3, 2.3);
   right: -300px;
   bottom: 120px;
-  width:400px;
-  height:600px;
+  width: 400px;
+  height: 600px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -969,8 +945,8 @@ const Apple_2_Top_Section = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 0px 0px 0px 0.63em;
-  margin-left:-10em;
-  margin-top:-10px;
+  margin-left: -10em;
+  margin-top: -10px;
 `;
 const Apple_2_Title = styled.div`
   width: 11.66em;
@@ -980,7 +956,7 @@ const Apple_2_Title = styled.div`
   font-size: 50px;
   font-weight: 700;
   font-family: Outfit;
-  margin-left:-5em;
+  margin-left: -5em;
 `;
 const Apple_2_Desc = styled.div`
   width: 26.6em;
@@ -990,7 +966,7 @@ const Apple_2_Desc = styled.div`
   font-family: Outfit;
   line-height: 30px;
   text-align: center;
-  margin-top:15px;
+  margin-top: 15px;
 `;
 const Apple_2_Button_Section = styled.div`
   width: 12.63em;
@@ -1003,7 +979,7 @@ const Apple_2_Button_Section = styled.div`
   align-items: flex-start;
   padding: 0px 15em 0px 9.94em;
   margin-top: 5px;
-  margin-right:10px;
+  margin-right: 10px;
 `;
 const Part_Signup_Button = styled.button`
   width: 7.5em;
@@ -1047,7 +1023,7 @@ const Part_Button_Desc = styled.div`
   font-size: 20px;
   font-family: Outfit;
   text-align: center;
-  margin-bottom:3em;
+  margin-bottom: 3em;
 `;
 const Apple_2_Bot_Desc = styled.div`
   width: 26.6em;
@@ -1058,8 +1034,8 @@ const Apple_2_Bot_Desc = styled.div`
   font-family: Outfit;
   text-align: center;
   white-space: pre-wrap;
-  margin-left:-5em;
-  margin-top:1em;
+  margin-left: -5em;
+  margin-top: 1em;
 `;
 
 const FinalSection = styled.div`
@@ -1082,9 +1058,8 @@ const Final_Card = styled.div`
   align-items: center;
 `;
 const Are_You_Ready = styled.div`
-
-  text-align:center;
-  justify-self:center;
+  text-align: center;
+  justify-self: center;
   align-self: center;
   color: #9cb1ff;
   font-size: 50px;
@@ -1118,7 +1093,7 @@ const Linkupsslogo = styled.img`
   position: relative;
 `;
 const Get_Started_Button = styled.div`
-  height:600px;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1126,7 +1101,7 @@ const Get_Started_Button = styled.div`
   align-items: center;
   padding: 1.13em 2.63em 2em;
   background-size: cover;
-  margin-left:15px;
+  margin-left: 15px;
   background-image: url("https://file.rendit.io/n/bF8TzWo0bdZ7j5E3zvFa.svg");
 `;
 const Get_Started_Text = styled.div`
@@ -1326,21 +1301,16 @@ const Home = () => {
                 />
               </Linkpad_Top>
               <Linkpad_Bottom>
-                <Mic>
-                  <Mic_Box >
-                  <Mic_Icon
-                    src={`https://file.rendit.io/n/ObvBey18mdzxURDbaKlP.png`}
+                <MicBox>
+                  <MicIcon
+                    src={`https://file.rendit.io/n/aaSNSEcYlCnckTNsXjhB.png`}
                   />
-                  </Mic_Box>
-                </Mic>
-                <Camera>
-                  <Camera_Box>
-
-                  <Camera_Icon
-                    src={`https://file.rendit.io/n/HeSHX8SraLI79bmcT0jw.png`}
+                </MicBox>
+                <CameraBox>
+                  <CameraIcon
+                    src={`https://file.rendit.io/n/Zqrvbtd4HjoJ42isUbNr.png`}
                   />
-                  </Camera_Box>
-                </Camera>
+                </CameraBox>
               </Linkpad_Bottom>
             </Linkpad>
           </Left_Col>
@@ -1455,8 +1425,7 @@ const Home = () => {
                       Part_Signup_ButtonFunction(e, "part-signup-button")
                     }
                   >
-
-                  <SignUp>Sign Up</SignUp>
+                    <SignUp>Sign Up</SignUp>
                   </Part_Signup_Button>
                   <Part_Button_Desc>
                     Don’t have a Linkupss account, sign up now !
@@ -1476,21 +1445,20 @@ const Home = () => {
       <div className="space-box" />
 
       <FinalSection>
-      <Final_Card>
-        <Are_You_Ready>Are You Ready ?</Are_You_Ready>
-        <Fnal_Body>
-          <Final_Text>Be A Part Of The Next Big Thing </Final_Text>
-          <Linkupsslogo
-            src={`https://file.rendit.io/n/KNedUaO2u2F928DSWGrv.png`}
-          />
-        </Fnal_Body>
-      </Final_Card>
-      <Get_Started_Button>
-        <Get_Started_Text>Get Started</Get_Started_Text>
-      </Get_Started_Button>
-    </FinalSection>
-    <div className="space-box" />
-
+        <Final_Card>
+          <Are_You_Ready>Are You Ready ?</Are_You_Ready>
+          <Fnal_Body>
+            <Final_Text>Be A Part Of The Next Big Thing </Final_Text>
+            <Linkupsslogo
+              src={`https://file.rendit.io/n/KNedUaO2u2F928DSWGrv.png`}
+            />
+          </Fnal_Body>
+        </Final_Card>
+        <Get_Started_Button>
+          <Get_Started_Text>Get Started</Get_Started_Text>
+        </Get_Started_Button>
+      </FinalSection>
+      <div className="space-box" />
     </React.Fragment>
   );
 };

@@ -231,7 +231,7 @@ const SessionForm = (props) => {
 
     }
     const response = axios.post(
-      "https://agile-mountain-50739.herokuapp.com/https://api.linkupss.com/addtosession",
+      "https://api.linkupss.com/addtosession",
       {
         participant_id:_member_id,
         session_id:props.selectedSession._id

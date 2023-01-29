@@ -4,7 +4,7 @@ import NavBar from './components/navbar';
 import SideBar from './components/sidebar';
 import React, { Component,useEffect } from 'react';
 import { Switch } from 'react-router-dom';
-import { Redirect,Route } from 'react-router-dom';
+import { Redirect,Route,Router } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard';
 import LoginRegister from './components/loginregister/loginregister';
 import AOS from "aos";
@@ -20,11 +20,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ParticipantRegister from './components/loginregister/participantRegister';
 import Participants from './components/participants/participants';
 import Footer from './components/footer';
+import { AuthProvider } from './contexts/AuthContext';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   document.body.style.backgroundColor = "#dbe3ff";
   document.body.style.margin = "0";
   return (
+    <AuthProvider>
+
     <div className="box">
     <NavBar/>
     <div className="content">
@@ -43,6 +46,7 @@ function App() {
     </div>
     {/* <Footer className = "footerpos"/> */}
     </div>
+    </AuthProvider>
     
   );
 }

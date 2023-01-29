@@ -489,7 +489,7 @@ transition: transform 0.35s ease-in;
       
     }
 .am-colour{
-  background-color:rgba(255,229,136) !important;
+  background-color:rgb(249, 207, 54) !important;
 }
 .pm-colour{
   background-color:rgba(136,191,255) !important;
@@ -1061,4 +1061,7 @@ font-weight: 700;
   padding-left:35%;
   padding-right:40%;
   padding-bottom: 8%;
+}
+.welcome-back-toast{
+  background-color: #ccc;
 }

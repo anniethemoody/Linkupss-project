@@ -90,6 +90,7 @@ const NavbarBoxRootRootRoot = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   align-items: flex-start;
   padding: 1.25em 4.5em 1.13em 1.38em;
   background-color: #f8f8f8;

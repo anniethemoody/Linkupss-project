@@ -15,6 +15,7 @@ import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
 import axios from "axios";
 import styled from "styled-components";
+import { useAuth } from "../../contexts/AuthContext";
 const Login_Col = styled.div`
   position: relative;
   gap: 43px;
@@ -159,6 +160,7 @@ const Password1 = styled.div`
   position: absolute;
 `;
 const Forgot_Pwd = styled.div`
+  cursor: pointer;
   width: 100%;
   align-self: center;
   margin-top: -10px;
@@ -236,6 +238,18 @@ const Reg_Password = styled.div`
   align-items: flex-start;
   margin: 0px 5px 0.56em 0px;
   padding: 0px 5em 0px 4.25em;
+`;
+const Reg_ConfirmPassword = styled.div`
+width: 18.75em;
+height: 75px;
+position: relative;
+gap: 0px;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: flex-start;
+margin: 0px 5px 0.56em 0px;
+padding: 0px 5em 0px 4.25em;
 `;
 const Space_Pwd = styled.div`
   width: 18.75em;
@@ -338,6 +352,7 @@ const Register_Button = styled.div`
   font-family: Outfit;
 `;
 const LoginRegister = () => {
+  const {signup,currentUser} = useAuth();
   const history = useHistory();
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
@@ -345,12 +360,14 @@ const LoginRegister = () => {
   const [registerName, setRegisterName] = useState("");
   const [registerUserName, setRegisterUserName] = useState("");
   const [registerUserPassword, setRegisterUserPassword] = useState("");
+  const [registerUserPasswordConfirmation,setRegisterUserPasswordConfirmation] = useState("")
   const [registerUserEmail, setRegisterUserEmail] = useState("");
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [errorLog, setErrorLog] = useState({});
   const [loginFailed, setLoginFailed] = useState(false);
   const [registerFailed, setRegisterFailed] = useState(false);
+  const [loading,setLoading] = useState(false);
   const btnText = "Learn more";
 
   const schema = {
@@ -359,6 +376,7 @@ const LoginRegister = () => {
     password: Joi.string().required().label("Password"),
     newUsername: Joi.string().required().label("Username"),
     newPassword: Joi.string().required().label("Password").min(8),
+    newPasswordConfirmation: Joi.any().valid(registerUserPassword).required(),
     email: Joi.string().required().label("Email").email(),
     orgId: Joi.string().required().label("Organization ID"),
   };
@@ -399,7 +417,7 @@ const LoginRegister = () => {
       return history.push("/dashboard");
     } catch (err) {
       if (!err?.response) {
-        window.alert("Missing fields. Please try again.");
+        window.alert("Invalid fields. Please try again.");
       } else if (err.response?.status === 400) {
         window.alert("Missing Username or Password");
       } else if (err.response.data.msg) {
@@ -417,25 +435,44 @@ const LoginRegister = () => {
   };
 
   const doSubmitRegister = async (e) => {
+
+
     //setRegisterClicked(true);
     var failed = false;
     var token_retrieved = "";
     e.preventDefault();
+
+
+    //firebase authentication
+
+    console.log(registerUserEmail,registerUserPassword);
+    try{
+      setLoading(true);
+      const firebase_response = await signup(registerUserEmail,registerUserPassword)
+      console.log(firebase_response);
+
+
+    }
+    catch(e){
+console.log(e)    }
+
+    {currentUser &&
+    console.log(currentUser.email )}
     try {
-      console.log(registerUserName, registerUserOrgId);
+      console.log(registerUserEmail, registerUserOrgId);
       if (
-        (registerName == "") | (registerUserName == "") ||
+         (registerName == "") ||
         registerUserOrgId == "" ||
         registerUserEmail == "" ||
         registerUserPassword == ""
       ) {
-        throw "Missing fields. Please try again";
+        throw "Invalid fields. Please try again";
       }
       const response = await httpService.post(
         "https://api.linkupss.com/adminregister",
         {
           name: registerName,
-          user_name: registerUserName,
+          user_name: registerName,
           user_password: registerUserPassword,
           extra_info: registerUserEmail,
         },
@@ -453,14 +490,14 @@ const LoginRegister = () => {
       localStorage.setItem("adminId", adminid_retrieved);
       token_retrieved = token;
 
-      if (response.data.msg != "Registered") {
-        setRegisterFailed(true);
-        // setRegisterError(response.data.msg+". Please try again")
-        failed = true;
-        window.alert(response.data.msg + ". Please try again");
-      } else {
-        setRegisterFailed(false);
-      }
+      // if (response.data.msg != "Registered") {
+      //   setRegisterFailed(true);
+      //   // setRegisterError(response.data.msg+". Please try again")
+      //   failed = true;
+      //   window.alert(response.data.msg + ". Please try again");
+      // } else {
+      //   setRegisterFailed(false);
+      // }
     } catch (err) {
       console.log(err);
       if (!err.response) {
@@ -498,11 +535,11 @@ const LoginRegister = () => {
           "https://api.linkupss.com/organizationjoin",
           {
             org_code: registerUserOrgId,
-            user_name: registerUserName,
+            user_name: registerName,
           },
           config
         );
-        localStorage.setItem("adminUserName", registerUserName);
+        localStorage.setItem("adminUserName", registerName);
         console.log(response);
         return history.push("/dashboard");
       } catch (err) {
@@ -570,6 +607,24 @@ const LoginRegister = () => {
     else delete errors["newPassword"];
     setErrorLog(errors);
   };
+
+
+const handleRegisterUserPasswordConfirmation = (e) => {
+  setRegisterUserPasswordConfirmation(e.target.value);
+  const errormsg = validateProperty("newPasswordConfirmation",e.currentTarget.value)
+  const errors = {...errorLog};
+  if(errormsg) errors["newPasswordConfirmation"] = errormsg;
+  else delete errors["newPasswordConfirmation"];
+  console.log(errormsg)
+  setErrorLog(errors);
+}
+
+
+
+
+
+
+
   const handleRegisterUserEmail = (e) => {
     setRegisterUserEmail(e.target.value);
     const errormsg = validateProperty("email", e.currentTarget.value);
@@ -798,7 +853,10 @@ const LoginRegister = () => {
                     />
                   </InputGroup>
                 </Login_Password>
+                <div  >
+
                 <Forgot_Pwd>Forgot your password ?</Forgot_Pwd>
+                </div>
               </Top_Section>
               <button
                 type="btn"
@@ -816,7 +874,7 @@ const LoginRegister = () => {
             <Register_Col>
               <Register_Title>Register</Register_Title>
               <Register_Desc>
-                Don’t have an account ? Sign up now to start using your meeting
+                Don’t have an account? Sign up now to start using your meeting
                 manaement tool
               </Register_Desc>
               <div className="button-group-flex">
@@ -859,6 +917,29 @@ const LoginRegister = () => {
                   />
                 </InputGroup>
               </Reg_Password>
+
+              <Reg_ConfirmPassword>
+              <InputGroup className="input-g mb-3 login-input">
+                  <Form.Control
+                    className="login-field"
+                    placeholder="Confirm Password"
+                    aria-label="Password Confirmation"
+                    aria-describedby="basic-addon1"
+                    value={registerUserPasswordConfirmation}
+                    onChange={handleRegisterUserPasswordConfirmation}
+                    isInvalid={errorLog["newPasswordConfirmation"]}
+                  />
+                </InputGroup>
+              </Reg_ConfirmPassword>
+
+
+
+
+
+
+
+
+
               <Reg_Email>
                 <Space_Username />
                 <InputGroup className="input-g mb-3 login-input">
@@ -890,7 +971,7 @@ const LoginRegister = () => {
               </Organisation>
               <Donthaveorgid>Don’t have an org ID ?</Donthaveorgid>
               {
-                <button type="submit" className="login-register-buttons">
+                <button type="submit" disabled = {loading} className="login-register-buttons">
                   <Register_Button>Register</Register_Button>
                 </button>
               }

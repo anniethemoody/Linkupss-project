@@ -9,6 +9,12 @@ class CreateAccountForm extends StatefulWidget {
   _CreateAccountFormState createState() => _CreateAccountFormState();
 }
 
+class NewAccountArguments {
+  final String fName, lName, email, pass, orgID;
+  NewAccountArguments(
+      this.fName, this.lName, this.email, this.pass, this.orgID);
+}
+
 double padding = 25.0;
 
 class _CreateAccountFormState extends State<CreateAccountForm> {
@@ -17,14 +23,14 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
 
   void validate() {
     if (formKeyNew.currentState != null) {
-      if (formKeyNew.currentState!.validate()) {
-        print(fName);
-        print(lName);
-        print(email);
-        print(password);
-        print(orgID);
-        //here we can now navigate to next page!
-      } else {
+      if (formKeyNew.currentState!.validate()) //if all boxes filled properly
+      {
+        Navigator.of(context).pushNamed('/user_verify',
+            arguments:
+                NewAccountArguments(fName, lName, email, password, orgID));
+      } 
+      else 
+      {
         print("Error - not all fields completed");
       }
     }
@@ -57,7 +63,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 50.0,
-                  fontStyle: FontStyle.italic, //want to make it bold
+                  fontStyle: FontStyle.normal, //want to make it bold
                   fontFamily: 'Montserrat',
                 ),
               ),
@@ -95,6 +101,7 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
                 ],
               ),
               SizedBox(height: padding),
+              
               //Email address, password, and organisation with their text below.
               Row(
                 children: <Widget>[
@@ -193,10 +200,4 @@ class _CreateAccountFormState extends State<CreateAccountForm> {
       ),
     );
   }
-}
-
-class NewAccountArguments {
-  final String fName, lName, email, pass, orgID;
-  NewAccountArguments(
-      this.fName, this.lName, this.email, this.pass, this.orgID);
 }

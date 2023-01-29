@@ -8,7 +8,6 @@ const double padding = 25.0;
 
 class LandingPage extends StatelessWidget {
   LandingPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

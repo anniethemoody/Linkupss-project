@@ -84,7 +84,7 @@ class DashboardState extends State<Dashboard> {
                   children: [
                     Column(children: [
                       Container(
-                          width: 490,
+                          width: 190,
                           height: 30,
                           decoration: new BoxDecoration(
                               color: Colors.white,

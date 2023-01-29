@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:linkupss_flutter_app/screens/landing_screen.dart';
+import 'package:linkupss_flutter_app/route_generator.dart';
+import 'package:linkupss_flutter_app/screens/landing_screen.dart';
 import 'package:linkupss_flutter_app/screens/dashboard.dart';
 import 'package:flutter/services.dart';
 
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
       ),
 
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: Dashboard(),
+      initialRoute: '/',
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

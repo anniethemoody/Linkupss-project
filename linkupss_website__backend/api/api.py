@@ -31,15 +31,47 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'linkupssDbu2022'
 app.config['MYSQL_DATABASE_DB'] = 'linkupss_db'
 mysql.init_app(app)
 
+# @app.route("/adminlogin", methods=["POST"])
+# def adminLogin():
+#     username = request.json.get("user_name", None)
+#     password = request.json.get("user_password", None)
+#     returnValue = verifyLogin(username, password)
+#     if returnValue[0] == 0:
+#         return jsonify({"code":401, "msg":"Invalid username or password", "result":[]}), 401
+#     else:
+#         accessToken = create_access_token(identity = username)
+#         response = jsonify(access_token = accessToken,result=returnValue[1])
+#         return response
+
+# @app.route("/adminregister", methods=["POST"])
+# def createAdmin():
+#     name = request.json.get("name", None)
+#     username = request.json.get("user_name", None)
+#     password = request.json.get("user_password", None)
+#     email = request.json.get("extra_info", None)
+#     userDupeCheck = "SELECT * FROM admin WHERE user_name='"+username+"'"
+#     cursor = runSQL(userDupeCheck)
+#     numberOfRows = cursor.rowcount
+#     cursor.close()
+#     if numberOfRows > 0:
+#         return jsonify({"code":99, "msg":"Username already exists", "result":[]}), 200
+#     else:
+#         query = "INSERT INTO admin (name, user_name, user_password, extra_info) SELECT '"+name+"', '"+username+"', get_pass('"+password+"', 'secret'), '{\"email\":\""+email+"\"}'"
+#         cursor = runSQL(query)
+#         accessToken = create_access_token(identity = username)
+#         query = "select admin_id from admin where user_name='"+username+"'"
+#         r = fetchData(query)
+#         return jsonify({"code":200, "token":accessToken, "data":r}), 200
+
 @app.route("/adminlogin", methods=["POST"])
 def adminLogin():
-    username = request.json.get("user_name", None)
+    email = request.json.get("email", None)
     password = request.json.get("user_password", None)
-    returnValue = verifyLogin(username, password)
+    returnValue = verifyLogin(email, password)
     if returnValue[0] == 0:
-        return jsonify({"code":401, "msg":"Invalid username or password", "result":[]}), 401
+        return jsonify({"code":401, "msg":"Invalid email or password", "result":[]})
     else:
-        accessToken = create_access_token(identity = username)
+        accessToken = create_access_token(identity = email)
         response = jsonify(access_token = accessToken,result=returnValue[1])
         return response
 
@@ -49,12 +81,21 @@ def createAdmin():
     username = request.json.get("user_name", None)
     password = request.json.get("user_password", None)
     email = request.json.get("extra_info", None)
+    
+    emailDupeCheck = "SELECT * FROM admin WHERE JSON_EXTRACT(extra_info,'\$.email')='"+email+"'"
+    cursor = runSQL(emailDupeCheck)
+    numberOfRows = cursor.rowcount
+    cursor.close()
+    if numberOfRows > 0:
+        return jsonify({"code":99, "msg":"Email already exists", "result":[]}), 200
+
     userDupeCheck = "SELECT * FROM admin WHERE user_name='"+username+"'"
     cursor = runSQL(userDupeCheck)
     numberOfRows = cursor.rowcount
     cursor.close()
     if numberOfRows > 0:
         return jsonify({"code":99, "msg":"Username already exists", "result":[]}), 200
+    
     else:
         query = "INSERT INTO admin (name, user_name, user_password, extra_info) SELECT '"+name+"', '"+username+"', get_pass('"+password+"', 'secret'), '{\"email\":\""+email+"\"}'"
         cursor = runSQL(query)
@@ -208,9 +249,9 @@ def runSQL(query):
     print(query)
     return cursor
 
-def verifyLogin(username, password):
+def verifyLogin(email, password):
     #username can be used for sql injection
-    query = "SELECT admin_id FROM admin WHERE user_name='"+username+"' AND user_password=get_pass('"+password+"','secret')"
+    query = "SELECT admin_id FROM admin WHERE JSON_EXTRACT(extra_info,'\$.email')='"+email+"' AND user_password=get_pass('"+password+"','secret')"
     cursor = runSQL(query)
     numberOfRows = cursor.rowcount
     r = [dict((cursor.description[i][0], value)

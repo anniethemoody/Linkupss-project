@@ -10,21 +10,50 @@ import Accordion from "react-bootstrap/Accordion";
 import { NavLink, Link } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { set } from "lodash";
-
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import { useAuth } from "../../contexts/AuthContext";
 const LeftSideBar = (props) => {
   const [offcanvasBody, setOffcanvasBody] = useState({});
   const [offcanvasTitle, setOffcanvasTitle] = useState("");
+  const [changePasswordState,setChangePasswordState] = useState(false)
+  const [newPassword,setNewPassword] = useState("")
+  const [newPasswordConfirm,setNewPasswordConfirm] = useState("")
   const [accountNameState, setAccountNameState] = useState(true);
   const [accountName, setAccountName] = useState(props.userinfo.admin_name);
+  const [accountImage,setAccountImage] = useState([])
+  const [accountImageURL,setAccountImageURL] = useState([])
+  const [accountEmailState, setAccountEmailState] = useState(true);
+  const [accountEmail, setAccountEmail] = useState(props.userinfo.admin_name);
   const [reportProbTitle, setReportProbTitle] = useState("");
   const [reportProbDesc, setReportProbDesc] = useState("");
   const [reportSubmissionState, setReportSubmissionState] = useState(false);
   const [reportSubmissionBtnText, setReportSubmissionBtnText] =
-    useState("Submit")
+    useState("Submit");
 
-  const [filterByNameStatus,setFilterByNameStatus] = useState(false);
-  const [filterByTimeStatus,setFilterByTimeStatus]=useState(false);
-  const [filterByCreationStatus,setFilterByCreationStatus] = useState(false);
+  const [filterByNameStatus, setFilterByNameStatus] = useState(false);
+  const [filterByTimeStatus, setFilterByTimeStatus] = useState(false);
+  const [filterByCreationStatus, setFilterByCreationStatus] = useState(false);
+  const { currentUser } = useAuth();
+  const handleNewPassword = (e) => {
+    setNewPassword(e.target.value)
+    //console.log("Password: "+newPassword)
+  }
+  const handleNewPasswordConfirm = (e) => {
+    setNewPasswordConfirm(e.target.value)
+    //console.log("New password: "+newPasswordConfirm)
+
+  }
+const handleOnImageChange = (e) => {
+  var images = []
+  images = images.concat([e.target.files[0]])
+  setAccountImage(images)
+  var imageURL = []
+  console.log(URL.createObjectURL(e.target.files[0]))
+  imageURL = imageURL.concat(URL.createObjectURL(e.target.files[0]))
+  setAccountImageURL(imageURL)
+}
+
   const handleReportProbTitle = (e) => {
     const title = e.target.value;
     setReportProbTitle(title);
@@ -42,6 +71,13 @@ const LeftSideBar = (props) => {
     setAccountName(name);
     //console.log(accountName);
   };
+  const handleAccountEmail = (e) => {
+    //console.log(e);
+    const email = e.target.value;
+    //console.log(name);
+    setAccountEmail(email);
+    //console.log(accountName);
+  };
   const handleSubmitProblem = () => {
     setReportSubmissionState(true);
     setReportSubmissionBtnText("Submitted");
@@ -52,43 +88,102 @@ const LeftSideBar = (props) => {
     setReportProbTitle("");
     setReportSubmissionBtnText("Submit");
   };
-  const handleFilteringLogic = (type) =>{
-    if(type==="name"){
+  const handleFilteringLogic = (type) => {
+    if (type === "name") {
       setFilterByNameStatus(true);
       setFilterByTimeStatus(false);
       setFilterByCreationStatus(false);
-      props.filterSessionByButton("name")
+      props.filterSessionByButton("name");
       props.hide();
     }
-    if(type==="time"){
+    if (type === "time") {
       setFilterByNameStatus(false);
       setFilterByTimeStatus(true);
       setFilterByCreationStatus(false);
-      props.filterSessionByButton("time")
+      props.filterSessionByButton("time");
       props.hide();
     }
-    if(type==="none"){
+    if (type === "none") {
       setFilterByNameStatus(false);
       setFilterByTimeStatus(false);
       setFilterByCreationStatus(true);
-      props.filterSessionByButton("none")
+      props.filterSessionByButton("none");
       props.hide();
+    }
+  };
+  const updateProfile = async (e) => {
+    const new_user_details = {
+      name: accountName,
+      email: accountEmail,
+      new_password: newPasswordConfirm,
+      photo: accountImageURL[0]
+    }
+    if(accountImageURL.length!==0){
+      currentUser.updateProfile({
+        photoURL: accountImageURL[0]
+      }).then(function() {
+        console.log('User photo updated successfully!');
+      }).catch(function(error) {
+        console.error('Error updating user photo:', error);
+      });
     }
   }
 
+  const updatePassword = async (e) => {
+    currentUser.updatePassword(newPassword).then(function() {
+      console.log('User password updated successfully!');
+    }).catch(function(error) {
+      console.error('Error updating user password:', error);
+    });
+  }
   useEffect(() => {
+    //call fetch info to get admin name,email, and let them udpate profile
+    const adminUserName = localStorage.getItem("adminUserName");
+    const adminEmail = localStorage.getItem("adminUserName");
+    const equalPassword = !(newPassword===newPasswordConfirm);
+    console.log(equalPassword.toString())
+
+    console.log(currentUser)
+    if (adminUserName != null) {
+      setAccountEmail(adminEmail);
+      setAccountName(adminUserName);
+    }
+
     if (props.content === "Account") {
       setOffcanvasTitle("My Account");
       setOffcanvasBody(
         <Offcanvas.Body>
           <p>Account Details</p>
+          <input
+              accept="image/*"
+              id="contained-button-file"
+              className="hidden"
+              type="file"
+              style={{display:"none"}}
+              onChange = {handleOnImageChange}
+            />
+            <label htmlFor="contained-button-file">
+          <IconButton component="span">
+            {
+              accountImageURL.length===0 && 
+            <Avatar sx={{ width: 100, height: 100}}>H</Avatar>
+            }
+                        {
+              accountImageURL.length!==0 && 
+            <Avatar src = {accountImageURL[0]}
+            sx={{ width: 100, height: 100 }}
+         
+            />
+            }
+          </IconButton>
+            </label>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">Name</InputGroup.Text>
             <Form.Control
               placeholder="Admin name"
               aria-label="Admin name"
               aria-describedby="basic-addon1"
-              defaultValue={props.userinfo.admin_name}
+              defaultValue={accountName}
               disabled={accountNameState}
               onChange={handleAccountName}
             />
@@ -101,14 +196,22 @@ const LeftSideBar = (props) => {
           </InputGroup>
 
           <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">Role</InputGroup.Text>
+            <InputGroup.Text id="basic-addon2">Email</InputGroup.Text>
             <Form.Control
-              placeholder="Role"
-              aria-label="Role"
-              aria-describedby="basic-addon1"
-              defaultValue={props.userinfo.role}
-              disabled={true}
+              placeholder="Email"
+              aria-label="Email"
+              aria-describedby="basic-addon2"
+              defaultValue={accountEmail}
+              disabled={accountEmailState}
+              onChange={handleAccountEmail}
             />
+            <Button
+              variant="outline-secondary"
+              onClick={() => setAccountEmailState(!accountEmailState)}
+            >
+              {console.log(accountEmailState)}
+              {accountEmailState ? "Edit" : "Save"}
+            </Button>
           </InputGroup>
 
           <InputGroup className="mb-3">
@@ -123,46 +226,47 @@ const LeftSideBar = (props) => {
               disabled={true}
             />
           </InputGroup>
+{          
+!changePasswordState &&
+<button className="btn centered w-100 update-password-btn" onClick={() => setChangePasswordState(!changePasswordState)}>
+                Change Password
+              </button>}
 
-          <Card>
-            <Card.Header>
-              {props.sessions.length === 0 ? (
-                <span style={{ paddingRight: "20px" }}>
-                  There are no users enrolled in this organisation. Ask your
-                  members to register before picking participants !
-                </span>
-              ) : (
-                <span style={{ paddingRight: "20px" }}>Your sessions</span>
-              )}
-            </Card.Header>
-            <ListGroup
-              variant="flush"
-              className={
-                props.sessions.length >= 3
-                  ? "form-listgroup-card"
-                  : "form-listgroup-card-sidebar"
-              }
-            >
-              {props.sessions.map((m) => (
-                <ListGroup.Item
-                  className="form-listgroup-sidebar-item"
-                  key={m.name}
-                >
-                  <span>{m.name}</span>
-                  <Badge
-                    bg="primary"
-                    pill
-                    style={{ display: "flex", alignItems: "center" }}
-                  >
-                    {m.participants.length} participant
-                    {m.participants.length > 1 || m.participants.length === 0
-                      ? "s"
-                      : ""}
-                  </Badge>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
+          {
+            changePasswordState && 
+            <React.Fragment>
+
+            <InputGroup className="mb-3">
+            <InputGroup.Text id="basic-addon1">
+              New Password
+            </InputGroup.Text>
+            <Form.Control
+              placeholder=" "
+              aria-label=" "
+              aria-describedby="basic-addon1"
+              onChange= {handleNewPassword}
+
+            />
+          </InputGroup>
+                    <InputGroup className="mb-3">
+                    <InputGroup.Text id="basic-addon1">
+                      Confirm Password
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder=" "
+                      aria-label=" "
+                      aria-describedby="basic-addon1"
+                      onChange={handleNewPasswordConfirm}
+                      isInvalid={equalPassword}
+                    />
+                  </InputGroup>
+            </React.Fragment>
+
+          }
+          <button className="btn centered w-100 update-profile-btn" onClick={() => updateProfile()}>
+                Update Profile
+              </button>
+
         </Offcanvas.Body>
       );
     } else if (props.content === "Filter") {
@@ -172,19 +276,31 @@ const LeftSideBar = (props) => {
           <p>Filter your sessions</p>
           <hr className="rounded" />
           <ListGroup as="ul" defaultActiveKey="#link1">
-          <ListGroup.Item as = "li" action  active ={filterByNameStatus} onClick={()=>handleFilteringLogic("name")}>
+            <ListGroup.Item
+              as="li"
+              action
+              active={filterByNameStatus}
+              onClick={() => handleFilteringLogic("name")}
+            >
               Filtered by name
             </ListGroup.Item>
-            <ListGroup.Item as = "li" action active={filterByTimeStatus} onClick={()=>handleFilteringLogic("time")}>
+            <ListGroup.Item
+              as="li"
+              action
+              active={filterByTimeStatus}
+              onClick={() => handleFilteringLogic("time")}
+            >
               Filtered by time
-            </ListGroup.Item >
-            <ListGroup.Item action as = "li" active ={filterByCreationStatus} onClick={()=>handleFilteringLogic("none")}>
+            </ListGroup.Item>
+            <ListGroup.Item
+              action
+              as="li"
+              active={filterByCreationStatus}
+              onClick={() => handleFilteringLogic("none")}
+            >
               Filtered by time of creation
             </ListGroup.Item>
           </ListGroup>
- 
-          
-          
         </Offcanvas.Body>
       );
     } else if (props.content === "Need help") {
@@ -298,16 +414,22 @@ const LeftSideBar = (props) => {
           </Accordion>
         </Offcanvas.Body>
       );
-    } 
+    }
   }, [
     props.content,
+    accountImageURL,
+    accountImage,
     accountNameState,
+    accountEmailState,
+    changePasswordState,
+    newPassword,
+    newPasswordConfirm,
     reportSubmissionBtnText,
     reportSubmissionState,
     reportProbTitle,
     reportProbDesc,
     filterByNameStatus,
-    filterByTimeStatus
+    filterByTimeStatus,
   ]);
 
   return (

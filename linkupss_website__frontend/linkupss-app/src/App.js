@@ -20,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ParticipantRegister from './components/loginregister/participantRegister';
 import Participants from './components/participants/participants';
 import Footer from './components/footer';
+import ResetYourPassword from './components/loginregister/resetpassword';
 import { AuthProvider } from './contexts/AuthContext';
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
@@ -38,6 +39,7 @@ function App() {
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
     <Route path="/adminloginregister" component={LoginRegister}/> 
+    <Route path="/resetyourpassword" component={ResetYourPassword}/> 
     <Route path="/participantregister" component={ParticipantRegister}/> 
     <Route path="/dashboard" component={Dashboard}/> 
     <Route path="/participants" component = {Participants}/>

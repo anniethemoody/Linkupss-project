@@ -196,7 +196,7 @@ def joinSession():
     participantID = request.json.get("participant_id", None)
     sessionID = request.json.get("session_id", None)
     query = "insert into participant_session (participant_id, session_id) select '"+str(participantID)+"','"+str(sessionID)+"'"
-    cursor = runSQL(query)
+    cursor = runSQL(query) 
     cursor.close()
     return jsonify({"code":200, "msg":"Added","result":[]}), 200
     

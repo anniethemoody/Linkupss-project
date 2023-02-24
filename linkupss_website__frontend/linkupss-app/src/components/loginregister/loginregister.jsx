@@ -3,7 +3,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from "bootstrap";
 import Form from "react-bootstrap/Form";
 import Jumbotron from "../jumbotron";
-import { getCurrentUser, login } from "../../services/authService";
+import { getCurrentUser } from "../../services/authService";
 import { useEffect } from "react";
 import Joi from "joi-browser";
 import Alert from "react-bootstrap/Alert";
@@ -16,6 +16,7 @@ import ToastContainer from "react-bootstrap/ToastContainer";
 import axios from "axios";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
+import { NavLink } from "react-router-dom";
 const Login_Col = styled.div`
   position: relative;
   gap: 43px;
@@ -161,14 +162,12 @@ const Password1 = styled.div`
 `;
 const Forgot_Pwd = styled.div`
   cursor: pointer;
-  width: 100%;
-  align-self: center;
   margin-top: -10px;
   color: #798dac;
   font-size: 20px;
   font-weight: 700;
   font-family: Outfit;
-  text-align: center;
+ padding-left:80px;  
 `;
 const Login_Button = styled.div`
   width: 100%;
@@ -240,16 +239,16 @@ const Reg_Password = styled.div`
   padding: 0px 5em 0px 4.25em;
 `;
 const Reg_ConfirmPassword = styled.div`
-width: 18.75em;
-height: 75px;
-position: relative;
-gap: 0px;
-display: flex;
-flex-direction: column;
-justify-content: flex-end;
-align-items: flex-start;
-margin: 0px 5px 0.56em 0px;
-padding: 0px 5em 0px 4.25em;
+  width: 18.75em;
+  height: 75px;
+  position: relative;
+  gap: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin: 0px 5px 0.56em 0px;
+  padding: 0px 5em 0px 4.25em;
 `;
 const Space_Pwd = styled.div`
   width: 18.75em;
@@ -352,7 +351,7 @@ const Register_Button = styled.div`
   font-family: Outfit;
 `;
 const LoginRegister = () => {
-  const {signup,currentUser} = useAuth();
+  const { signup, login, currentUser } = useAuth();
   const history = useHistory();
   const [loginUserName, setLoginUserName] = useState("");
   const [loginUserPassword, setLoginUserPassword] = useState("");
@@ -360,14 +359,17 @@ const LoginRegister = () => {
   const [registerName, setRegisterName] = useState("");
   const [registerUserName, setRegisterUserName] = useState("");
   const [registerUserPassword, setRegisterUserPassword] = useState("");
-  const [registerUserPasswordConfirmation,setRegisterUserPasswordConfirmation] = useState("")
+  const [
+    registerUserPasswordConfirmation,
+    setRegisterUserPasswordConfirmation,
+  ] = useState("");
   const [registerUserEmail, setRegisterUserEmail] = useState("");
   const [registerUserOrgId, setRegisterUserOrgId] = useState("");
   const [registerError, setRegisterError] = useState("");
   const [errorLog, setErrorLog] = useState({});
   const [loginFailed, setLoginFailed] = useState(false);
   const [registerFailed, setRegisterFailed] = useState(false);
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const btnText = "Learn more";
 
   const schema = {
@@ -382,18 +384,28 @@ const LoginRegister = () => {
   };
 
   const doSubmitLogin = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) { e.preventDefault(); }
 
     localStorage.removeItem("userToken");
     localStorage.clear();
     const user = { loginUserName, loginUserPassword };
+    console.log(user);
+    try{
+
+      const firebase_response = await login(loginUserName, loginUserPassword);
+    }
+    catch(err){
+      window.alert(err.message)
+    }
     try {
       if (loginUserName == "" && loginUserPassword == "") {
         throw "Login Failed. Please try again";
       }
+      setLoading(true);
+
       const response = await httpService.post(
         "https://api.linkupss.com/adminlogin",
-        { user_name: loginUserName, user_password: loginUserPassword }
+        { email: loginUserName, user_password: loginUserPassword }
       );
       console.log(response?.data);
       const token = response?.data?.access_token;
@@ -435,93 +447,84 @@ const LoginRegister = () => {
   };
 
   const doSubmitRegister = async (e) => {
-
-
     //setRegisterClicked(true);
     var failed = false;
     var token_retrieved = "";
     e.preventDefault();
 
-
     //firebase authentication
-
-    console.log(registerUserEmail,registerUserPassword);
-    try{
+  try {
       setLoading(true);
-      const firebase_response = await signup(registerUserEmail,registerUserPassword)
-      console.log(firebase_response);
-
-
-    }
-    catch(e){
-console.log(e)    }
-
-    {currentUser &&
-    console.log(currentUser.email )}
-    try {
-      console.log(registerUserEmail, registerUserOrgId);
-      if (
-         (registerName == "") ||
-        registerUserOrgId == "" ||
-        registerUserEmail == "" ||
-        registerUserPassword == ""
-      ) {
-        throw "Invalid fields. Please try again";
-      }
-      const response = await httpService.post(
-        "https://api.linkupss.com/adminregister",
-        {
-          name: registerName,
-          user_name: registerName,
-          user_password: registerUserPassword,
-          extra_info: registerUserEmail,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: false,
-        }
+      const firebase_response = await signup(
+        registerUserEmail,
+        registerUserPassword
       );
-      console.log(response);
-      const token = response.data.token;
-      const adminid_retrieved = response.data.data[0].admin_id;
-      //**********************************************//
-      // NEED TO RETRIEVE ADMIN ID FROM /adminregister
-      localStorage.setItem("userToken", token);
-      localStorage.setItem("adminId", adminid_retrieved);
-      token_retrieved = token;
-
-      // if (response.data.msg != "Registered") {
-      //   setRegisterFailed(true);
-      //   // setRegisterError(response.data.msg+". Please try again")
-      //   failed = true;
-      //   window.alert(response.data.msg + ". Please try again");
-      // } else {
-      //   setRegisterFailed(false);
-      // }
-    } catch (err) {
-      console.log(err);
-      if (!err.response) {
-        console.log("No Server Response");
-      } else if (err.response.status === 409) {
-        console.log("Username Taken");
-        failed = true;
-      } else {
-        console.log("Registration Failed");
-      }
-      if (err.code == "ERR_NETWORK") {
-        window.alert(
-          "Oops. It seems like you're disconnected. Please try again."
+      console.log(firebase_response);
+    } catch (e) {
+      window.alert(e.message);
+      setRegisterFailed(true);
+    }
+    if (!registerFailed) {
+      try {
+        if (
+          registerName == "" ||
+          registerUserOrgId == "" ||
+          registerUserEmail == "" ||
+          registerUserPassword == ""
+        ) {
+          throw "Invalid fields. Please try again";
+        }
+        const response = await httpService.post(
+          "https://api.linkupss.com/adminregister",
+          {
+            name: registerName,
+            user_name: registerName,
+            user_password: registerUserPassword,
+            extra_info: registerUserEmail,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: false,
+          }
         );
+        console.log(response);
+
+        const token = response.data.token;
+        const adminid_retrieved = response.data.data[0].admin_id;
+        //**********************************************//
+        // NEED TO RETRIEVE ADMIN ID FROM /adminregister
+        localStorage.setItem("userToken", token);
+        localStorage.setItem("adminId", adminid_retrieved);
+        token_retrieved = token;
+      } catch (err) {
+        console.log(err);
         setRegisterFailed(true);
-      } else {
-        failed = true;
-        window.alert(err);
+
+        if (!err.response) {
+          console.log("No Server Response");
+        } else if (err.response.status === 409) {
+          console.log("Username Taken");
+          failed = true;
+        } else if (err.response.data["code"] === 99) {
+          window.alert(
+            "Email already taken. Please try again with a different email."
+          );
+          failed = true;
+        } else {
+          console.log("Registration Failed");
+        }
+        if (err.code == "ERR_NETWORK") {
+          window.alert(
+            "Oops. It seems like you're disconnected. Please try again."
+          );
+        } else {
+          failed = true;
+          window.alert(err);
+        }
       }
     }
 
-    console.log(registerFailed);
-
-    if (!failed) {
+    if (!registerFailed) {
       try {
         var auth = "Bearer " + token_retrieved;
         console.log(auth);
@@ -608,22 +611,18 @@ console.log(e)    }
     setErrorLog(errors);
   };
 
-
-const handleRegisterUserPasswordConfirmation = (e) => {
-  setRegisterUserPasswordConfirmation(e.target.value);
-  const errormsg = validateProperty("newPasswordConfirmation",e.currentTarget.value)
-  const errors = {...errorLog};
-  if(errormsg) errors["newPasswordConfirmation"] = errormsg;
-  else delete errors["newPasswordConfirmation"];
-  console.log(errormsg)
-  setErrorLog(errors);
-}
-
-
-
-
-
-
+  const handleRegisterUserPasswordConfirmation = (e) => {
+    setRegisterUserPasswordConfirmation(e.target.value);
+    const errormsg = validateProperty(
+      "newPasswordConfirmation",
+      e.currentTarget.value
+    );
+    const errors = { ...errorLog };
+    if (errormsg) errors["newPasswordConfirmation"] = errormsg;
+    else delete errors["newPasswordConfirmation"];
+    console.log(errormsg);
+    setErrorLog(errors);
+  };
 
   const handleRegisterUserEmail = (e) => {
     setRegisterUserEmail(e.target.value);
@@ -827,7 +826,7 @@ const handleRegisterUserPasswordConfirmation = (e) => {
                     <Form.Control
                       key="login-username"
                       className="login-field"
-                      placeholder="Username"
+                      placeholder="Email"
                       aria-label="Username"
                       aria-describedby="basic-addon1"
                       value={loginUserName}
@@ -853,9 +852,10 @@ const handleRegisterUserPasswordConfirmation = (e) => {
                     />
                   </InputGroup>
                 </Login_Password>
-                <div  >
-
-                <Forgot_Pwd>Forgot your password ?</Forgot_Pwd>
+                <div className="d-flex w-100">
+                <NavLink style={{ textDecoration: 'none' }} to="/resetyourpassword">
+                  <Forgot_Pwd>Forgot your password ?</Forgot_Pwd>
+              </NavLink>
                 </div>
               </Top_Section>
               <button
@@ -919,7 +919,7 @@ const handleRegisterUserPasswordConfirmation = (e) => {
               </Reg_Password>
 
               <Reg_ConfirmPassword>
-              <InputGroup className="input-g mb-3 login-input">
+                <InputGroup className="input-g mb-3 login-input">
                   <Form.Control
                     className="login-field"
                     placeholder="Confirm Password"
@@ -931,14 +931,6 @@ const handleRegisterUserPasswordConfirmation = (e) => {
                   />
                 </InputGroup>
               </Reg_ConfirmPassword>
-
-
-
-
-
-
-
-
 
               <Reg_Email>
                 <Space_Username />
@@ -971,7 +963,11 @@ const handleRegisterUserPasswordConfirmation = (e) => {
               </Organisation>
               <Donthaveorgid>Don’t have an org ID ?</Donthaveorgid>
               {
-                <button type="submit" disabled = {loading} className="login-register-buttons">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="login-register-buttons"
+                >
                   <Register_Button>Register</Register_Button>
                 </button>
               }

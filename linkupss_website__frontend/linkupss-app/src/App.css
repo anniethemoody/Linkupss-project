@@ -1065,3 +1065,16 @@ font-weight: 700;
 .welcome-back-toast{
   background-color: #ccc;
 }
+
+.update-profile-btn{
+  color:#f8f8f8 !important;
+  background-color: #798dac !important;
+  margin-bottom:5px !important;
+}
+
+.update-password-btn{
+  color:#abbeff !important;
+  background-color: #ffff !important;
+  margin-bottom:5px !important;
+
+}

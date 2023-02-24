@@ -56,5 +56,6 @@
   },
   "devDependencies": {
     "sass": "^1.54.5"
-  }
+  },
+  "proxy":"https://api.linkupss.com"
 }

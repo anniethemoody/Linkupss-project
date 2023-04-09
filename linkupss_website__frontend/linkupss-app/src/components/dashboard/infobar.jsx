@@ -51,7 +51,7 @@ const InfoBar = (props) => {
             className="badge info-bar-badge"
             style={{ display: "flex", alignItems: "center" }}
           >
-            {props.orgInfo.org_name}
+            {localStorage.getItem("orgName")}
           </span>{" "}
           {/*30 Characters*/}
           <Form.Control
@@ -65,7 +65,7 @@ const InfoBar = (props) => {
           />
         </InputGroup>
       </span>
-      <span className="col-4" />
+      <span className="col-3" />
 
 
       <span className="col">
@@ -74,9 +74,17 @@ const InfoBar = (props) => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id="button-tooltip">{"Filter"}</Tooltip>}
         >
+        <div className="d-flex flex-column align-items-center">
           <FilterAltIcon  
             onClick={() => props.openOffcanvas("Filter")}
           />
+          <span>
+            Filter
+          </span>
+
+
+        </div>
+
         </OverlayTrigger>
       </span> 
       <span className="col">
@@ -85,7 +93,14 @@ const InfoBar = (props) => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id="button-tooltip">{"Account"}</Tooltip>}
         >
+                     <div className="d-flex flex-column align-items-center">
           <SettingsIcon onClick={() => props.openOffcanvas("Account")} />
+          <span>
+            Account
+          </span>
+
+                     </div>
+
         </OverlayTrigger>
       </span>
       <span className="col">
@@ -94,7 +109,14 @@ const InfoBar = (props) => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id="button-tooltip">{"Need help?"}</Tooltip>}
         >
+           <div className="d-flex flex-column align-items-center">
+
+
           <HelpIcon onClick={() => props.openOffcanvas("Need help")} />
+          <span>
+            Help
+          </span>
+           </div>
         </OverlayTrigger>
       </span>
       <span className="col">
@@ -103,7 +125,13 @@ const InfoBar = (props) => {
           delay={{ show: 250, hide: 400 }}
           overlay={<Tooltip id="button-tooltip">{"Log out?"}</Tooltip>}
         >
+          <div className="d-flex flex-column align-items-center">
+
           <LogoutIcon onClick={() => props.logout()} />
+          <span>
+            Log Out
+          </span>
+          </div>
         </OverlayTrigger>
       </span>
     </div>

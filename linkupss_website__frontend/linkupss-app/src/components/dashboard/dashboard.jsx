@@ -89,24 +89,25 @@ const Dashboard = () => {
 
 
          console.log(result)
-          var adminUsername = "";
+          var orgName = "";
           var orgnID = "";
           var sessions_ew = {};
-          adminUsername = result.data.orgdata[0]?.name;
+          orgName = result.data.orgdata[0]?.name;
           orgnID = result.data.orgdata[0]?.org_id;
           sessions_ew = result.data.sessions;
           sessions_ew = getAllSessions(sessions_ew);
 
           console.log(sessions_ew)
           setOrgId(orgnID);
-          setAdminName(adminUsername);
-          console.log(adminName)
-          setUserInfo({
-            _admin_id: localStorage.getItem("adminId"),
-            admin_name: adminUsername,
-            org_id: orgnID,
-            role: "admin",
-          })
+          localStorage.setItem("orgName",orgName);
+          //setAdminName(adminUsername);
+          //console.log(adminName)
+          // setUserInfo({
+          //   _admin_id: localStorage.getItem("adminId"),
+          //   admin_name: adminUsername,
+          //   org_id: orgnID,
+          //   role: "admin",
+          // })
           setSessions(sessions_ew);
          setFilteredSessions(sessions_ew);
           //response.current = reuslt;
@@ -137,9 +138,8 @@ const Dashboard = () => {
     setSessionFormState(true);
   };
   const handleDeleteSession = async (session) => {
-    console.log(session);
-    const delete_id = session.id;
-    //const { _id } = session;
+    //console.log(session);
+
     const authtoken = "Bearer " + localStorage.getItem("userToken");
     var config = { headers: { Authorization: authtoken } };
 
@@ -153,8 +153,7 @@ const Dashboard = () => {
       },
       config
       )
-      const result = await response;
-      console.log(result);
+      console.log(response)
     }
     catch(err){
       window.alert(alert);

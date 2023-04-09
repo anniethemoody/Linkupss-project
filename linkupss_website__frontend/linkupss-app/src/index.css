@@ -20,7 +20,7 @@ time, mark, audio, video {
 }
 
  body {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
   margin: 0;
   font-family: Outfit !important;
   -webkit-font-smoothing: antialiased;

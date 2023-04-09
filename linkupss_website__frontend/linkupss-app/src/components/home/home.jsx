@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import styled from "styled-components";
+import Footer from "../footer";
 const SeeProductsButtonFunction = (e, name) => {
   alert(`${name} was clicked`);
 };
@@ -444,13 +445,12 @@ const RootRootRootRoot = styled.div`
   align-items: flex-start;
 `;
 const Action_Top_Section = styled.div`
-  position: relative;
   gap: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-self: flex-end;
-  align-items: flex-start;
+  align-self: center;
+  align-items: center;
   padding: 0px 7.56em 0px 4.5em;
 `;
 const Action_Title = styled.div`
@@ -473,190 +473,11 @@ const Action_Desc = styled.div`
   padding: 0 10em 0 10em;
 `;
 const Action_Bot_Section = styled.div`
-  width: 90em;
-  height: 1885px;
-  position: relative;
-  gap: 70px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
+  width: 100%;
+  height:100%;
+
 `;
-const WireConnectionThingy = styled.img`
-  width: 47.63em;
-  height: 493px;
-  left: 456px;
-  top: 662px;
-  position: absolute;
-`;
-const Left_Col = styled.div`
-  height: 1597px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-`;
-const AdminCircle = styled.div`
-  width: 39.81em;
-  height: 526px;
-  position: relative;
-  gap: 21px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 12.69em 0px 12.69em 2.19em;
-`;
-const Apple_1 = styled.div`
-  width: 60em;
-  height: 1280px;
-  left: -600px;
-  top: -180px;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 18.13em 4.25em 23.63em 2.19em;
-  margin-right: 10em;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/NYlL2dltkVfcHO0M2yPf.svg");
-`;
-const Apple_1_Title = styled.div`
-  width: 11.66em;
-  height: 66px;
-  position: relative;
-  align-self: flex-end;
-  color: rgba(254, 69, 41, 0.44);
-  font-size: 50px;
-  font-weight: 700;
-  font-family: Outfit;
-  margin-left: 80px;
-`;
-const Apple_1_Text_Section = styled.div`
-  position: relative;
-  gap: 26px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-left: 30px;
-`;
-const Apple_1_Desc = styled.div`
-  width: 26.6em;
-  height: 118px;
-  align-self: flex-end;
-  margin: 0px 0.5em 1.5em 0px;
-  color: #798dac;
-  font-size: 27px;
-  font-family: Outfit;
-  line-height: 30px;
-  text-align: center;
-`;
-const Apple_1_Buttons_Section = styled.div`
-  gap: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-left: 50px;
-`;
-const Apple_1_Buttons_Left = styled.div`
-  width: 12.63em;
-  height: 120px;
-  position: relative;
-`;
-const Signup_Text = styled.div`
-  width: 4.29em;
-  height: 42px;
-  color: #798dac;
-  font-size: 28px;
-  font-weight: 700;
-  font-family: Outfit;
-`;
-const Signup_Button = styled.button`
-  width: 7.5em;
-  height: 42px;
-  left: 0px;
-  top: 47px;
-  position: absolute;
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 0px;
-  padding-top: 1em;
-  padding-right: 3.81em;
-  padding-bottom: 0.94em;
-  padding-left: 4.56em;
-  border-width: 0px;
-  border-radius: 50px;
-  box-sizing: content-box;
-  background-color: #f4f0f1;
-  margin-top: 2em;
-  cursor: pointer;
-  &: hover {
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  } ;
-`;
-const Apple_1_Buttons_Riight = styled.div`
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-self: flex-end;
-  align-items: flex-start;
-`;
-const Apple_1_Logindesc = styled.div`
-  width: 13.47em;
-  height: 24px;
-  align-self: flex-end;
-  margin: 18px 1.33em 0px 0px;
-  color: #798dac;
-  font-size: 20px;
-  font-family: Outfit;
-  text-align: center;
-`;
-const Apple_1_signupdesc = styled.div`
-  width: 12em;
-  height: 40px;
-  justify-content: center;
-  align-self: center;
-  margin: 0px 1.33em 2em 30px;
-  color: #798dac;
-  font-size: 20px;
-  font-family: Outfit;
-  text-align: center;
-`;
-const Login_Button = styled.button`
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin-top: 1.8em;
-  align-items: flex-start;
-  padding: 0px;
-  padding-top: 1em;
-  padding-right: 3.38em;
-  padding-bottom: 0.94em;
-  padding-left: 5em;
-  border-width: 0px;
-  border-radius: 50px;
-  box-sizing: content-box;
-  background-color: #f4f0f1;
-  cursor: pointer;
-  &: hover {
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  } ;
-`;
-const Login_Text = styled.div`
-  width: 4.29em;
-  height: 42px;
-  color: #798dac;
-  font-size: 28px;
-  font-weight: 700;
-  font-family: Outfit;
-`;
+
 const Linkpad = styled.div`
   width: 28em;
   gap: 14px;
@@ -726,316 +547,165 @@ const CameraBox = styled.div`
 const CameraIcon = styled.img`
   width: 9.19em;
   height: 104px;
-`; 
-
-const Right_Col = styled.div`
-  height: 1737px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-self: flex-end;
-  align-items: flex-start;
 `;
-const Website_Dummy = styled.div`
-  height: 462px;
+
+const WebDummy = styled.div`
+  position: relative;
+  gap: 11.7px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0px 0px 0px 12em;
-  padding: 1.11em 0.66em 1.11em 0.49em;
+  padding: 17.8px 8.85px 33px 8.85px;
   border-radius: 20px;
+  box-sizing: border-box;
   background-color: #ffffff;
   box-shadow: 0px 4px 4px 0px rgba(243, 110, 90, 0.44);
-  transform:scale(1.3);
 `;
-const Window_Buttons = styled.img`
-  width: 4.58em;
-  height: 12.7px;
-  margin: 0px 0px 0.67em 0.57em;
+const WindowButtons = styled.div`
+  gap: 17px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: flex-start;
+  margin: 0px 0px 0px 8.17px;
+  box-sizing: border-box;
 `;
-const Website_Line = styled.img`
-  width: 45em;
-  height: 2px;
-  margin: 0px 0px 1.51em 0px;
+const Close1 = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  align-self: flex-start;
+  box-sizing: border-box;
 `;
-const Sessions_Top = styled.div`
-  height: 146px;
-  gap: 52.4px;
+const Minimize = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  align-self: flex-start;
+  box-sizing: border-box;
+`;
+const Expand = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  align-self: flex-start;
+  box-sizing: border-box;
+`;
+const TopSection = styled.div`
+  width: 99.64%;
+  position: relative;
+  gap: 51.8px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0px 0px 1.35em 1.47em;
+  align-self: flex-start;
+  margin: 0px 0px 9.9px 0px;
+  padding: 0px 23.2px;
+  box-sizing: border-box;
 `;
-const Session_Yoga = styled.div`
-  height: 128px;
-  gap: 10.4px;
+const Line = styled.img`
+  width: 637px;
+  min-width: 0px;
+  height: 2.57px;
+  min-height: 0px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  box-sizing: border-box;
+  transform: rotate(-0.23deg);
+  transform-origin: 0px 0px;
+`;
+const SessionBox = styled.div`
+  width: 52.69%;
+  position: relative;
+  gap: 3.81px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  align-items: flex-start;
-  padding: 0.56em 0.82em 0.56em 0.74em;
+  align-self: flex-end;
+  margin: 24.8px 0px 0.33px 0px;
+  padding: 22.9px 14.4px 8.89px 14.4px;
   border-radius: 20px;
+  box-sizing: border-box;
   background-color: #f4f0f1;
 `;
-const Session_Yoga_Top = styled.div`
-  gap: 3.81px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 0px 0.16em 0px 0.82em;
+
+const Dummy1 = styled.div`
+  width: 111px;
+  height: 15.2px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  box-sizing: border-box;
+  background-color: #d9d9d9;
 `;
-const Yoga_Text_Top = styled.div`
-  height: 27.9px;
-  gap: 7.85px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
+const Dummy2 = styled.div`
+  width: 202px;
+  height: 15.2px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin: 0px 0px 2.54px 0px;
+  box-sizing: border-box;
+  background-color: #d9d9d9;
 `;
-const Yoga_Title = styled.div`
-  width: 5.8em;
-  height: 27.9px;
-  color: #798dac;
-  font-size: 20px;
-  font-weight: 700;
-  font-family: Outfit;
-  text-align: center;
-`;
-const Yoga_Time = styled.div`
-  width: 4.58em;
-  height: 27.9px;
-  color: #798dac;
-  font-size: 20px;
-  font-weight: 700;
-  font-family: Outfit;
-  text-align: center;
-`;
-const Yoga_Desc = styled.div`
-  width: 12.62em;
-  height: 39.4px;
-  margin: 0px 0px 0px 0.91em;
-  color: #798dac;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: Outfit;
-`;
-const Session_Yoga_Bottom = styled.div`
-  gap: 3.81px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-const Session_Yoga_Line = styled.img`
-  width: 13.81em;
+
+const LineDummy = styled.div`
+  width: 97.05%;
   height: 1px;
-  align-self: flex-end;
-  margin: 0px 0.16em 0px 0px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin: 0px 0px 0px 2.62px;
+  border-width: 1px 0px 0px 0px;
+  border-radius: 0.5px;
+  border-style: solid;
+  border-color: #d9d9d9;
+  box-sizing: border-box;
 `;
-const Session_Yoga_Button_Section = styled.div`
-  height: 31.8px;
-  gap: 92.9px;
+const ButtonDummy = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-`;
-const Yoga_Start = styled.div`
-  position: relative;
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 0.5em 0px;
+  box-sizing: border-box;
 `;
-const Yoga_Start_Button = styled.div`
-  width: 5.73em;
+const StartSessionButtonDummy = styled.div`
+  width: 50%;
   height: 27.9px;
-  left: 7.85px;
-  top: 3.81px;
-  position: absolute;
+  align-self: center;
+  margin: 1.27px 0px 2.54px 0px;
   border-radius: 20px;
+  box-sizing: border-box;
   background-color: #dbe3ff;
 `;
-const StartSession = styled.div`
-  width: 8.15em;
-  height: 20.3px;
-  position: relative;
-  color: #97adfa;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: Outfit;
-  text-align: center;
+const EditButton = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  box-sizing: border-box;
 `;
-const Edit_Button = styled.div`
-  height: 100%;
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 0.4em 0.41em;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/mzL3Qf39xTM1Il5bWZo5.svg");
-`;
-const Pen = styled.img`
-  width: 1.23em;
-  height: 19.1px;
-`;
-const Sessions_Bottom = styled.div`
-  height: 146px;
+
+const BottomSection = styled.div`
+  width: 88.38%;
   gap: 52.4px;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
-  margin: 0px 0px 1.67em 1.47em;
-`;
-const Plus_Button = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-self: flex-end;
-  align-items: flex-start;
-  margin: 0px 5em 0px 0px;
-  padding: 1.03em 0.98em 0.95em 1.06em;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/gCdhYuR0mg3e8SiYhfjn.svg");
+  align-self: flex-start;
+  margin: 0px 0px 15px 22.6px;
+  box-sizing: border-box;
 `;
 
-const Plus = styled.img`
-  width: 1.64em;
-  height: 25.4px;
-`;
-const ParticipantCirrcle = styled.div`
-  width: 38.19em;
-  height: 596px;
-  position: relative;
-  gap: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  padding: 10.5em 0px 10.5em 5.44em;
-`;
-const Apple_2 = styled.div`
-  transform: scale(2.3, 2.3);
-  right: -300px;
-  bottom: 120px;
-  width: 400px;
-  height: 600px;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 10.5em 0px 10.5em 5.44em;
-  background-size: cover;
-  background-image: url("https://file.rendit.io/n/4ANkZ8YJZNw0cGcPtC4G.svg");
-`;
-const Apple_2_Top_Section = styled.div`
-  height: 323px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0px 0px 0px 0.63em;
-  margin-left: -10em;
-  margin-top: -10px;
-`;
-const Apple_2_Title = styled.div`
-  width: 11.66em;
-  height: 66px;
-  align-self: flex-end;
-  color: rgba(254, 69, 41, 0.44);
-  font-size: 50px;
-  font-weight: 700;
-  font-family: Outfit;
-  margin-left: -5em;
-`;
-const Apple_2_Desc = styled.div`
-  width: 26.6em;
-  height: 118px;
-  color: #798dac;
-  font-size: 27px;
-  font-family: Outfit;
-  line-height: 30px;
-  text-align: center;
-  margin-top: 15px;
-`;
-const Apple_2_Button_Section = styled.div`
-  width: 12.63em;
-  height: 117px;
-  position: relative;
-  gap: 0px;
+const CircleButton = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  padding: 0px 15em 0px 9.94em;
-  margin-top: 5px;
-  margin-right: 10px;
+  align-self: flex-end;
+  margin: 0px 48.7px 0px 0px;
+  padding: 16.5px 15.7px 15.2px 15.7px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-image: url("https://file.rendit.io/n/3IVQqBi0tBpmtv0vpXSF.svg");
 `;
-const Part_Signup_Button = styled.button`
-  width: 7.5em;
-  height: 49px;
-  left: 170px;
-  top: 44px;
-  position: absolute;
-  gap: 0px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0px;
-  padding-top: 0.75em;
-  padding-right: 3.81em;
-  padding-bottom: 0.75em;
-  padding-left: 4.56em;
-  margin-top: 30px;
-  border-width: 0px;
-  border-radius: 50px;
-  box-sizing: content-box;
-  background-color: #f4f0f1;
-  cursor: pointer;
-  &: hover {
-    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
-  } ;
-`;
-const SignUp = styled.div`
-  width: 4.29em;
-  height: 42px;
-
-  color: #798dac;
-  font-size: 28px;
-  font-weight: 700;
-  font-family: Outfit;
-`;
-const Part_Button_Desc = styled.div`
-  width: 13.47em;
-  height: 71px;
-  position: relative;
-  color: #798dac;
-  font-size: 20px;
-  font-family: Outfit;
-  text-align: center;
-  margin-bottom: 3em;
-`;
-const Apple_2_Bot_Desc = styled.div`
-  width: 26.6em;
-  height: 118px;
-  position: relative;
-  color: #798dac;
-  font-size: 27px;
-  font-family: Outfit;
-  text-align: center;
-  white-space: pre-wrap;
-  margin-left: -5em;
-  margin-top: 1em;
+const Plus = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  align-self: flex-end;
+  margin: 0px 0px 0px 1.31px;
+  box-sizing: border-box;
 `;
 
 const FinalSection = styled.div`
@@ -1112,6 +782,209 @@ const Get_Started_Text = styled.div`
   font-weight: 700;
   font-family: Outfit;
   text-align: center;
+`;
+
+//ADMIN BOX
+const AdminButtonInnerText = styled.div`
+  color: #798dac;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: Outfit;
+  box-sizing: border-box;
+`;
+const AdminBox = styled.div`
+  width: 100%;
+  gap: 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 85px 38px 106px 38px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background-color: rgba(255, 203, 203, 0.71);
+`;
+const AdminText = styled.div`
+  gap: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0px 0px 15px 26px;
+  box-sizing: border-box;
+`;
+const AdminTitle = styled.div`
+  margin: 0px 40px 0px 28px;
+  align-self: center;
+  color: rgba(254, 69, 41, 0.44);
+  font-size: 50px;
+  font-weight: 700;
+  font-family: Outfit;
+  box-sizing: border-box;
+`;
+const AdminPara = styled.div`
+  width: 100%;
+  align-self: center;
+  color: #798dac;
+  font-size: 20px;
+  font-family: Outfit;
+  line-height: 30px;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const AdminButtonDesc = styled.div`
+  gap: 133px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 0px 0px 26px;
+  box-sizing: border-box;
+`;
+const SignUpText = styled.div`
+  color: #798dac;
+  font-size: 15px;
+  font-family: Outfit;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const DashboardText = styled.div`
+  margin: 13px 0px 6px 0px;
+  color: #798dac;
+  font-size: 15px;
+  font-family: Outfit;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const AdminButtons = styled.div`
+  width: 94.82%;
+  gap: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+`;
+const Signupbutton = styled.button`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0px;
+  padding-top: 16px;
+  padding-bottom: 22px;
+  border-width: 0px;
+  border-radius: 50px;
+  box-sizing: content-box;
+  background-color: #f4f0f1;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const Loginbutton = styled.button`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 0px;
+  padding-top: 16px;
+  padding-bottom: 22px;
+  border-width: 0px;
+  border-radius: 50px;
+  box-sizing: content-box;
+  background-color: #f4f0f1;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+
+//PARTICIPANT BOX
+const PartBox = styled.div`
+  gap: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 91px 47px 50px 47px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background-color: rgba(255, 203, 203, 0.71);
+`;
+const PartTitle = styled.div`
+  justify-content: center;
+  align-self: center;
+  margin: 0px 3px 8px 0px;
+  color: rgba(254, 69, 41, 0.44);
+  font-size: 50px;
+  font-weight: 700;
+  font-family: Outfit;
+  box-sizing: border-box;
+`;
+const PartPara = styled.div`
+  width: 91.57%;
+  margin: 0px 0px 33px 10px;
+  color: #798dac;
+  font-size: 20px;
+  font-family: Outfit;
+  line-height: 30px;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const PartButtonText = styled.div`
+  width: 34.77%;
+  margin: 0px 0px 0px 169px;
+  color: #798dac;
+  font-size: 15px;
+  font-family: Outfit;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const PartButton = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0px 0px 22px 143px;
+  padding: 0px;
+  padding-top: 16px;
+  padding-right: 61px;
+  padding-bottom: 22px;
+  padding-left: 61px;
+  border-width: 0px;
+  border-radius: 50px;
+  box-sizing: content-box;
+  background-color: #f4f0f1;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const Download = styled.div`
+  color: #798dac;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: Outfit;
+  text-align: center;
+  box-sizing: border-box;
+`;
+const PartDesc = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+`;
+const PartEndPara = styled.div`
+  width: 100%;
+  position: relative;
+  color: #798dac;
+  font-size: 20px;
+  font-family: Outfit;
+  text-align: center;
+  box-sizing: border-box;
 `;
 
 const Home = () => {
@@ -1237,211 +1110,183 @@ const Home = () => {
       </RectangleRootRootRootRoot>
       <div className="space-box" />
 
-      <RootRootRootRoot>
-        <Action_Top_Section>
-          <div>
-            <Action_Title>What we are doing right now</Action_Title>
-            <Action_Desc>
-              LINKUPSS has developed a way for online meetings on Zoom to
-              operate simpler for both end users with our Linkpad and our
-              meeting management tool.{" "}
-            </Action_Desc>
-          </div>
-        </Action_Top_Section>
-        <Action_Bot_Section>
-          <WireConnectionThingy
-            src={`https://file.rendit.io/n/EjQg9TlERrnUtA6ICJqK.png`}
-          />
-          <Left_Col>
-            <AdminCircle>
-              <Apple_1 />
-              <Apple_1_Title>If you’re an admin ...</Apple_1_Title>
-              <Apple_1_Text_Section>
-                <Apple_1_Desc>
-                  Admins can create their sessions by using their Zoom meeting
-                  ID and start them on their dashboard. Admins can also add
-                  participants to each session that are registered in the
-                  organisation
-                </Apple_1_Desc>
-                <Apple_1_Buttons_Section>
-                  <Apple_1_Buttons_Left>
-                    <Apple_1_signupdesc>
-                      Don't have an account ? Sign up now !
-                    </Apple_1_signupdesc>
-                    <Signup_Button
-                      onClick={(e) =>
-                        Admin_Signup_ButtonFunction(e, "signup-button")
-                      }
-                    >
-                      <Signup_Text>Sign Up</Signup_Text>
-                    </Signup_Button>
-                  </Apple_1_Buttons_Left>
-                  <Apple_1_Buttons_Riight>
-                    <Apple_1_Logindesc>
-                      To access your dahsboard
-                    </Apple_1_Logindesc>
-                    <Login_Button
-                      onClick={(e) =>
-                        Admin_Login_ButtonFunction(e, "login-button")
-                      }
-                    >
-                      <Login_Text>Log In</Login_Text>
-                    </Login_Button>
-                  </Apple_1_Buttons_Riight>
-                </Apple_1_Buttons_Section>
-              </Apple_1_Text_Section>
-            </AdminCircle>
-            <Linkpad>
-              <Linkpad_Top>
-                <Join
-                  src={`https://file.rendit.io/n/rZ3otUbTvTL20PN0PR9l.png`}
-                />
-                <Leave
-                  src={`https://file.rendit.io/n/isBJcm4VvVPH6TNIz940.png`}
-                />
-              </Linkpad_Top>
-              <Linkpad_Bottom>
-                <MicBox>
-                  <MicIcon
-                    src={`https://file.rendit.io/n/aaSNSEcYlCnckTNsXjhB.png`}
-                  />
-                </MicBox>
-                <CameraBox>
-                  <CameraIcon
-                    src={`https://file.rendit.io/n/Zqrvbtd4HjoJ42isUbNr.png`}
-                  />
-                </CameraBox>
-              </Linkpad_Bottom>
-            </Linkpad>
-          </Left_Col>
-          <Right_Col>
-            <Website_Dummy>
-              <Window_Buttons
-                src={`https://file.rendit.io/n/z0OD2ig3jkQKS8QrMiXI.svg`}
-              />
-              <Website_Line
-                src={`https://file.rendit.io/n/ffOboopAZsrmQ3R4BKMK.svg`}
-              />
-              <Sessions_Top>
-                <Session_Yoga>
-                  <Session_Yoga_Top>
-                    <Yoga_Text_Top>
-                      <Yoga_Title>Yoga Class</Yoga_Title>
-                      <Yoga_Time>08:00</Yoga_Time>
-                    </Yoga_Text_Top>
-                    <Yoga_Desc>
-                      Morning stretches with our yoga instructor
-                    </Yoga_Desc>
-                  </Session_Yoga_Top>
-                  <Session_Yoga_Bottom>
-                    <Session_Yoga_Line
-                      src={`https://file.rendit.io/n/SK0vJlbteCMDDC5Uq9g1.svg`}
-                    />
-                    <Session_Yoga_Button_Section>
-                      <Yoga_Start>
-                        <Yoga_Start_Button />
-                        <StartSession>
-                          Start Session
-                          <br />
-                        </StartSession>
-                      </Yoga_Start>
-                      <Edit_Button>
-                        <Pen
-                          src={`https://file.rendit.io/n/ln0Nu2kgsEJPFhrDfGrr.png`}
-                        />
-                      </Edit_Button>
-                    </Session_Yoga_Button_Section>
-                  </Session_Yoga_Bottom>
-                </Session_Yoga>
-                <Session_Dummy_1>
-                  <Dumy_Short>
-                    <Dummy_Short_Rect />
-                  </Dumy_Short>
-                  <Dummy_Thing />
-                  <Dummy_Thing />
-                  <Session_Line
-                    src={`https://file.rendit.io/n/zmitke09jzEwOqrF6BaH.svg`}
-                  />
-                  <Session_1_Bottom>
-                    <Start_Dummy />
-                    <Edit_Dummy
-                      src={`https://file.rendit.io/n/EFDf0xqPyDE4rNSPHDZB.svg`}
-                    />
-                  </Session_1_Bottom>
-                </Session_Dummy_1>
-              </Sessions_Top>
-              <Sessions_Bottom>
-                <Session_Dummy_1>
-                  <Dumy_Short>
-                    <Dummy_Short_Rect />
-                  </Dumy_Short>
-                  <Dummy_Thing />
-                  <Dummy_Thing />
-                  <Session_Line
-                    src={`https://file.rendit.io/n/hjGM7ntQgXUkJFgsFR3X.svg`}
-                  />
-                  <Session_1_Bottom>
-                    <Start_Dummy />
-                    <Edit_Dummy
-                      src={`https://file.rendit.io/n/L2eIn7nvG0WFCKLFHGC1.svg`}
-                    />
-                  </Session_1_Bottom>
-                </Session_Dummy_1>
-                <Session_Dummy_1>
-                  <Dumy_Short>
-                    <Dummy_Short_Rect />
-                  </Dumy_Short>
-                  <Dummy_Thing />
-                  <Dummy_Thing />
-                  <Session_Line
-                    src={`https://file.rendit.io/n/jX1gEhWwJ8wnZ0d0vMaS.svg`}
-                  />
-                  <Session_1_Bottom>
-                    <Start_Dummy />
-                    <Edit_Dummy
-                      src={`https://file.rendit.io/n/DjWX75ow8wpFMh2XQjKd.svg`}
-                    />
-                  </Session_1_Bottom>
-                </Session_Dummy_1>
-              </Sessions_Bottom>
-              <Plus_Button>
-                <Plus
-                  src={`https://file.rendit.io/n/UqMK92DjGhizscs0iXdH.png`}
-                />
-              </Plus_Button>
-            </Website_Dummy>
-            <ParticipantCirrcle>
-              <Apple_2 />
-              <Apple_2_Top_Section>
-                <Apple_2_Title>If you’re a participant ...</Apple_2_Title>
-                <Apple_2_Desc>
-                  Participants can join online meetings simply by connecting the
-                  Linkpad to your computer. You can register for admins to be
-                  able to add you to a session.
-                </Apple_2_Desc>
-                <Apple_2_Button_Section>
-                  <Part_Signup_Button
-                    onClick={(e) =>
-                      Part_Signup_ButtonFunction(e, "part-signup-button")
-                    }
-                  >
-                    <SignUp>Sign Up</SignUp>
-                  </Part_Signup_Button>
-                  <Part_Button_Desc>
-                    Don’t have a Linkupss account, sign up now !
-                  </Part_Button_Desc>
-                </Apple_2_Button_Section>
-              </Apple_2_Top_Section>
-              <Apple_2_Bot_Desc>
-                That’s it ! Simply wait for the meeting to start and join with
-                the pad !{" "}
-              </Apple_2_Bot_Desc>
-            </ParticipantCirrcle>
-          </Right_Col>
-        </Action_Bot_Section>
-      </RootRootRootRoot>
+      <Action_Top_Section>
+        <div>
+          <Action_Title>What we are doing right now</Action_Title>
+          <Action_Desc>
+            LINKUPSS has developed a way for online meetings on Zoom to operate
+            simpler for both end users with our Linkpad and our meeting
+            management tool.{" "}
+          </Action_Desc>
+        </div>
+      </Action_Top_Section>
+      <Action_Bot_Section>
+        <div className="container mt-5">
+          <div className="d-flex flex-row">
+            <div className="col-6 admin-col-1">
 
-      <div className="space-box" />
+                <AdminBox>
+                  <AdminText>
+                    <AdminTitle>If you’re an admin ...</AdminTitle>
+                    <AdminPara>
+                      Admins can create their sessions by using their Zoom
+                      meeting ID and start them on their dashboard. Admins can
+                      also add participants to each session that are registered
+                      in the organisation
+                    </AdminPara>
+                  </AdminText>
+
+                  <AdminButtons>
+                    <div>
+                      <SignUpText>
+                        Don’t have a Linkupss account, sign up now !
+                      </SignUpText>
+                      <Signupbutton>
+                        <AdminButtonInnerText>Sign Up</AdminButtonInnerText>
+                      </Signupbutton>
+                    </div>
+
+                    <div>
+                      <DashboardText>To access your dahsboard</DashboardText>
+
+                      <Loginbutton>
+                        <AdminButtonInnerText>Log In</AdminButtonInnerText>
+                      </Loginbutton>
+                    </div>
+                  </AdminButtons>
+                </AdminBox>
+              </div>
+          
+              <div className="col-6 admin-col-2">
+                <WebDummy>
+                  <WindowButtons>
+                    <Close1
+                      src={`https://file.rendit.io/n/WatrGkwTBnuMwk3nHNiT.svg`}
+                    />
+                    <Minimize
+                      src={`https://file.rendit.io/n/LzslxJv5yg86NPS58McE.svg`}
+                    />
+                    <Expand
+                      src={`https://file.rendit.io/n/Da5ZCyzkFVfYfco8duWc.svg`}
+                    />
+                  </WindowButtons>
+                  <TopSection>
+                    <Line
+                      src={`https://file.rendit.io/n/Gjcxd7Pr0ZaulRBIxynG.svg`}
+                    />
+                    <SessionBox>
+                      <Dummy1 />
+                      <Dummy2 />
+                      <Dummy2 />
+                      <LineDummy />
+                      <ButtonDummy>
+                        <StartSessionButtonDummy />
+                        <EditButton
+                          src={`https://file.rendit.io/n/iWlaFHuBZW1KKi7Xmkxs.svg`}
+                        />
+                      </ButtonDummy>
+                    </SessionBox>
+                    <SessionBox>
+                      <Dummy1 />
+                      <Dummy2 />
+                      <Dummy2 />
+                      <LineDummy />
+                      <ButtonDummy>
+                        <StartSessionButtonDummy />
+                        <EditButton
+                          src={`https://file.rendit.io/n/iWlaFHuBZW1KKi7Xmkxs.svg`}
+                        />
+                      </ButtonDummy>
+                    </SessionBox>
+                  </TopSection>
+                  <BottomSection>
+                    <SessionBox>
+                      <Dummy1 />
+                      <Dummy2 />
+                      <Dummy2 />
+                      <LineDummy />
+                      <ButtonDummy>
+                        <StartSessionButtonDummy />
+                        <EditButton
+                          src={`https://file.rendit.io/n/iWlaFHuBZW1KKi7Xmkxs.svg`}
+                        />
+                      </ButtonDummy>
+                    </SessionBox>
+                    <SessionBox>
+                      <Dummy1 />
+                      <Dummy2 />
+                      <Dummy2 />
+                      <LineDummy />
+                      <ButtonDummy>
+                        <StartSessionButtonDummy />
+                        <EditButton
+                          src={`https://file.rendit.io/n/iWlaFHuBZW1KKi7Xmkxs.svg`}
+                        />
+                      </ButtonDummy>
+                    </SessionBox>
+                  </BottomSection>
+                  <CircleButton>
+                    <Plus
+                      src={`https://file.rendit.io/n/zquKnVQUvpMmWkTKjQsJ.png`}
+                    />
+                  </CircleButton>
+                </WebDummy>
+              </div>
+            </div>
+         
+        </div>
+        <div className="container mt-5">
+          <div className="d-flex flex-row align-items-center">
+            <div className="col">
+            <Linkpad>
+                <Linkpad_Top>
+                  <Join
+                    src={`https://file.rendit.io/n/rZ3otUbTvTL20PN0PR9l.png`}
+                  />
+                  <Leave
+                    src={`https://file.rendit.io/n/isBJcm4VvVPH6TNIz940.png`}
+                  />
+                </Linkpad_Top>
+                <Linkpad_Bottom>
+                  <MicBox>
+                    <MicIcon
+                      src={`https://file.rendit.io/n/aaSNSEcYlCnckTNsXjhB.png`}
+                    />
+                  </MicBox>
+                  <CameraBox>
+                    <CameraIcon
+                      src={`https://file.rendit.io/n/Zqrvbtd4HjoJ42isUbNr.png`}
+                    />
+                  </CameraBox>
+                </Linkpad_Bottom>
+              </Linkpad>
+            </div>
+            <div className="col">
+            <PartBox>
+                <PartTitle>If you’re a participant ...</PartTitle>
+                <PartPara>
+                  Participants can join online meetings simply by connecting the
+                  Linkpad to your computer. Download your LINKUPSS app now to
+                  join your meetings
+                </PartPara>
+                <PartButtonText>
+                  Don’t have a Linkupss account, sign up now !
+                </PartButtonText>
+                <PartButton>
+                  <Download>Download </Download>
+                </PartButton>
+                <PartDesc>
+                  <PartEndPara>
+                    That’s it ! Simply wait for the meeting to start and join
+                    with the pad !{" "}
+                  </PartEndPara>
+                </PartDesc>
+              </PartBox>
+
+            </div>
+          </div>
+        </div>
+      </Action_Bot_Section>
       <div className="space-box" />
 
       <FinalSection>
@@ -1459,6 +1304,7 @@ const Home = () => {
         </Get_Started_Button>
       </FinalSection>
       <div className="space-box" />
+      <Footer />
     </React.Fragment>
   );
 };

@@ -44,13 +44,31 @@ import React, { Component } from 'react';
 import { NavLink,Link } from 'react-router-dom';
 import styled from "styled-components";
 class NavBar extends Component{
-    state = { adminName:"" } 
+    state = { 
+      adminName:"" ,
+      prevScrollpos: window.pageYOffset,
+      visible: true} 
     componentDidMount(){
+      window.addEventListener("scroll", this.handleScroll);
       localStorage.getItem("userToken")
     }
+    componentWillUnmount() {
+      window.removeEventListener("scroll", this.handleScroll);
+    }
+    handleScroll = () => {
+      const { prevScrollpos } = this.state;
+  
+      const currentScrollPos = window.pageYOffset;
+      const visible = prevScrollpos > currentScrollPos;
+  
+      this.setState({
+        prevScrollpos: currentScrollPos,
+        visible
+      });
+    };
     render(){
       return(
-        <NavbarBoxRootRootRoot>
+        <NavbarBoxRootRootRoot className={this.state.visible ? "navbar-root" : "navbar-hidden"}>
         <NavLink style={{ textDecoration: 'none' }} to="/">
           <Text1>LINKUPSS</Text1>
         </NavLink>

@@ -17,6 +17,7 @@ import axios from "axios";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { NavLink } from "react-router-dom";
+
 const Login_Col = styled.div`
   position: relative;
   gap: 43px;
@@ -167,13 +168,11 @@ const Forgot_Pwd = styled.div`
   font-size: 20px;
   font-weight: 700;
   font-family: Outfit;
- padding-left:80px;  
+  padding-left: 80px;
 `;
 const Login_Button = styled.div`
   width: 100%;
-  align-self: center;
   text-align: center;
-  height: 42px;
   color: #798dac;
   font-size: 28px;
   font-weight: 700;
@@ -350,6 +349,46 @@ const Register_Button = styled.div`
   font-weight: 700;
   font-family: Outfit;
 `;
+
+//GOOGLE SIGN IN BUTTON
+const SignInWithGoogleButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  padding-top: 14px;
+  padding-right: 15px;
+  padding-bottom: 14px;
+  padding-left: 17px;
+  border-width: 0px;
+  border-radius: 50px;
+  margin-top:20px;
+  margin-bottom:20px;
+  margin-left:60px;
+  box-sizing: content-box;
+  background-color: #f4f0f1;
+  cursor: pointer;
+  &: hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+  } ;
+`;
+const GooglePic = styled.img`
+  min-width: 0px;
+  min-height: 0px;
+  box-sizing: border-box;
+`;
+
+const SignInGgText = styled.div`
+  align-self: center;
+  margin: 9px 0px 12px 0px;
+  color: #798dac;
+  font-size: 19px;
+  font-weight: 700;
+  font-family: Outfit;
+  box-sizing: border-box;
+`;
+
 const LoginRegister = () => {
   const { signup, login, currentUser } = useAuth();
   const history = useHistory();
@@ -382,20 +421,26 @@ const LoginRegister = () => {
     email: Joi.string().required().label("Email").email(),
     orgId: Joi.string().required().label("Organization ID"),
   };
+//  const handleSignInWithGoogle = () => {
 
+//   signInWithPopup(authApp,provider).then((data) =>{
+//     console.log(data);
+//   })
+//  }
+  //LOGIN FUNCTION
   const doSubmitLogin = async (e) => {
-    if (e && e.preventDefault) { e.preventDefault(); }
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
 
     localStorage.removeItem("userToken");
     localStorage.clear();
     const user = { loginUserName, loginUserPassword };
     console.log(user);
-    try{
-
+    try {
       const firebase_response = await login(loginUserName, loginUserPassword);
-    }
-    catch(err){
-      window.alert(err.message)
+    } catch (err) {
+      window.alert(err.message);
     }
     try {
       if (loginUserName == "" && loginUserPassword == "") {
@@ -415,17 +460,6 @@ const LoginRegister = () => {
       localStorage.setItem("adminId", JSON.stringify(admin_id));
       localStorage.setItem("adminUserName", loginUserName);
 
-      // setJwt(accessToken);
-      //  setAuth({
-      //    user_name: loginUserName,
-      //    user_password: loginUserPassword,
-      //    accessToken,
-      //  });
-      // // set the state of the user
-      // setUser(response.data);
-      // // store the user in localStorage
-
-      //setAuthToken(token);
       return history.push("/dashboard");
     } catch (err) {
       if (!err?.response) {
@@ -445,7 +479,7 @@ const LoginRegister = () => {
       setLoginFailed(true);
     }
   };
-
+  //REGISTER FUNCTION
   const doSubmitRegister = async (e) => {
     //setRegisterClicked(true);
     var failed = false;
@@ -453,7 +487,7 @@ const LoginRegister = () => {
     e.preventDefault();
 
     //firebase authentication
-  try {
+    try {
       setLoading(true);
       const firebase_response = await signup(
         registerUserEmail,
@@ -491,8 +525,7 @@ const LoginRegister = () => {
 
         const token = response.data.token;
         const adminid_retrieved = response.data.data[0].admin_id;
-        //**********************************************//
-        // NEED TO RETRIEVE ADMIN ID FROM /adminregister
+
         localStorage.setItem("userToken", token);
         localStorage.setItem("adminId", adminid_retrieved);
         token_retrieved = token;
@@ -640,172 +673,6 @@ const LoginRegister = () => {
     else delete errors["orgId"];
     setErrorLog(errors);
   };
-  // const handleLoginValidation  = () =>{
-  //   const data = {loginUserName,loginUserPassword};
-  //   const {error} = Joi.validate(data,schema,{abortEarly:false})
-  //   if (!error) return null;
-  //   const errors = {};
-  //   for(let item of error.details) errors[item.path[0]] = item.message;
-  //   return errors;
-  // }
-
-  // return (
-  //   <div className="row modal-header text-center ">
-  //     {/* Login Side */}
-
-  //     <Form className="col-md-6 align-items-start" onSubmit={doSubmitLogin}>
-  //       <h1 className="text-primary">Login</h1>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Username"
-  //             aria-label="Username"
-  //             aria-describedby="basic-addon1"
-  //             value={loginUserName}
-  //             isInvalid={errorLog["username"]}
-  //             //onChange={(e) => setLoginUserName(e.target.value)}
-  //             onChange={handleLoginUserName}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["username"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["username"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Password"
-  //             aria-label="Password"
-  //             aria-describedby="basic-addon1"
-  //             value={loginUserPassword}
-  //             isInvalid={errorLog["password"]}
-  //             //onChange={(e) => setLoginUserPassword(e.target.value)}
-  //             onChange={handleLoginUserPassword}
-  //           />
-  //         </InputGroup>
-  //         {errorLog["password"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["password"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-
-  //       <button
-  //         type="submit"
-  //         className="btn btn-primary"
-  //         //onClick={() => doSubmitLogin()}
-  //       >
-  //         Login
-  //       </button>
-
-  //     </Form>
-
-  //     {/* Register Side */}
-  //     <Form
-  //       onSubmit={doSubmitRegister}
-  //     >
-  //       <h1 className="text-primary">Register</h1>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Name"
-  //             aria-label="Name"
-  //             aria-describedby="basic-addon1"
-  //             value={registerName}
-  //             onChange={handleRegisterName}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["name"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["name"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Username"
-  //             aria-label="Username"
-  //             aria-describedby="basic-addon1"
-  //             value={registerUserName}
-  //             onChange={handleRegisterUserName}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["newUsername"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["newUsername"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="New Password"
-  //             aria-label="Password"
-  //             aria-describedby="basic-addon1"
-  //             value={registerUserPassword}
-  //             onChange={handleRegisterUserPassword}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["newPassword"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["newPassword"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Email Address"
-  //             aria-label="Email Address"
-  //             aria-describedby="basic-addon1"
-  //             value={registerUserEmail}
-  //             onChange={handleRegisterUserEmail}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["email"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["email"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <div className="row d-flex justify-content-center">
-  //         <InputGroup className="input-g mb-3">
-  //           <Form.Control
-  //             placeholder="Organization ID"
-  //             aria-label="Organization ID"
-  //             aria-describedby="basic-addon1"
-  //             value={registerUserOrgId}
-  //             onChange={handleRegisterOrgId}
-  //           />
-  //         </InputGroup>
-
-  //         {errorLog["orgId"] && (
-  //           <Alert className="error-badge" variant={"danger"}>
-  //             {errorLog["orgId"]}
-  //           </Alert>
-  //         )}
-  //       </div>
-  //       <button type="submit" className="btn btn-primary">
-  //         Sign Up
-  //       </button>
-  //       <div className="row d-flex justify-content-center">
-  //         {/* {registerFailed && (
-  //           <Alert className="error-badge mt-3" variant={"danger"}>
-  //             {registerError}
-  //           </Alert>
-  //         )} */}
-  //       </div>
-  //     </Form>
-  //   </div>
-  // );
 
   return (
     <React.Fragment>
@@ -820,6 +687,18 @@ const LoginRegister = () => {
                 <Login_Desc>
                   Sign in to start using your meeting management tool
                 </Login_Desc>
+
+              {/* <SignInWithGoogleButton
+                type="button"
+                onClick={(e) =>
+                 {}
+                }
+              >
+                <GooglePic
+                  src={`https://file.rendit.io/n/SkOtNoy5DgtXLEmIqPBV.png`}
+                />
+                <SignInGgText>Continue with Google</SignInGgText>
+              </SignInWithGoogleButton> */}
                 <Login_Username>
                   <Username />
                   <InputGroup className="input-g mb-3 login-input">
@@ -853,18 +732,22 @@ const LoginRegister = () => {
                   </InputGroup>
                 </Login_Password>
                 <div className="d-flex w-100">
-                <NavLink style={{ textDecoration: 'none' }} to="/resetyourpassword">
-                  <Forgot_Pwd>Forgot your password ?</Forgot_Pwd>
-              </NavLink>
+                  <NavLink
+                    style={{ textDecoration: "none" }}
+                    to="/resetyourpassword"
+                  >
+                    <Forgot_Pwd>Forgot your password ?</Forgot_Pwd>
+                  </NavLink>
                 </div>
               </Top_Section>
               <button
                 type="btn"
-                className="login-register-buttons"
+                className="login-buttons"
                 onClick={() => doSubmitLogin()}
               >
                 <Login_Button>Login</Login_Button>
               </button>
+
             </Login_Col>
           </Form>
           <Login_Register_Line
@@ -877,16 +760,7 @@ const LoginRegister = () => {
                 Don’t have an account? Sign up now to start using your meeting
                 manaement tool
               </Register_Desc>
-              <div className="button-group-flex">
-                <div className="btn-group admin-part-btn-grp" role="group">
-                  <button type="button" className="btn-lr admin-btn-grp">
-                    Admin
-                  </button>
-                  <button type="button" className="btn-lr part-btn-grp">
-                    Participant
-                  </button>
-                </div>
-              </div>
+
               <div className="space-register" />
 
               <Reg_Username>
@@ -966,7 +840,7 @@ const LoginRegister = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="login-register-buttons"
+                  className="register-buttons"
                 >
                   <Register_Button>Register</Register_Button>
                 </button>

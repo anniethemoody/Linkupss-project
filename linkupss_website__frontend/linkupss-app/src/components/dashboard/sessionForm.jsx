@@ -453,6 +453,8 @@ const fetchParticipants =  () => {
       meeting_link: sessionLink,
     };
 
+    
+
     setNewSession(session_saved);
     props.hide();
     props.saveSession({ session_saved });

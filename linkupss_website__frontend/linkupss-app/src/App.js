@@ -6,7 +6,7 @@ import React, { Component,useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import { Redirect,Route,Router } from 'react-router-dom';
 import Dashboard from './components/dashboard/dashboard';
-import LoginRegister from './components/loginregister/loginregister';
+import LoginRegister from './components/loginregister/login';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import AboutUs from './components/about-us/about-us';
@@ -22,11 +22,16 @@ import Participants from './components/participants/participants';
 import Footer from './components/footer';
 import ResetYourPassword from './components/loginregister/resetpassword';
 import { AuthProvider } from './contexts/AuthContext';
+import Register from './components/loginregister/register';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 //EVERYTHING IS IN CAMEL CASE!!!  
 function App() {
   document.body.style.backgroundColor = "#dbe3ff";
   document.body.style.margin = "0";
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+
     <AuthProvider>
 
     <div className="box">
@@ -39,6 +44,7 @@ function App() {
     <Route path="/latestnews" component={LatestNews}/> 
     <Route path="/aboutus" component={AboutUs}/> 
     <Route path="/adminloginregister" component={LoginRegister}/> 
+    <Route path="/adminregister" component={Register}/> 
     <Route path="/resetyourpassword" component={ResetYourPassword}/> 
     <Route path="/participantregister" component={ParticipantRegister}/> 
     <Route path="/dashboard" component={Dashboard}/> 
@@ -49,6 +55,7 @@ function App() {
     {/* <Footer className = "footerpos"/> */}
     </div>
     </AuthProvider>
+    </LocalizationProvider>
     
   );
 }

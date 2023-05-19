@@ -20,6 +20,7 @@ const InfoBar = (props) => {
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
   const [filterButtonState, setfilterButtonState] = useState(false);
   const [logOutPopUpState,setLogOutPopUpState] = useState(false);
+  const [chooseOrgPopUpState,setChooseOrgPopUpState] = useState(false);
   const handleSearchSession = (e) => {
     const query = e.target.value;
     setSessionSearchQuery(query);
@@ -47,13 +48,13 @@ const InfoBar = (props) => {
     >
       <span className="col-5">
         <InputGroup>
-          <span
-            className="badge info-bar-badge"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            {localStorage.getItem("orgName")}
-          </span>{" "}
-          {/*30 Characters*/}
+
+      <button 
+      className="btn choose-orgnanization-button"
+      onClick = {()=>props.chooseOrg()}
+      >
+        Choose Organization
+      </button>
           <Form.Control
           type="search-bar"
           className="search-bar-style"

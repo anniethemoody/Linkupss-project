@@ -17,6 +17,9 @@ import axios from "axios";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { NavLink } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { authApp } from "../../firebase";
+import { provider } from "../../firebase"; 
 
 const Login_Col = styled.div`
   position: relative;
@@ -169,6 +172,17 @@ const Forgot_Pwd = styled.div`
   font-weight: 700;
   font-family: Outfit;
   padding-left: 80px;
+`;
+const Or = styled.div`
+  margin-top: -10px;
+  color: #798dac;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: Outfit;
+  padding-left: 180px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 `;
 const Login_Button = styled.div`
   width: 100%;
@@ -421,33 +435,42 @@ const LoginRegister = () => {
     email: Joi.string().required().label("Email").email(),
     orgId: Joi.string().required().label("Organization ID"),
   };
-//  const handleSignInWithGoogle = () => {
+ const handleSignInWithGoogle = () => {
 
-//   signInWithPopup(authApp,provider).then((data) =>{
-//     console.log(data);
-//   })
-//  }
+  signInWithPopup(authApp,provider).then((data) =>{
+    console.log(data);
+  })
+ }
   //LOGIN FUNCTION
   const doSubmitLogin = async (e) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-
+    var firebase_token="";
     localStorage.removeItem("userToken");
     localStorage.clear();
     const user = { loginUserName, loginUserPassword };
     console.log(user);
     try {
       const firebase_response = await login(loginUserName, loginUserPassword);
+      firebase_token = firebase_response;
     } catch (err) {
       window.alert(err.message);
     }
     try {
       if (loginUserName == "" && loginUserPassword == "") {
-        throw "Login Failed. Please try again";
+        throw "Invalid Fields. Please try again";
       }
       setLoading(true);
-
+      
+      console.log(firebase_token)
+      //console.log(firebase_token["user"]["multiFactor"]["user"]["accessToken"])
+      firebase_token = firebase_token["user"]["multiFactor"]["user"]["accessToken"]
+      const firebase_uid = await httpService.post(
+        "https://api.linkupss.com/firebaselogin",
+        {token: firebase_token}
+      )
+      console.log("Firebase uid: "+JSON.stringify(firebase_uid))
       const response = await httpService.post(
         "https://api.linkupss.com/adminlogin",
         { email: loginUserName, user_password: loginUserPassword }
@@ -480,119 +503,6 @@ const LoginRegister = () => {
     }
   };
   //REGISTER FUNCTION
-  const doSubmitRegister = async (e) => {
-    //setRegisterClicked(true);
-    var failed = false;
-    var token_retrieved = "";
-    e.preventDefault();
-
-    //firebase authentication
-    try {
-      setLoading(true);
-      const firebase_response = await signup(
-        registerUserEmail,
-        registerUserPassword
-      );
-      console.log(firebase_response);
-    } catch (e) {
-      window.alert(e.message);
-      setRegisterFailed(true);
-    }
-    if (!registerFailed) {
-      try {
-        if (
-          registerName == "" ||
-          registerUserOrgId == "" ||
-          registerUserEmail == "" ||
-          registerUserPassword == ""
-        ) {
-          throw "Invalid fields. Please try again";
-        }
-        const response = await httpService.post(
-          "https://api.linkupss.com/adminregister",
-          {
-            name: registerName,
-            user_name: registerName,
-            user_password: registerUserPassword,
-            extra_info: registerUserEmail,
-          },
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: false,
-          }
-        );
-        console.log(response);
-
-        const token = response.data.token;
-        const adminid_retrieved = response.data.data[0].admin_id;
-
-        localStorage.setItem("userToken", token);
-        localStorage.setItem("adminId", adminid_retrieved);
-        token_retrieved = token;
-      } catch (err) {
-        console.log(err);
-        setRegisterFailed(true);
-
-        if (!err.response) {
-          console.log("No Server Response");
-        } else if (err.response.status === 409) {
-          console.log("Username Taken");
-          failed = true;
-        } else if (err.response.data["code"] === 99) {
-          window.alert(
-            "Email already taken. Please try again with a different email."
-          );
-          failed = true;
-        } else {
-          console.log("Registration Failed");
-        }
-        if (err.code == "ERR_NETWORK") {
-          window.alert(
-            "Oops. It seems like you're disconnected. Please try again."
-          );
-        } else {
-          failed = true;
-          window.alert(err);
-        }
-      }
-    }
-
-    if (!registerFailed) {
-      try {
-        var auth = "Bearer " + token_retrieved;
-        console.log(auth);
-        var config = {
-          headers: { Authorization: "Bearer " + token_retrieved },
-        };
-        console.log(registerUserOrgId, registerUserName);
-        console.log(config, registerUserOrgId, registerUserName);
-
-        const response = await axios.post(
-          "https://api.linkupss.com/organizationjoin",
-          {
-            org_code: registerUserOrgId,
-            user_name: registerName,
-          },
-          config
-        );
-        localStorage.setItem("adminUserName", registerName);
-        console.log(response);
-        return history.push("/dashboard");
-      } catch (err) {
-        failed = true;
-        if (err.code == "ERR_NETWORK") {
-          window.alert(
-            "Oops. It seems like you're disconnected. Please try again."
-          );
-        } else {
-          window.alert(
-            "Invalid Organisation Code. Please try again or contact your organization."
-          );
-        }
-      }
-    }
-  };
-
   const validateProperty = (type, val) => {
     const obj = { [type]: val };
     const schemas = { [type]: schema[type] };
@@ -680,25 +590,26 @@ const LoginRegister = () => {
 
       <LoginRegisterStyle>
         <div className="d-flex justify-content-center">
-          <Form onSubmit={doSubmitLogin}>
-            <Login_Col>
+          <Form onSubmit={doSubmitLogin}  autoComplete="on">
+          
               <Top_Section>
                 <Login_Title>Login</Login_Title>
                 <Login_Desc>
                   Sign in to start using your meeting management tool
                 </Login_Desc>
 
-              {/* <SignInWithGoogleButton
+               <SignInWithGoogleButton
                 type="button"
                 onClick={(e) =>
-                 {}
+                  handleSignInWithGoogle()
                 }
               >
                 <GooglePic
                   src={`https://file.rendit.io/n/SkOtNoy5DgtXLEmIqPBV.png`}
                 />
                 <SignInGgText>Continue with Google</SignInGgText>
-              </SignInWithGoogleButton> */}
+              </SignInWithGoogleButton> 
+              <Or>Or</Or>
                 <Login_Username>
                   <Username />
                   <InputGroup className="input-g mb-3 login-input">
@@ -740,6 +651,10 @@ const LoginRegister = () => {
                   </NavLink>
                 </div>
               </Top_Section>
+
+                <div className="login-wrapper">
+
+                
               <button
                 type="btn"
                 className="login-buttons"
@@ -747,106 +662,10 @@ const LoginRegister = () => {
               >
                 <Login_Button>Login</Login_Button>
               </button>
-
-            </Login_Col>
+              </div>
+            
           </Form>
-          <Login_Register_Line
-            src={`https://file.rendit.io/n/O41yB1kxmHauj1mBztTm.png`}
-          />
-          <Form onSubmit={doSubmitRegister}>
-            <Register_Col>
-              <Register_Title>Register</Register_Title>
-              <Register_Desc>
-                Don’t have an account? Sign up now to start using your meeting
-                manaement tool
-              </Register_Desc>
 
-              <div className="space-register" />
-
-              <Reg_Username>
-                <Space_Username />
-                <InputGroup className="input-g mb-3 login-input">
-                  <Form.Control
-                    className="login-field"
-                    placeholder="Name"
-                    aria-label="Name"
-                    aria-describedby="basic-addon1"
-                    value={registerName}
-                    onChange={handleRegisterName}
-                    isInvalid={errorLog["name"]}
-                  />
-                </InputGroup>
-              </Reg_Username>
-              <Reg_Password>
-                <Space_Pwd />
-                <InputGroup className="input-g mb-3 login-input">
-                  <Form.Control
-                    className="login-field"
-                    placeholder="Create A New Password"
-                    aria-label="Password"
-                    aria-describedby="basic-addon1"
-                    value={registerUserPassword}
-                    onChange={handleRegisterUserPassword}
-                    isInvalid={errorLog["newPassword"]}
-                  />
-                </InputGroup>
-              </Reg_Password>
-
-              <Reg_ConfirmPassword>
-                <InputGroup className="input-g mb-3 login-input">
-                  <Form.Control
-                    className="login-field"
-                    placeholder="Confirm Password"
-                    aria-label="Password Confirmation"
-                    aria-describedby="basic-addon1"
-                    value={registerUserPasswordConfirmation}
-                    onChange={handleRegisterUserPasswordConfirmation}
-                    isInvalid={errorLog["newPasswordConfirmation"]}
-                  />
-                </InputGroup>
-              </Reg_ConfirmPassword>
-
-              <Reg_Email>
-                <Space_Username />
-                <InputGroup className="input-g mb-3 login-input">
-                  <Form.Control
-                    className="login-field"
-                    placeholder="Email Address"
-                    aria-label="Email Address"
-                    aria-describedby="basic-addon1"
-                    value={registerUserEmail}
-                    onChange={handleRegisterUserEmail}
-                    isInvalid={errorLog["email"]}
-                  />
-                </InputGroup>
-              </Reg_Email>
-              <Organisation>
-                <Space_Username />
-
-                <InputGroup className="input-g mb-3 login-input">
-                  <Form.Control
-                    className="login-field"
-                    placeholder="Organization ID"
-                    aria-label="Organization ID"
-                    aria-describedby="basic-addon1"
-                    value={registerUserOrgId}
-                    onChange={handleRegisterOrgId}
-                    isInvalid={errorLog["orgId"]}
-                  />
-                </InputGroup>
-              </Organisation>
-              <Donthaveorgid>Don’t have an org ID ?</Donthaveorgid>
-              {
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="register-buttons"
-                >
-                  <Register_Button>Register</Register_Button>
-                </button>
-              }
-            </Register_Col>
-          </Form>
         </div>
       </LoginRegisterStyle>
       <div className="space-box-login" />

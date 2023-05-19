@@ -12,8 +12,14 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { set } from "lodash";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
-import { useAuth } from "../../contexts/AuthContext";
+import { upload, useAuth } from "../../contexts/AuthContext";
+import { authApp,updateProfile } from "../../firebase";
+import {getStorage,uploadBytes,uploadBytesResumable,ref, getDownloadURL} from "firebase/storage"
+
 const LeftSideBar = (props) => {
+  const storage = getStorage()
+  const auth = useAuth()
+  const { currentUser } = useAuth();
   const [offcanvasBody, setOffcanvasBody] = useState({});
   const [offcanvasTitle, setOffcanvasTitle] = useState("");
   const [changePasswordState,setChangePasswordState] = useState(false)
@@ -21,8 +27,9 @@ const LeftSideBar = (props) => {
   const [newPasswordConfirm,setNewPasswordConfirm] = useState("")
   const [accountNameState, setAccountNameState] = useState(true);
   const [accountName, setAccountName] = useState(props.userinfo.admin_name);
-  const [accountImage,setAccountImage] = useState([])
-  const [accountImageURL,setAccountImageURL] = useState([])
+  const [accountImage,setAccountImage] = useState({})
+  const [accountImageURL,setAccountImageURL] = useState("")
+  const [accountImageObj,setAccountImageObj] = useState({});
   const [accountEmailState, setAccountEmailState] = useState(true);
   const [accountEmail, setAccountEmail] = useState(props.userinfo.admin_name);
   const [reportProbTitle, setReportProbTitle] = useState("");
@@ -34,7 +41,7 @@ const LeftSideBar = (props) => {
   const [filterByNameStatus, setFilterByNameStatus] = useState(false);
   const [filterByTimeStatus, setFilterByTimeStatus] = useState(false);
   const [filterByCreationStatus, setFilterByCreationStatus] = useState(false);
-  const { currentUser } = useAuth();
+  
   const handleNewPassword = (e) => {
     setNewPassword(e.target.value)
     //console.log("Password: "+newPassword)
@@ -44,14 +51,18 @@ const LeftSideBar = (props) => {
     //console.log("New password: "+newPasswordConfirm)
 
   }
+
 const handleOnImageChange = (e) => {
   var images = []
   images = images.concat([e.target.files[0]])
   setAccountImage(images)
   var imageURL = []
-  console.log(URL.createObjectURL(e.target.files[0]))
+  console.log(e)
   imageURL = imageURL.concat(URL.createObjectURL(e.target.files[0]))
-  setAccountImageURL(imageURL)
+  console.log(imageURL)
+  setAccountImageURL(URL.createObjectURL(e.target.files[0]))
+  setAccountImageObj(e.target.files[0])
+console.log(auth.currentUser.photoURL)
 }
 
   const handleReportProbTitle = (e) => {
@@ -112,20 +123,22 @@ const handleOnImageChange = (e) => {
     }
   };
   const updateProfile = async (e) => {
+    console.log(accountImageURL)
     const new_user_details = {
       name: accountName,
       email: accountEmail,
       new_password: newPasswordConfirm,
-      photo: accountImageURL[0]
+      photo: accountImageURL
     }
     if(accountImageURL.length!==0){
-      currentUser.updateProfile({
-        photoURL: accountImageURL[0]
-      }).then(function() {
-        console.log('User photo updated successfully!');
-      }).catch(function(error) {
-        console.error('Error updating user photo:', error);
-      });
+      upload(accountImageObj,currentUser)
+      // currentUser.updateProfile({
+      //   photoURL: accountImageURL
+      // }).then(function() {
+      //   console.log('User photo updated successfully!');
+      // }).catch(function(error) {
+      //   console.error('Error updating user photo:', error);
+      // });
     }
   }
 
@@ -136,14 +149,37 @@ const handleOnImageChange = (e) => {
       console.error('Error updating user password:', error);
     });
   }
+
+  const saveProfilePhoto = async () =>{
+    const fileRef = ref(storage,currentUser.uid)
+    const photoURL = await getDownloadURL(fileRef)
+    // fileRef.getDownloadURL().then((url) => {
+    //   console.log(url)
+    //   //setAccountImageURL(url);
+    // }).catch((error) => {
+    //   // handle error
+    // });
+    console.log(fileRef)
+    console.log(photoURL)
+    console.log(currentUser.photoURL)
+    setAccountImageURL(photoURL)
+  }
+  useEffect(()=>{
+    saveProfilePhoto()
+
+  },[])
+
+
   useEffect(() => {
     //call fetch info to get admin name,email, and let them udpate profile
     const adminUserName = localStorage.getItem("adminUserName");
     const adminEmail = localStorage.getItem("adminUserName");
     const equalPassword = !(newPassword===newPasswordConfirm);
+
+    
     console.log(equalPassword.toString())
 
-    console.log(currentUser)
+    console.log(auth.currentUser)
     if (adminUserName != null) {
       setAccountEmail(adminEmail);
       setAccountName(adminUserName);
@@ -154,6 +190,9 @@ const handleOnImageChange = (e) => {
       setOffcanvasBody(
         <Offcanvas.Body>
           <p>Account Details</p>
+          <div className = "profile-photo-style">
+            
+          
           <input
               accept="image/*"
               id="contained-button-file"
@@ -166,17 +205,18 @@ const handleOnImageChange = (e) => {
           <IconButton component="span">
             {
               accountImageURL.length===0 && 
-            <Avatar sx={{ width: 100, height: 100}}>H</Avatar>
+            <Avatar sx={{ width: 100, height: 100}}>{accountName[0].toUpperCase()}</Avatar>
             }
                         {
               accountImageURL.length!==0 && 
-            <Avatar src = {accountImageURL[0]}
+            <Avatar src = {accountImageURL}
             sx={{ width: 100, height: 100 }}
          
             />
             }
           </IconButton>
             </label>
+            </div>
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">Name</InputGroup.Text>
             <Form.Control
@@ -263,6 +303,11 @@ const handleOnImageChange = (e) => {
             </React.Fragment>
 
           }
+          {changePasswordState && <button className="btn centered w-100 update-password-btn" onClick={() => setChangePasswordState(!changePasswordState)}>
+                Cancel
+           </button>}
+
+
           <button className="btn centered w-100 update-profile-btn" onClick={() => updateProfile()}>
                 Update Profile
               </button>
@@ -355,6 +400,7 @@ const handleOnImageChange = (e) => {
                     className="mt-3 "
                     onClick={() => handleSubmitProblem()}
                   >
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae ex quae iure minus aliquam necessitatibus temporibus vero, saepe praesentium reprehenderit nesciunt voluptatem tempore qui sapiente debitis blanditiis similique nisi deserunt quos explicabo id. Minima distinctio itaque ullam nam quasi nobis corporis illo laborum libero, sequi consectetur accusamus sunt autem praesentium quos fuga nulla magnam, ea omnis ipsam, unde corrupti optio facilis. Autem deserunt quis ut alias laboriosam eveniet ea nam architecto commodi? Sint asperiores consequatur vero iste pariatur. Repudiandae minus debitis, consequuntur impedit nemo, rem hic, labore laboriosam voluptates esse provident quae magnam tempora excepturi cumque. Consectetur quam eos quos!</p>
                     {reportSubmissionBtnText}
                   </Button>
                   {reportSubmissionState && (

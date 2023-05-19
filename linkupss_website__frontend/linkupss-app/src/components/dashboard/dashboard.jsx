@@ -5,7 +5,7 @@ import axios from "axios";
 import FloatingActionButton from "../floatingActionButton";
 import SessionGrid from "./sessionGrid";
 import SessionLaunchedPopUp from "./sessionLaunchedPopUp";
-
+import SessionFormNew from "./sessionFormNew";
 import {
   getSession,
   getSessions,
@@ -26,7 +26,7 @@ import httpService from "../../services/httpService";
 import getCurrentUser from "../../services/authService";
 import jwtDecode from "jwt-decode";
 import ConfirmLogOutPopUp from "./confirmLogOutPopUp";
-
+import ChooseOrgPopUp from "./chooseOrgPopUp";
 const Dashboard = () => {
   const [userInfo, setUserInfo] = useState({
     _admin_id: "",
@@ -53,6 +53,7 @@ const Dashboard = () => {
   const [selectedSession, setSelectedSession] = useState({});
   const [confirmSessionDeleteState, setConfirmSessionDeleteState] =
   useState(false);
+  const [chooseOrgPopUpState,setChooseOrgPopUpState] = useState(false);
   const [confirmLogOutState,setConfirmLogOutState] = useState(false);
   const [launchSessionState,setLaunchSessionState] = useState(false);
   const [deleteSession, setDeleteSession] = useState({});
@@ -240,7 +241,7 @@ const Dashboard = () => {
     }
     if (sessionFormType === "edit") {
       const index = new_sessions.indexOf(
-        new_sessions.find((m) => m._id === session_saved._id)
+        new_sessions.find((m) => m.name === session_saved.name)
       );
       console.log(index);
       console.log(session_new);
@@ -266,6 +267,7 @@ const Dashboard = () => {
     setOffCanvasState(true);
     setOffCanvasContent(content);
   };
+
   const handleFilteringSessionsButton = (filter) => {
     if (filter === "name") {
       const new_sessions = [];
@@ -344,11 +346,13 @@ const Dashboard = () => {
         sessions={sessions}
         filterSessionByButton={handleFilteringSessionsButton}
       />
+
       <div className="col main-content-box">
         <InfoBar
           orgInfo={orgInfo}
           handleSearchSession={handleSearchSession}
           logout = {()=>setConfirmLogOutState(true)}
+          chooseOrg = {()=>setChooseOrgPopUpState(true)}
           openOffcanvas={handleOffCanvas}
         />
         <div
@@ -361,6 +365,10 @@ const Dashboard = () => {
             selectedSession={selectedSession}
             deleteSession={handleDeleteSession}
           />
+         <ChooseOrgPopUp
+         show={chooseOrgPopUpState}
+         hide={() => setChooseOrgPopUpState(false)}
+         />
           <SessionLaunchedPopUp
             show={launchSessionState}
             hide={() => setLaunchSessionState(false)}
@@ -370,7 +378,7 @@ const Dashboard = () => {
           show={confirmLogOutState}
           hide={() => setConfirmLogOutState(false)}
           />
-          <SessionForm
+          <SessionFormNew
             show={sessionFormState}
             hide={() => setSessionFormState(false)}
             selectedSession={selectedSession}

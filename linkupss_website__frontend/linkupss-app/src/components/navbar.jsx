@@ -92,7 +92,7 @@ class NavBar extends Component{
 
             <Text5>Login</Text5>
             </NavLink>
-            <NavLink style={{ textDecoration: 'none' }} to ="/adminloginregister">
+            <NavLink style={{ textDecoration: 'none' }} to ="/adminregister">
             <Text6>Sign Up</Text6>
 
 </NavLink>
